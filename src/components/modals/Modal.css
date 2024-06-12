@@ -1,0 +1,21 @@
+.modal-container {
+	background-color: rgba(231, 231, 231, 0.808);
+	height: -webkit-fill-available;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: -webkit-fill-available;
+}
+
+.modal-background {
+	display: flex;
+	justify-content: center;
+	width: inherit;
+	height: inherit;
+}
+
+@media (max-width: 1024px) {}
+
+@media (max-width: 768px) {}
+
+@media (max-width: 475px) {}
