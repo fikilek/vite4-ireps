@@ -20,9 +20,6 @@ const FormikSelect = props => {
 					// console.log(`props`, props);
 					const { field, form, meta } = props;
 
-					
-					
-
 					const handleChange = e => {
 						// console.log(`e.target.value`, e.target.value);
 						// console.log(`field.name`, field.name);

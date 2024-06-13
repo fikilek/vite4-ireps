@@ -27,9 +27,9 @@ const FormikSelectSetAnomalyDetail = props => {
 				{props => {
 					const { field, form, meta } = props;
 
-					const handleChange = e => {
-						form.setFieldValue(field.name, e.target.value);
-						form.validateField(field.name);
+					const handleChange = async e => {
+						await form.setFieldValue(field.name, e.target.value);
+						await form.validateField(field.name);
 					};
 
 					return (

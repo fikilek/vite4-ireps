@@ -1,6 +1,6 @@
 import { Timestamp, serverTimestamp, where } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
-import { date, lazy, number, object, string } from "yup";
+import { lazy, number, object, string } from "yup";
 import { useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { LuFileEdit } from "react-icons/lu";
@@ -27,63 +27,59 @@ export const useTrns = (trnType, astCat) => {
 	const { getDocument, response } = useFirestore("users");
 	// console.log(`response`, response);
 
-	const [workbase, setWorkbase] = useState(null)
+	const [workbase, setWorkbase] = useState(null);
 	// console.log(`workbase`, workbase);
 
-	const [constraints, setConstraints] = useState([])
+	const [constraints, setConstraints] = useState([]);
 	// console.log(`constraints`, constraints);
 
 	const { user } = useAuthContext();
-	// console.log(`user`, user);	
+	// console.log(`user`, user);
 
 	const { state, getCollection } = useGetCollection("trns");
 	// console.log(`state`, state);
 
-	getCollection(constraints)
+	getCollection(constraints);
 
 	useEffect(() => {
 		setTrnsContext({
 			...trnsContext,
 			trns: state.data,
-			trnsTableFields
+			trnsTableFields,
 		});
 	}, [state]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		// console.log(`workbase changed:`, workbase)
-		if(workbase) {
-			setConstraints( prev => {
-					return [ ...prev,where("erf.address.lmMetro", "==", workbase?.trim()) ]
-				}
-			)
-		}
-		
-		if(trnType && trnType !== 'all') {
-			setConstraints( prev => {
-					return [ ...prev,where("metadata.trnType", "==", trnType) ]
-				}
-			)
+		if (workbase) {
+			setConstraints((prev) => {
+				return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
+			});
 		}
 
-		return () => setConstraints([])
+		if (trnType && trnType !== "all") {
+			setConstraints((prev) => {
+				return [...prev, where("metadata.trnType", "==", trnType)];
+			});
+		}
 
-	},[workbase, trnType])
+		return () => setConstraints([]);
+	}, [workbase, trnType]);
 
-	useEffect(()=>{
-		if(response.success) {
+	useEffect(() => {
+		if (response.success) {
 			// console.log(`response`, response);
-			const {workbase} = response?.document
+			const { workbase } = response?.document;
 			// console.log(`workbase`, workbase)
-			setWorkbase(workbase)
+			setWorkbase(workbase);
 		}
-
-	},[response.success])
+	}, [response.success]);
 
 	useEffect(() => {
 		if (user?.uid) {
 			getDocument(user?.uid);
 		}
-	}, [user?.uid]);	
+	}, [user?.uid]);
 
 	const trnsNewFormData = {
 		meter: {
@@ -101,7 +97,7 @@ export const useTrns = (trnType, astCat) => {
 					createdByUid: user.uid,
 					trnHistory: 0, // how many times transaction has been updated
 					trnType: "audit", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-					trnNo: "1234",
+					trnNo: "",
 					trnId: uuidv4(),
 					trnState: "draft",
 				},
@@ -109,27 +105,27 @@ export const useTrns = (trnType, astCat) => {
 					astId: uuidv4(),
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
-					astState: "service", // ['stores', 'field', 'service', 'etc']
-					astManufacturer: "Conlog",
-					astName: "BEC44",
+					astState: "", // ['stores', 'field', 'service', 'etc']
+					astManufacturer: "",
+					astName: "",
 					meter: {
-						phase: "single", // ['single', 'three', ]
-						type: "pre-paid", // ['pre-paid', 'conventional']
+						phase: "", // ['single', 'three', ]
+						type: "", // ['pre-paid', 'conventional']
 						keypad: {
-							isThereKeypad: "yes", // [ 'yes', 'no']
-							keypadAccess: "yes", // [ 'yes', 'no'] - required if 'isThereKeypad' is 'yes'
-							serialNo: "1q1q1q1q", // required if 'isThereKeypad' === 'yes' && 'keypadAccess' === 'yes'
-							comment: "good condition", // required if 'keypadAccess' is 'no' (no access reason)
+							isThereKeypad: "", // [ 'yes', 'no']
+							keypadAccess: "", // [ 'yes', 'no'] - required if 'isThereKeypad' is 'yes'
+							serialNo: "", // required if 'isThereKeypad' === 'yes' && 'keypadAccess' === 'yes'
+							comment: "", // required if 'keypadAccess' is 'no' (no access reason)
 						},
 						cb: {
-							isThereCb: "yes", // [ 'yes', 'no']
-							size: "80", // number (Amps) - required if 'isThereCb' === 'yes'
-							comment: "good condition", // required if 'isThereCb' === 'yes' && 'cbSize' !== null
+							isThereCb: "", // [ 'yes', 'no']
+							size: "", // number (Amps) - required if 'isThereCb' === 'yes'
+							comment: "", // required if 'isThereCb' === 'yes' && 'cbSize' !== null
 						},
 						seal: {
-							meterSealed: "yes", // [ 'yes', 'no']
-							sealNo: "qaqaqaqaqaq", // text - required if 'isThereSeal' is yes
-							comment: "good condition", // required if 'isThereSeal' === 'yes' && sealNo === null
+							meterSealed: "", // [ 'yes', 'no']
+							sealNo: "", // text - required if 'isThereSeal' is yes
+							comment: "", // required if 'isThereSeal' === 'yes' && sealNo === null
 						},
 					},
 				},
@@ -139,12 +135,12 @@ export const useTrns = (trnType, astCat) => {
 						lat: "", // long - Required
 						lng: "", // long - Required
 					},
-					premises: "inside", // ['inside', 'outside'] - Required
-					insideBox: "yes", // ['yes', 'no'] - Required
+					premises: "", // ['inside', 'outside'] - Required
+					insideBox: "", // ['yes', 'no'] - Required
 				},
 				anomalies: {
-					anomaly: "meter ok", // ['', '', '', '', '', ''] - required
-					anomalyDetail: "operationally ok", // ['', '', '', '', '', ''] - required based on 'anomaly'
+					anomaly: "", // ['', '', '', '', '', ''] - required
+					anomalyDetail: "", // ['', '', '', '', '', ''] - required based on 'anomaly'
 				},
 				erf: {
 					erfNo: "",
@@ -152,7 +148,7 @@ export const useTrns = (trnType, astCat) => {
 					erfAdr: "",
 				},
 				serviceConnection: {
-					configuration: "overhead",
+					configuration: "",
 				},
 			},
 			tid: {
@@ -169,7 +165,7 @@ export const useTrns = (trnType, astCat) => {
 					createdByUid: user.uid,
 					trnHistory: 0, // how many times transaction has been updated
 					trnType: "tid", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-					trnNo: "1234",
+					trnNo: "",
 					trnId: uuidv4(),
 					trnState: "draft",
 				},
@@ -198,7 +194,7 @@ export const useTrns = (trnType, astCat) => {
 				},
 				installationData: {
 					installationDate: new Date(),
-					sgc: "222222", //supplier group code
+					sgc: "", //supplier group code
 				},
 				metadata: {
 					updatedAtDatetime: Timestamp.now(),
@@ -209,7 +205,7 @@ export const useTrns = (trnType, astCat) => {
 					createdByUid: user.uid,
 					trnHistory: 0, // how many times transaction has been updated
 					trnType: "installation", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-					trnNo: "1234",
+					trnNo: "",
 					trnId: uuidv4(),
 					trnState: "draft",
 				},
@@ -217,26 +213,26 @@ export const useTrns = (trnType, astCat) => {
 					astId: uuidv4(),
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
-					astState: "service", // ['stores', 'field', 'service', 'etc']
-					astManufacturer: "Conlog",
-					astName: "BEC44",
+					astState: "", // ['stores', 'field', 'service', 'etc']
+					astManufacturer: "",
+					astName: "",
 					meter: {
-						phase: "single", // ['single', 'three', ]
-						type: "pre-paid", // ['pre-paid', 'conventional']
+						phase: "", // ['single', 'three', ]
+						type: "", // ['pre-paid', 'conventional']
 						keypad: {
-							keypadInstalled: "yes", // [ 'yes', 'no']
-							serialNo: "1q1q1q1q", // required if 'isThereKeypad' === 'yes' && 'keypadAccess' === 'yes'
-							comment: "good condition", // required if 'keypadAccess' is 'no' (no access reason)
+							keypadInstalled: "", // [ 'yes', 'no']
+							serialNo: "", // required if 'isThereKeypad' === 'yes' && 'keypadAccess' === 'yes'
+							comment: "", // required if 'keypadAccess' is 'no' (no access reason)
 						},
 						cb: {
-							cbInstalled: "yes", // [ 'yes', 'no']
-							size: "80", // number (Amps) - required if 'isThereCb' === 'yes'
-							comment: "good condition", // required if 'isThereCb' === 'yes' && 'cbSize' !== null
+							cbInstalled: "", // [ 'yes', 'no']
+							size: "", // number (Amps) - required if 'isThereCb' === 'yes'
+							comment: "", // required if 'isThereCb' === 'yes' && 'cbSize' !== null
 						},
 						seal: {
-							meterSealed: "yes", // [ 'yes', 'no']
-							sealNo: "qaqaqa", // text - required if 'isThereSeal' is yes
-							comment: "good condition", // required if 'isThereSeal' === 'yes' && sealNo === null
+							meterSealed: "", // [ 'yes', 'no']
+							sealNo: "", // text - required if 'isThereSeal' is yes
+							comment: "", // required if 'isThereSeal' === 'yes' && sealNo === null
 						},
 					},
 				},
@@ -246,12 +242,12 @@ export const useTrns = (trnType, astCat) => {
 						lat: "", // long - Required
 						lng: "", // long - Required
 					},
-					premises: "inside", // ['inside', 'outside'] - Required
-					insideBox: "yes", // ['yes', 'no'] - Required
+					premises: "", // ['inside', 'outside'] - Required
+					insideBox: "", // ['yes', 'no'] - Required
 				},
 				anomalies: {
-					anomaly: "meter ok", // ['', '', '', '', '', ''] - required
-					anomalyDetail: "operationally ok", // ['', '', '', '', '', ''] - required based on 'anomaly'
+					anomaly: "", // ['', '', '', '', '', ''] - required
+					anomalyDetail: "", // ['', '', '', '', '', ''] - required based on 'anomaly'
 				},
 				erf: {
 					erfNo: "",
@@ -259,7 +255,7 @@ export const useTrns = (trnType, astCat) => {
 					erfAdr: "",
 				},
 				serviceConnection: {
-					configuration: "overhead",
+					configuration: "",
 				},
 			},
 		},
@@ -269,16 +265,24 @@ export const useTrns = (trnType, astCat) => {
 		meter: {
 			audit: object().shape({
 				access: object().shape({
-					meterAccess: string().required("Required"),
-					noAccessReason: string().when("meterAccess", (meterAccess, schema) => {
-						if (meterAccess[0] === "no") {
-							return schema
-								?.required("no access reason required")
-								?.notOneOf(["choose", ""], "Required");
-						} else {
-							return schema;
+					meterAccess: string()
+						.required("Required")
+						.notOneOf(["choose", ""], "Required"),
+					noAccessReason: string().when(
+						"meterAccess",
+						(meterAccess, schema) => {
+							if (meterAccess[0] === "no") {
+								return schema
+									?.required("no access reason required")
+									?.notOneOf(["choose", ""], "Required");
+							}
+							if (meterAccess[0] === "yes") {
+								return schema
+									.notRequired()
+									.oneOf(["", "choose"], "Must Be 'choose' ");
+							}
 						}
-					}),
+					),
 				}),
 				astData: lazy((v, { context }) => {
 					return object().shape({
@@ -286,25 +290,31 @@ export const useTrns = (trnType, astCat) => {
 							const { meterAccess } = context.access;
 							if (meterAccess === "no") {
 								return schema.notRequired();
-							} else {
-								return schema.required("Required");
 							}
-						}),
-						astManufacturer: string().when("meterAccess", (meterAccess_, schema) => {
-							const { meterAccess } = context.access;
-							if (meterAccess === "no") {
-								return schema.notRequired();
-							} else {
+							if (meterAccess === "yes") {
 								return schema.required("Required");
-							}
+							} else return schema;
 						}),
+						astManufacturer: string().when(
+							"meterAccess",
+							(meterAccess_, schema) => {
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (meterAccess === "yes") {
+									return schema.required("Required");
+								} else return schema;
+							}
+						),
 						astName: string().when("meterAccess", (meterAccess_, schema) => {
 							const { meterAccess } = context.access;
 							if (meterAccess === "no") {
 								return schema.notRequired();
-							} else {
-								return schema.required("Required");
 							}
+							if (meterAccess === "yes") {
+								return schema.required("Required");
+							} else return schema;
 						}),
 						meter: object().shape({
 							phase: string().when("astNo", (astNo_, schema) => {
@@ -336,54 +346,73 @@ export const useTrns = (trnType, astCat) => {
 								}
 							}),
 							keypad: object().shape({
-								keypadAccess: string().when("access", (meterAccess_, schema) => {
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
+								keypadAccess: string().when(
+									"meterAccess",
+									(meterAccess_, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "yes or no")
+												.notOneOf(["choose", ""], "Required");
+										} else schema;
 									}
-									if (meterAccess === "yes") {
-										return schema.oneOf(["yes", "no"], "yes or no?").required("Required");
-									} else {
-										return schema;
+								),
+								serialNo: string().when(
+									"keypadAccess",
+									(keypadAccess_, schema) => {
+										const { keypadAccess } = context.astData.meter.keypad;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (keypadAccess === "yes") {
+											return schema.required("Required");
+										}
+										if (keypadAccess === "no") {
+											return schema.oneOf([""], "Must Be Blank");
+										} else {
+											return schema;
+										}
 									}
-								}),
-								serialNo: string().when("keypadAccess", (keypadAccess_, schema) => {
-									const { keypadAccess } = context.astData.meter.keypad;
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
+								),
+								comment: string().when(
+									"keypadAccess",
+									(keypadAccess_, schema) => {
+										const { keypadAccess } = context.astData.meter.keypad;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (keypadAccess === "no") {
+											return schema
+												.required("Required")
+												.notOneOf(["choose"], "Required");
+										} else {
+											return schema;
+										}
 									}
-									if (keypadAccess === "yes") {
-										return schema.required("Required");
-									}
-									if (keypadAccess === "no") {
-										return schema.oneOf([""], "Must Be Blank");
-									} else {
-										return schema;
-									}
-								}),
-								comment: string().when("keypadAccess", (keypadAccess_, schema) => {
-									const { keypadAccess } = context.astData.meter.keypad;
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
-									}
-									if (keypadAccess === "no") {
-										return schema.required("Required").notOneOf(["choose"], "Required");
-									} else {
-										return schema;
-									}
-								}),
+								),
 							}),
 							cb: object().shape({
-								isThereCb: string().when("meterAccess", (isThereCb_, schema) => {
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
-									} else {
-										schema.oneOf(["yes", "no"], "yes or no").required("Required");
+								isThereCb: string().when(
+									"meterAccess",
+									(isThereCb_, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "yes or no")
+												.notOneOf(["choose", ""], "Required");
+										} else schema;
 									}
-								}),
+								),
 								size: number().when("isThereCb", (isThereCb_, schema) => {
 									const { isThereCb } = context.astData.meter.cb;
 									const { meterAccess } = context.access;
@@ -391,7 +420,9 @@ export const useTrns = (trnType, astCat) => {
 										return schema.notRequired();
 									}
 									if (isThereCb === "yes") {
-										return schema.required("Required");
+										return schema
+											.required("Required")
+											.notOneOf([""], "Required");
 									}
 									if (isThereCb === "no") {
 										return schema.oneOf([""], "Must Be Blank");
@@ -416,14 +447,21 @@ export const useTrns = (trnType, astCat) => {
 								}),
 							}),
 							seal: object().shape({
-								meterSealed: string().when("meterAccess", (meterAccess_, schema) => {
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
-									} else {
-										return schema.oneOf(["yes", "no"], "yes or no").required("Required");
+								meterSealed: string().when(
+									"meterAccess",
+									(meterAccess_, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "yes or no")
+												.notOneOf(["choose", ""], "Required");
+										} else schema;
 									}
-								}),
+								),
 								sealNo: string().when(
 									["meterSealed", "comment"],
 									([meterSealed, comment], schema) => {
@@ -447,21 +485,24 @@ export const useTrns = (trnType, astCat) => {
 										}
 									}
 								),
-								comment: string().when("meterSealed", (meterSealed_, schema) => {
-									const { meterSealed, sealNo } = context.astData.meter.seal;
-									const { meterAccess } = context.access;
-									if (meterAccess === "no") {
-										return schema.notRequired();
+								comment: string().when(
+									"meterSealed",
+									(meterSealed_, schema) => {
+										const { meterSealed, sealNo } = context.astData.meter.seal;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterSealed === "yes" && sealNo === "") {
+											return schema
+												.required("Required")
+												.defined("Required")
+												.notOneOf(["choose"], "Required");
+										} else {
+											return schema;
+										}
 									}
-									if (meterSealed === "yes" && sealNo === "") {
-										return schema
-											.required("Required")
-											.defined("Required")
-											.notOneOf(["choose"], "Required");
-									} else {
-										return schema;
-									}
-								}),
+								),
 							}),
 						}),
 					});
@@ -513,7 +554,9 @@ export const useTrns = (trnType, astCat) => {
 								return schema.notRequired();
 							}
 							if (meterAccess === "yes") {
-								return schema.required("Required").oneOf(["yes", "no"], "Required");
+								return schema
+									.required("Required")
+									.oneOf(["yes", "no"], "Required");
 							} else {
 								return schema.notRequired();
 							}
@@ -528,7 +571,9 @@ export const useTrns = (trnType, astCat) => {
 								return schema.notRequired();
 							}
 							if (meterAccess === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose", ""], "Required");
 							} else {
 								return schema;
 							}
@@ -549,21 +594,32 @@ export const useTrns = (trnType, astCat) => {
 							) {
 								return schema.notRequired();
 							} else {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							}
 						}),
 					});
 				}),
 				serviceConnection: lazy((v, { context }) => {
 					return object().shape({
-						configuration: string().when("meterAccess", (meterAccess_, schema) => {
-							const { meterAccess } = context.access;
-							if (meterAccess === "no") {
-								return schema.notRequired();
-							} else {
-								return schema.required("Required");
+						configuration: string().when(
+							"meterAccess",
+							(meterAccess_, schema) => {
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (meterAccess === "yes") {
+									return schema
+										.required("Required")
+										.oneOf(["overhead", "underground"], "Required")
+										.notOneOf(["choose", ""], "Required");
+								} else {
+									return schema;
+								}
 							}
-						}),
+						),
 					});
 				}),
 				// metadata: lazy((v, { context }) => {
@@ -587,17 +643,20 @@ export const useTrns = (trnType, astCat) => {
 					meterAccess: string()
 						.required("Required")
 						?.notOneOf(["choose", ""], "Required"),
-					noAccessReason: string().when("meterAccess", (meterAccess, schema) => {
-						// console.log(`meterAccess`, meterAccess);
-						if (meterAccess[0] === "no") {
-							return schema
-								?.required("no access reason required")
-								?.notOneOf(["choose", ""], "Required");
+					noAccessReason: string().when(
+						"meterAccess",
+						(meterAccess, schema) => {
+							// console.log(`meterAccess`, meterAccess);
+							if (meterAccess === "no") {
+								return schema
+									?.required("no access reason required")
+									?.notOneOf(["choose", ""], "Required");
+							}
+							if (meterAccess === "yes") {
+								return schema?.oneOf(["choose"], "Must Be Choose");
+							}
 						}
-						if (meterAccess[0] === "yes") {
-							return schema?.oneOf(["choose"], "Must Be Choose");
-						}
-					}),
+					),
 				}),
 
 				tidOperation: lazy((v, { context }) => {
@@ -605,18 +664,22 @@ export const useTrns = (trnType, astCat) => {
 						tidDone: string().when("meterAccess", (meterAccess_, schema) => {
 							const { meterAccess } = context.access;
 							if (meterAccess === "yes") {
-								return schema.required("Required").notOneOf(["choose", ""], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose", ""], "Required");
 							} else {
 								return schema.notRequired();
 							}
 						}),
 						comment: string().when("tidDone", (tidDone, schema) => {
 							const { meterAccess } = context.access;
-							if (meterAccess === "no" || tidDone[0] === "no") {
+							if (meterAccess === "no" || tidDone === "no") {
 								return schema.notRequired();
 							}
-							if (tidDone[0] === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+							if (tidDone === "yes") {
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							} else {
 								return schema;
 							}
@@ -630,7 +693,9 @@ export const useTrns = (trnType, astCat) => {
 							const { meterAccess } = context.access;
 							const { tidDone } = context.tidOperation;
 							if (meterAccess === "yes" && tidDone === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							}
 							if (
 								meterAccess === "yes" &&
@@ -643,7 +708,9 @@ export const useTrns = (trnType, astCat) => {
 							const { meterAccess } = context.access;
 							const { tidDone } = context.tidOperation;
 							if (meterAccess === "yes" && tidDone === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							}
 							if (
 								meterAccess === "yes" &&
@@ -661,7 +728,9 @@ export const useTrns = (trnType, astCat) => {
 							const { meterAccess } = context.access;
 							const { tidDone } = context.tidOperation;
 							if (meterAccess === "yes" && tidDone === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							}
 							if (
 								meterAccess === "yes" &&
@@ -678,7 +747,9 @@ export const useTrns = (trnType, astCat) => {
 							// console.log(`tidDone`, tidDone);
 
 							if (meterAccess === "yes" && tidDone === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
+								return schema
+									.required("Required")
+									.notOneOf(["choose"], "Required");
 							}
 							if (
 								meterAccess === "yes" &&
@@ -692,20 +763,41 @@ export const useTrns = (trnType, astCat) => {
 			}),
 			installation: object().shape({
 				access: object().shape({
-					meterAccess: string().required("Required"),
-					noAccessReason: string().when("meterAccess", (meterAccess, schema) => {
-						if (meterAccess[0] === "no") {
-							return schema
-								?.required("no access reason required")
-								?.notOneOf(["choose", ""], "Required");
-						} else {
-							return schema;
+					meterAccess: string()
+						.required("Required")
+						.notOneOf(["choose", ""], "Required"),
+					noAccessReason: string().when(
+						"meterAccess",
+						(meterAccess, schema) => {
+							if (meterAccess[0] === "no") {
+								return schema
+									?.required("no access reason required")
+									?.notOneOf(["choose", ""], "Required");
+							}
+							if (meterAccess[0] === "yes") {
+								return schema
+									.notRequired()
+									.oneOf(["", "choose"], "Must Be 'choose' ");
+							}
 						}
-					}),
+					),
 				}),
-				installationData: object().shape({
-					// installationDate: date().notRequired(),
-					sgc: string().required("Required").notOneOf(["choose", ""], "Required"),
+				installationData: lazy((v, { context }) => {
+					return object().shape({
+						// TODO: implement installation date validation
+						// installationDate: date().notRequired(),
+						sgc: string().when("meterAccess", (meterAccess_, schema) => {
+							const { meterAccess } = context.access;
+							if (meterAccess === "no") {
+								return schema.notRequired();
+							}
+							if (meterAccess === "yes") {
+								return schema
+									.required("Required")
+									.notOneOf(["choose", ""], "Required");
+							} else return schema;
+						}),
+					});
 				}),
 				astData: lazy((v, { context }) => {
 					return object().shape({
@@ -713,59 +805,222 @@ export const useTrns = (trnType, astCat) => {
 							const { meterAccess } = context.access;
 							if (meterAccess === "no") {
 								return schema.notRequired();
-							} else {
-								return schema.required("Required");
 							}
+							if (meterAccess === "yes") {
+								return schema.required("Required");
+							} else return schema;
 						}),
-						astManufacturer: string().required("Required"),
-						astName: string().required("Required"),
+						astManufacturer: string().when(
+							"meterAccess",
+							(meterAccess_, schema) => {
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (meterAccess === "yes") {
+									return schema.required("Required");
+								} else return schema;
+							}
+						),
+						astName: string().when("meterAccess", (meterAccess_, schema) => {
+							const { meterAccess } = context.access;
+							if (meterAccess === "no") {
+								return schema.notRequired();
+							}
+							if (meterAccess === "yes") {
+								return schema.required("Required");
+							} else return schema;
+						}),
 						meter: object().shape({
-							phase: string().required("Required"),
-							type: string().required("Required"),
+							phase: string().when("astNo", (astNo_, schema) => {
+								const { astNo } = context.astData;
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (astNo === "" || astNo === null || astNo === undefined) {
+									return schema?.notRequired();
+								} else {
+									return schema
+										?.defined("Required")
+										?.oneOf(["single", "three"], "Required");
+								}
+							}),
+							type: string().when("astNo", (astno, schema) => {
+								const { astNo } = context.astData;
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (astNo === "" || astNo === null || astNo === undefined) {
+									return schema?.notRequired();
+								} else {
+									return schema
+										?.defined("Required")
+										?.oneOf(["pre-paid", "conventional"], "Required");
+								}
+							}),
 							keypad: object().shape({
-								keypadInstalled: string()
-									.required("Required")
-									.oneOf(["yes", "no"], "Required")
-									.notOneOf(["choose", ""], "Required"),
-								serialNo: string().when(
-									"keypadInstalled",
-									(keypadInstalled, schema) => {
-										if (keypadInstalled[0] === "yes") {
-											return schema.required("Required");
-										} else {
+								keypadInstalled: string().when(
+									"meterAccess",
+									(meterAccess_, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
 											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "Required")
+												.notOneOf(["choose", ""], "Required");
+										} else {
+											return schema;
 										}
 									}
 								),
-								comment: string().required("Required"),
+								serialNo: string().when(
+									"keypadInstalled",
+									(keypadInstalled_, schema) => {
+										const { keypadInstalled } = context.astData.meter.keypad;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (keypadInstalled === "yes") {
+											return schema.required("Required");
+										}
+										if (keypadInstalled === "no") {
+											return schema.oneOf([""], "Must Be Blank");
+										} else {
+											return schema;
+										}
+									}
+								),
+								comment: string().when(
+									"keypadInstalled",
+									(keypadInstalled_, schema) => {
+										const { keypadInstalled } = context.astData.meter.keypad;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (keypadInstalled === "no") {
+											return schema
+												.required("Required")
+												.notOneOf(["choose"], "Required");
+										} else {
+											return schema;
+										}
+									}
+								),
 							}),
 							cb: object().shape({
-								cbInstalled: string()
-									.required("Required")
-									.oneOf(["yes", "no"], "Required")
-									.notOneOf(["choose", ""], "Required"),
-								size: number().when("cbInstalled", (cbInstalled, schema) => {
-									if (cbInstalled[0] === "yes") {
-										return schema.required("Required").notOneOf([''], 'Required');
-									} else {
+								cbInstalled: string().when(
+									"meterAccess",
+									(cbInstalled, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "Required")
+												.notOneOf(["choose", ""], "Required");
+										} else {
+											return schema;
+										}
+									}
+								),
+								size: number().when("cbInstalled", (cbInstalled_, schema) => {
+									const { cbInstalled } = context.astData.meter.cb;
+									const { meterAccess } = context.access;
+									if (meterAccess === "no") {
 										return schema.notRequired();
 									}
+									if (cbInstalled === "yes") {
+										return schema
+											.required("Required")
+											.notOneOf([""], "Required");
+									}
+									if (cbInstalled === "no") {
+										return schema.oneOf([""], "Must Be Blank");
+									} else {
+										return schema;
+									}
 								}),
-								comment: string().notRequired(),
+								comment: string().when(
+									"cbInstalled",
+									(cbInstalled_, schema) => {
+										const { cbInstalled } = context.astData.meter.cb;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (cbInstalled === "no") {
+											return schema
+												.required("Value Required")
+												.notOneOf(["choose"], "Required")
+												.defined("Required");
+										} else {
+											return schema;
+										}
+									}
+								),
 							}),
 							seal: object().shape({
-								meterSealed: string()
-									.required("Required")
-									.oneOf(["yes", "no"], "Required")
-									.notOneOf(["choose", ""], "Required"),
-								sealNo: string().when("meterSealed", (meterSealed, schema) => {
-									if (meterSealed[0] === "yes") {
-										return schema.required("Required").notOneOf([''], 'Required');
-									} else {
-										return schema.notRequired();
+								sealInstalled: string().when(
+									"meterAccess",
+									(meterAccess_, schema) => {
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (meterAccess === "yes") {
+											return schema
+												.required("Required")
+												.oneOf(["yes", "no"], "Required")
+												.notOneOf(["choose", ""], "Required");
+										} else {
+											return schema;
+										}
 									}
-								}),
-								comment: string().notRequired(),
+								),
+								sealNo: string().when(
+									"sealInstalled",
+									(sealInstalled_, schema) => {
+										const { sealInstalled } = context.astData.meter.seal;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (sealInstalled === "yes") {
+											return schema.required("Required");
+										}
+										if (sealInstalled === "no") {
+											return schema.oneOf([""], "Must Be Blank");
+										} else {
+											return schema;
+										}
+									}
+								),
+								comment: string().when(
+									"sealInstalled",
+									(sealInstalled_, schema) => {
+										const { sealInstalled } = context.astData.meter.seal;
+										const { meterAccess } = context.access;
+										if (meterAccess === "no") {
+											return schema.notRequired();
+										}
+										if (sealInstalled === "no") {
+											return schema
+												.required("Required")
+												.notOneOf(["choose"], "Required");
+										} else {
+											return schema;
+										}
+									}
+								),
 							}),
 						}),
 					});
@@ -817,50 +1072,72 @@ export const useTrns = (trnType, astCat) => {
 								return schema.notRequired();
 							}
 							if (meterAccess === "yes") {
-								return schema.required("Required").oneOf(["yes", "no"], "Required");
+								return schema
+									.required("Required")
+									.oneOf(["yes", "no"], "Required");
 							} else {
 								return schema.notRequired();
 							}
 						}),
 					});
 				}),
-				anomalies: lazy((v, { context }) => {
-					return object().shape({
-						anomaly: string().when("meterAccess", (meterAccess_, schema) => {
-							const { meterAccess } = context.access;
-							if (meterAccess === "no") {
-								return schema.notRequired();
-							}
-							if (meterAccess === "yes") {
-								return schema.required("Required").notOneOf(["choose"], "Required");
-							} else {
-								return schema;
-							}
-						}),
-						anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
-							const { anomaly } = context.anomalies;
-							// console.log(`anomaly`, anomaly)
-							// console.log(`meterAccess_`, meterAccess_);
-							const { meterAccess } = context.access;
-							if (meterAccess === "no") {
-								return schema.notRequired();
-							}
-							if (
-								anomaly === "" ||
-								anomaly === "choose" ||
-								anomaly === null ||
-								anomaly === undefined
-							) {
-								return schema.notRequired();
-							} else {
-								return schema.required("Required").notOneOf(["choose"], "Required");
-							}
-						}),
-					});
-				}),
+				// anomalies: lazy((v, { context }) => {
+				// 	return object().shape({
+				// 		anomaly: string().when("meterAccess", (meterAccess_, schema) => {
+				// 			const { meterAccess } = context.access;
+				// 			if (meterAccess === "no") {
+				// 				return schema.notRequired();
+				// 			}
+				// 			if (meterAccess === "yes") {
+				// 				return schema
+				// 					.required("Required")
+				// 					.notOneOf(["choose", ""], "Required");
+				// 			} else {
+				// 				return schema;
+				// 			}
+				// 		}),
+				// 		anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
+				// 			const { anomaly } = context.anomalies;
+				// 			// console.log(`anomaly`, anomaly)
+				// 			// console.log(`meterAccess_`, meterAccess_);
+				// 			const { meterAccess } = context.access;
+				// 			if (meterAccess === "no") {
+				// 				return schema.notRequired();
+				// 			}
+				// 			if (
+				// 				anomaly === "" ||
+				// 				anomaly === "choose" ||
+				// 				anomaly === null ||
+				// 				anomaly === undefined
+				// 			) {
+				// 				return schema.notRequired();
+				// 			} else {
+				// 				return schema
+				// 					.required("Required")
+				// 					.notOneOf(["choose", ""], "Required");
+				// 			}
+				// 		}),
+				// 	});
+				// }),
 				serviceConnection: lazy((v, { context }) => {
 					return object().shape({
-						configuration: string().required("Required"),
+						configuration: string().when(
+							"meterAccess",
+							(meterAccess_, schema) => {
+								const { meterAccess } = context.access;
+								if (meterAccess === "no") {
+									return schema.notRequired();
+								}
+								if (meterAccess === "yes") {
+									return schema
+										.required("Required")
+										.oneOf(["overhead", "underground"], "Required")
+										.notOneOf(["choose", ""], "Required");
+								} else {
+									return schema;
+								}
+							}
+						),
 					});
 				}),
 				// metadata: lazy((v, { context }) => {
@@ -892,6 +1169,7 @@ export const useTrns = (trnType, astCat) => {
 					width: 200,
 					hide: true,
 				},
+
 				// trn created
 				{
 					headerName: "Created",
@@ -915,21 +1193,24 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.createdAtDatetime;
 							},
 							hide: false,
 						},
 					],
 				},
+
 				// trn updated
 				{
 					headerName: "Updated",
@@ -953,34 +1234,75 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.updatedAtDatetime;
 							},
 							hide: false,
 						},
 					],
 				},
+
+				// Ast Data
+				{
+					headerName: "Ast Data",
+					children: [
+						// astCat
+						{
+							field: "astData.astCatergory",
+							columnGroupShow: "open",
+							headerName: "Ast Cat",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astNo",
+							columnGroupShow: "closed",
+							headerName: "Ast No",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astManufacturer",
+							columnGroupShow: "open",
+							headerName: "Manufacturer",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astName",
+							columnGroupShow: "open",
+							headerName: "Ast Name",
+							width: 150,
+							hide: false,
+						},
+					],
+				},
+
 				// erf - data comes from the erf that created the trn
 				{
-					headerName: "Erf for Ast",
+					headerName: "Erf (Where ast belongs)",
 					children: [
 						{
 							field: "erf.erfNo",
 							headerName: "Erf No",
 							width: 110,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								// console.log(`props`, props);
 								return (
 									<TableModalBtn data={params}>
-										<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+										<IconContext.Provider
+											value={{ color: "blue", fontSize: "1rem" }}
+										>
 											<FaMapMarkedAlt /> {params.value}
 										</IconContext.Provider>
 									</TableModalBtn>
@@ -1025,19 +1347,19 @@ export const useTrns = (trnType, astCat) => {
 				// 	field: "metadata.trnNo",
 				// 	headerName: "Trn No",
 				// 	width: 100,
-				// }, 
-
-						console.log(object),
+				// },
 
 				// edit
 				{
 					field: "",
 					headerName: "Edit",
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						// console.log(`props.data`, params.data);
 						return (
 							<TableModalBtn data={params}>
-								<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
 									<LuFileEdit />
 								</IconContext.Provider>
 							</TableModalBtn>
@@ -1062,13 +1384,15 @@ export const useTrns = (trnType, astCat) => {
 				{
 					field: "metadata.trnType",
 					headerName: "Trn Type",
-					valueGetter: params => {
+					valueGetter: (params) => {
 						// console.log(`params`, params);
 						const { trnType } = params.data.metadata;
 						return trnType;
 					},
 					width: 120,
 				},
+
+				// access
 				{
 					headerName: "Access",
 					children: [
@@ -1118,41 +1442,7 @@ export const useTrns = (trnType, astCat) => {
 				// 		return media;
 				// 	},
 				// },
-				// Ast Description
-				{
-					headerName: "Ast Description",
-					children: [
-						// astCat
-						{
-							field: "astData.astCatergory",
-							// columnGroupShow: "closed",
-							headerName: "Ast Cat",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astNo",
-							// columnGroupShow: "open",
-							headerName: "Ast No",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astManufacturer",
-							// columnGroupShow: "open",
-							headerName: "Manufacturer",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astName",
-							// columnGroupShow: "open",
-							headerName: "Ast Name",
-							width: 150,
-							hide: false,
-						},
-					],
-				},
+
 				// Ast Specific data
 				{
 					headerName: "Ast Specific",
@@ -1207,15 +1497,17 @@ export const useTrns = (trnType, astCat) => {
 							field: "location.gps",
 							columnGroupShow: "closed",
 							headerName: "Ast Gps",
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								// console.log(`params`, params)
-								return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+								return (
+									<TableModalBtn data={params}>{params.value}</TableModalBtn>
+								);
 							},
 							cellRendererParams: {
 								modalName: "showAstOnMap",
 								width: "7rem",
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								const lat = Number(params.data.location.gps.lat).toFixed(3);
 								const lng = Number(params.data.location.gps.lng).toFixed(3);
 								return `${lat}/${lng}`;
@@ -1268,15 +1560,17 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.createdAtDatetime;
 							},
 							hide: false,
@@ -1306,15 +1600,17 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.updatedAtDatetime;
 							},
 							hide: false,
@@ -1325,11 +1621,13 @@ export const useTrns = (trnType, astCat) => {
 				{
 					field: "",
 					headerName: "Edit",
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						// console.log(`props.data`, params.data);
 						return (
 							<TableModalBtn data={params}>
-								<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
 									<LuFileEdit />
 								</IconContext.Provider>
 							</TableModalBtn>
@@ -1482,15 +1780,17 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.createdAtDatetime;
 							},
 							hide: false,
@@ -1520,17 +1820,55 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.updatedAtDatetime;
 							},
+							hide: false,
+						},
+					],
+				},
+
+				// Ast Data
+				{
+					headerName: "Ast Data",
+					children: [
+						// astCat
+						{
+							field: "astData.astCatergory",
+							columnGroupShow: "open",
+							headerName: "Ast Cat",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astNo",
+							columnGroupShow: "closed",
+							headerName: "Ast No",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astManufacturer",
+							columnGroupShow: "open",
+							headerName: "Manufacturer",
+							width: 150,
+							hide: false,
+						},
+						{
+							field: "astData.astName",
+							columnGroupShow: "open",
+							headerName: "Ast Name",
+							width: 150,
 							hide: false,
 						},
 					],
@@ -1556,15 +1894,17 @@ export const useTrns = (trnType, astCat) => {
 				// },
 				// erf - data comes from the erf that created the trn
 				{
-					headerName: "Erf for Ast",
+					headerName: "Erf (where ast belongs)",
 					children: [
 						{
 							field: "erf.erfNo",
 							headerName: "Erf No",
 							width: 110,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								// console.log(`props`, props);
-								return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+								return (
+									<TableModalBtn data={params}>{params.value}</TableModalBtn>
+								);
 							},
 							cellRendererParams: {
 								modalName: "iwShowOnMap",
@@ -1596,11 +1936,13 @@ export const useTrns = (trnType, astCat) => {
 				{
 					field: "",
 					headerName: "Edit",
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						// console.log(`props.data`, params.data);
 						return (
 							<TableModalBtn data={params}>
-								<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
 									<LuFileEdit />
 								</IconContext.Provider>
 							</TableModalBtn>
@@ -1625,48 +1967,31 @@ export const useTrns = (trnType, astCat) => {
 				{
 					field: "metadata.trnType",
 					headerName: "Trn Type",
-					valueGetter: params => {
+					valueGetter: (params) => {
 						// console.log(`params`, params);
 						const { trnType } = params.data.metadata;
 						return trnType;
 					},
 					width: 120,
 				},
-				// Ast Description
+
+				// access
 				{
-					headerName: "Ast Description",
+					headerName: "Access",
 					children: [
-						// astCat
 						{
-							field: "astData.astCatergory",
-							// columnGroupShow: "closed",
-							headerName: "Ast Cat",
-							width: 150,
-							hide: false,
+							field: "access.meterAccess",
+							headerName: "Access?",
+							width: 120,
 						},
 						{
-							field: "astData.astNo",
-							// columnGroupShow: "open",
-							headerName: "Ast No",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astManufacturer",
-							// columnGroupShow: "open",
-							headerName: "Manufacturer",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astName",
-							// columnGroupShow: "open",
-							headerName: "Ast Name",
-							width: 150,
-							hide: false,
+							field: "access.noAccessReason",
+							headerName: "No Access Reason",
+							width: 200,
 						},
 					],
 				},
+
 				// Ast Specific data
 				{
 					headerName: "Ast Specific",
@@ -1702,15 +2027,17 @@ export const useTrns = (trnType, astCat) => {
 							field: "location.gps",
 							columnGroupShow: "closed",
 							headerName: "Ast Gps",
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								// console.log(`params`, params)
-								return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+								return (
+									<TableModalBtn data={params}>{params.value}</TableModalBtn>
+								);
 							},
 							cellRendererParams: {
 								modalName: "showAstOnMap",
 								width: "7rem",
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								const lat = Number(params.data.location.gps.lat).toFixed(3);
 								const lng = Number(params.data.location.gps.lng).toFixed(3);
 								return `${lat}/${lng}`;
@@ -1734,7 +2061,7 @@ export const useTrns = (trnType, astCat) => {
 			],
 		},
 		all: {
-			all: 		[
+			all: [
 				// trn id
 				{
 					field: "id",
@@ -1765,15 +2092,17 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.createdAtDatetime;
 							},
 							hide: false,
@@ -1803,15 +2132,17 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "open",
 							headerName: "Date Created",
 							width: 150,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								const timestamp = new Timestamp(
 									params.value.seconds,
 									params.value.nanoseconds
 								);
 								const newDate = timestamp.toDate();
-								return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+								return (
+									<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+								);
 							},
-							valueGetter: params => {
+							valueGetter: (params) => {
 								return params.data.metadata.updatedAtDatetime;
 							},
 							hide: false,
@@ -1826,11 +2157,13 @@ export const useTrns = (trnType, astCat) => {
 							field: "erf.erfNo",
 							headerName: "Erf No",
 							width: 110,
-							cellRenderer: params => {
+							cellRenderer: (params) => {
 								// console.log(`props`, props);
 								return (
 									<TableModalBtn data={params}>
-										<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+										<IconContext.Provider
+											value={{ color: "blue", fontSize: "1rem" }}
+										>
 											<FaMapMarkedAlt /> {params.value}
 										</IconContext.Provider>
 									</TableModalBtn>
@@ -1876,19 +2209,19 @@ export const useTrns = (trnType, astCat) => {
 				// 	headerName: "Trn No",
 				// 	width: 100,
 				// },
-				
+
 				// trn state - shows the form state and opens it on a click for editing
 				{
 					field: "metadata.trnState",
 					headerName: "State",
 					width: 100,
 				},
-	
+
 				// trn type
 				{
 					field: "metadata.trnType",
 					headerName: "Trn Type",
-					valueGetter: params => {
+					valueGetter: (params) => {
 						// console.log(`params`, params);
 						const { trnType } = params.data.metadata;
 						return trnType;
@@ -1910,7 +2243,7 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
-	
+
 				// trn media - all phots, voice clips and videos of the ast involved in the trn.
 				// These are ast photos
 				// {
@@ -1930,21 +2263,21 @@ export const useTrns = (trnType, astCat) => {
 				// 	valueGetter: params => {
 				// 		// console.log(`params`, params);
 				// 		// query mediaAsts to ifnd out hamy media files are there for the ast
-	
+
 				// 		// get ast id from params
 				// 		const { astId } = params?.data?.astData
 				// 		// console.log(`astId`, astId)
-	
+
 				// 		// quuery mediaAsts for the astId
 				// 		// getCollectionCount("matadata.astId", '==', astId)
-	
+
 				// 		// console.log(`state`, state)
-	
+
 				// 		const media = params?.data?.media?.length ? params?.data?.media?.length : 0;
 				// 		return media;
 				// 	},
 				// },
-	
+
 				// Ast Description
 				{
 					headerName: "Ast Description",
@@ -1980,7 +2313,7 @@ export const useTrns = (trnType, astCat) => {
 						// },
 					],
 				},
-	
+
 				// Ast Location
 				// {
 				// 	headerName: "Ast Location",
@@ -2025,13 +2358,32 @@ export const useTrns = (trnType, astCat) => {
 				// 	],
 				// },
 			],
-		} 
-		
+		},
+	};
 
+	const updateFormState = async (formik, setFormState) => {
+		// console.log(`formik`, formik);
+		const { trnState } = formik?.values?.metadata;
+
+		const { meterAccess } = await formik?.values?.access;
+		// console.log(`meterAccess` , meterAccess)
+
+		const { dirty, isValid } = formik;
+		// console.log(`dirty` , dirty)
+		// console.log(`isValid` , isValid)
+
+		const newState =
+			isValid && dirty && meterAccess === "yes" ? "valid" : trnState;
+		// console.log(`newState` , newState)
+
+		setFormState(newState);
+
+		return { state: newState };
 	};
 
 	return {
 		trnsNewFormData,
 		trnsValidationSchema,
+		updateFormState,
 	};
 };

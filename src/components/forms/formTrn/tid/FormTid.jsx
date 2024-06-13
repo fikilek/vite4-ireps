@@ -8,7 +8,6 @@ import "@/components/forms/formTrn/tid/FormTid.css";
 
 // custom hooks
 import useModal from "@/hooks/useModal.jsx";
-import { useLocalStorage } from "@/hooks/useLocalStorage.jsx";
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 
 // components
@@ -20,42 +19,15 @@ import HeaderGeneric from "@/components/header/HeaderGeneric";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
-const FormTid = props => {
+const FormTid = (props) => {
 	// console.log(`props`, props);
 
 	const { data, validationSchema } = props?.data;
 	// console.log(`data`, data);
 
-	const { astNo, astId } = data.astData;
-
 	// destructure trn id
 	const { trnId } = data.metadata;
 	// console.log(`trnId`, trnId);
-
-	const [formState, setFormState] = useState(null);
-	// console.log(`formState`, formState);
-
-	const [formData, setFormData] = useState(null);
-	// console.log(`formData`, formData);
-
-	const key = `${astId}_${astNo}`;
-	const { setItem, getItem, deleteItem } = useLocalStorage(`${astId}_${astNo}`);
-
-	useEffect(() => {
-		const existingTrn = getItem(key);
-		// console.log(`existingTrn`, existingTrn);
-		if (existingTrn) {
-			setFormData(existingTrn);
-		} else {
-			setFormData(data);
-		}
-		return () => setFormData(null);
-	}, []);
-
-	useState(() => {
-		setFormState(data.metadata.trnState);
-		return () => setFormState(null);
-	}, []);
 
 	const { closeModal } = useModal();
 
@@ -65,18 +37,9 @@ const FormTid = props => {
 	// console.log(`response`, response)
 
 	const onSubmit = useCallback(
-		values => {
+		(values) => {
 			// console.log(`values`, values);
-			setDocument(
-				{
-					...values,
-					metadata: {
-						...values.metadata,
-						trnState: formState,
-					},
-				},
-				values.metadata.trnId
-			);
+			setDocument(values, values.metadata.trnId);
 		},
 		[setDocument]
 	);
@@ -84,7 +47,6 @@ const FormTid = props => {
 	useEffect(() => {
 		// console.log(`response`, response);
 		if (response.success) {
-			deleteItem(key);
 			closeModal();
 			toast(`Transaction UPDATED succesfully!`, {
 				position: "bottom-left",
@@ -99,37 +61,18 @@ const FormTid = props => {
 		}
 	}, [response]);
 
-	const handleChange = formik => {
-		let state = formik.values.metadata.trnState;
-		if (formik.values.access.meterAccess === "no") {
-			state = "N/A";
-		}
-		if (
-			formik.isValid &&
-			formik.dirty &&
-			formik.values.access.meterAccess === "yes"
-		) {
-			state = "valid";
-		}
-
-		setFormState(state);
-		// submitted form must not be saved to useLocalStorage
-		if (formik.values.metadata.trnState !== "submitted") {
-			setItem(formik.values);
-		}
-	};
-
-	return formData ? (
+	return data ? (
 		<div className="form-wrapper">
 			<div className="form-container trn form-meter-tid">
 				<Formik
 					initialValues={{
-						...formData,
+						...data,
 					}}
 					onSubmit={onSubmit}
 					validationSchema={validationSchema}
+					validationOnMount={true}
 				>
-					{formik => {
+					{(formik) => {
 						// const disabled = !(formik.isValid && formik.dirty);
 						// console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
@@ -137,11 +80,15 @@ const FormTid = props => {
 						// console.log(`formik.values.access.meterAccess`, formik.values.access.meterAccess);
 
 						return (
-							<Form onChange={handleChange(formik)}>
+							<Form>
 								<div className="trn-form">
 									<HeaderGeneric
 										hl1={"Tid Form"}
-										hl2={<span className="text-emphasis2">{formState}</span>}
+										hl2={
+											<span className="text-emphasis2">
+												{formik.values.metadata.trnState}
+											</span>
+										}
 										hr1={
 											<span>
 												Meter:

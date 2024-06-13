@@ -9,7 +9,6 @@ import "@/components/forms/formTrn/installation/FormMeterInstallation.css";
 // custome hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
-import { useLocalStorage } from "@/hooks/useLocalStorage.jsx";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -21,7 +20,7 @@ import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
-const FormMeterInstallation = props => {
+const FormMeterInstallation = (props) => {
 	// console.log(`props`, props);
 
 	const { data, validationSchema } = props?.data;
@@ -34,31 +33,6 @@ const FormMeterInstallation = props => {
 	const { trnId } = data.metadata;
 	// console.log(`trnId`, trnId);
 
-	const [formState, setFormState] = useState(null);
-	// console.log(`formState`, formState);
-
-	const [formData, setFormData] = useState(null);
-	// console.log(`formData`, formData);
-
-	const key = `${erfId}_${erfNo}`;
-	const { setItem, getItem, deleteItem } = useLocalStorage(`${erfId}_${erfNo}`);
-
-	useEffect(() => {
-		const existingTrn = getItem(key);
-		// console.log(`existingTrn`, existingTrn);
-		if (existingTrn) {
-			setFormData(existingTrn);
-		} else {
-		setFormData(data);
-		}
-		return () => setFormData(null);
-	}, []);
-
-	useState(() => {
-		setFormState(data.metadata.trnState);
-		return () => setFormState(null);
-	}, []);
-
 	const { closeModal } = useModal();
 
 	const [active, setActive] = useState(null);
@@ -67,18 +41,9 @@ const FormMeterInstallation = props => {
 	// console.log(`response`, response)
 
 	const onSubmit = useCallback(
-		values => {
+		(values) => {
 			console.log(`values`, values);
-			setDocument(
-				{
-					...values,
-					metadata: {
-						...values.metadata,
-						trnState: formState,
-					},
-				},
-				values.metadata.trnId
-			);
+			setDocument(values, values.metadata.trnId);
 		},
 		[setDocument]
 	);
@@ -86,7 +51,6 @@ const FormMeterInstallation = props => {
 	useEffect(() => {
 		// console.log(`response`, response);
 		if (response.success) {
-			deleteItem(key);
 			closeModal();
 			toast(`Transaction UPDATED succeesfully!`, {
 				position: "bottom-left",
@@ -101,34 +65,14 @@ const FormMeterInstallation = props => {
 		}
 	}, [response]);
 
-	const handleChange = formik => {
-		let state = formik.values.metadata.trnState;
-		if (formik.values?.access?.meterAccess === "no") {
-			state = "N/A";
-		}
-		if (
-			formik.isValid &&
-			formik.dirty &&
-			formik.values?.access?.meterAccess === "yes"
-		) {
-			state = "valid";
-		}
-
-		setFormState(state);
-		// submitted form must not be saved to useLocalStorage
-		if (formik.values.metadata.trnState !== "submitted") {
-			setItem(formik.values);
-		}
-	};
-
-	return formData ? (
+	return data ? (
 		<div className="form-wrapper">
 			<div className="form-container trn form-meter-audit">
 				<Formik
 					initialValues={{
-						...formData,
+						...data,
 						erf: {
-							...formData?.erf,
+							...data?.erf,
 							erfNo,
 							erfId,
 							address,
@@ -136,24 +80,31 @@ const FormMeterInstallation = props => {
 					}}
 					onSubmit={onSubmit}
 					validationSchema={validationSchema}
+					validateOnMount={true}
 				>
-					{formik => {
+					{(formik) => {
 						// const disabled = !(formik.isValid && formik.dirty);
-						// console.log(`formik.errors`, formik.errors);
+						console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
 						// console.log(`disabled`, disabled);
-						// console.log(`formik.values`, formik.values);
+						console.log(`formik.values`, formik.values);
 
 						return (
-							<Form onChange={handleChange(formik)}>
+							<Form>
 								<div className="trn-form">
 									<HeaderGeneric
 										hl1={
 											<span>
-												Meter <span className="text-emphasis2">Installation</span> Form
+												Meter{" "}
+												<span className="text-emphasis2">Installation</span>{" "}
+												Form
 											</span>
 										}
-										hl2={<span className="text-emphasis2">{formState}</span>}
+										hl2={
+											<span className="text-emphasis2">
+												{formik.values.metadata.trnState}
+											</span>
+										}
 										hr1={
 											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
@@ -183,7 +134,7 @@ const FormMeterInstallation = props => {
 										<div className="form-row-wrapper">
 											<div className="row-0 form-row">
 												<FormikControl
-													control="select"
+													control="selectMeterAccess"
 													type="text"
 													label="was there access to the meter?"
 													name={`access.meterAccess`}
@@ -344,7 +295,9 @@ const FormMeterInstallation = props => {
 														type="text"
 														label="premises?"
 														name={`location.premises`}
-														options={formSelectOptions.astLocationPremisesOptions}
+														options={
+															formSelectOptions.astLocationPremisesOptions
+														}
 													/>
 													<FormikControl
 														control="select"
@@ -383,7 +336,9 @@ const FormMeterInstallation = props => {
 													type="text"
 													label="service connection"
 													name={`serviceConnection.configuration`}
-													options={formSelectOptions.serviceConnectionEntryOptions}
+													options={
+														formSelectOptions.serviceConnectionEntryOptions
+													}
 												/>
 											</div>
 										</div>
@@ -499,7 +454,7 @@ const FormMeterInstallation = props => {
 														control="select"
 														type="text"
 														label="meter sealed?"
-														name={`astData.meter.seal.meterSealed`}
+														name={`astData.meter.seal.sealInstalled`}
 														options={formSelectOptions.yesNoOptions}
 													/>
 													<FormikControl

@@ -6,7 +6,7 @@ import { useTrns } from "@/hooks/useTrns.jsx";
 import TableModalBtn from "@/components/tables/TableModalBtn";
 
 const TableBtnsPossibleTrnsOnAst = props => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 	const { trns, erf } = props.data;
 	const { astNo, astId, astCatergory } = props.data.astData;
 

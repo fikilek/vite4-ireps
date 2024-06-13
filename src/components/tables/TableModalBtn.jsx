@@ -4,7 +4,7 @@ import useModal from "@/hooks/useModal.jsx";
 import { memo } from "react";
 
 const TableModalBtn = props => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 	const {
 		modalName,
 		data,

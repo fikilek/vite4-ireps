@@ -16,13 +16,13 @@ const FormikSelectSetAnomaly = props => {
 		<div className={`form-control ${name} `}>
 			<Field id={name} name={name} {...rest}>
 				{props => {
-					console.log(`props`, props)
+					// console.log(`props`, props)
 					const { field, form, meta } = props;
 
 					// const selected = field.value
 					// console.log(`selecred`, selected)
 
-					const handleChange = e => {
+					const handleChange = async e => {
 						// console.log(`e.target.value`, e.target.value);
 						// console.log(`field`, field);
 						// console.log(`form`, form);
@@ -33,12 +33,12 @@ const FormikSelectSetAnomaly = props => {
 							anomaly: e.target.value,
 						});
 
-						form.setFieldValue(field.name, e.target.value);
-						form.validateField(field.name);
+						await form.setFieldValue(field.name, e.target.value);
+						await form.validateField(field.name);
 
 						if (e.target.value === "choose") {
-							form.setFieldValue("anomalies.anomalyDetail", "choose");
-							form.validateField("anomalies.anomalyDetail");
+							await form.setFieldValue("anomalies.anomalyDetail", "choose");
+							await form.validateField("anomalies.anomalyDetail");
 						}
 					};
 
