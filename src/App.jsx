@@ -257,7 +257,9 @@ const router = createBrowserRouter(
 				path="admin"
 				element={
 					<Suspense fallback={loader}>
-						<RequireAuth allowedRoles={["supervisor", "manager", "superuser"]}>
+						<RequireAuth allowedRoles={[
+								"guest",
+								"fieldworker","supervisor", "manager", "superuser"]}>
 							<AdminLayout />
 						</RequireAuth>
 					</Suspense>
@@ -267,7 +269,9 @@ const router = createBrowserRouter(
 					path="users"
 					element={
 						<Suspense fallback={loader}>
-							<RequireAuth allowedRoles={["supervisor", "manager", "superuser"]}>
+							<RequireAuth allowedRoles={[
+								"guest",
+								"fieldworker","supervisor", "manager", "superuser"]}>
 								<Users />
 							</RequireAuth>
 						</Suspense>
@@ -304,7 +308,9 @@ const router = createBrowserRouter(
 					path="administrativeAreas"
 					element={
 						<Suspense fallback={loader}>
-							<RequireAuth allowedRoles={["supervisor", "manager", "superuser"]}>
+							<RequireAuth allowedRoles={[
+								"guest",
+								"fieldworker","supervisor", "manager", "superuser"]}>
 								<AdministrativeAreas />
 							</RequireAuth>
 						</Suspense>
