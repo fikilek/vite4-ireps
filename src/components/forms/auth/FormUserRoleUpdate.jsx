@@ -14,7 +14,8 @@ import FormFooter from "@/components/forms/formFooter/FormFooter";
 import FormikControl from "@/components/forms/formik/FormikControl";
 import FormError from "@/components/forms/formError/FormError";
 import { ClaimsContext } from "@/contexts/ClaimsContext";
-import HeaderGeneric2 from "@/components/header/HeaderGeneric2";
+import HeaderGeneric from "@/components/header/HeaderGeneric";
+import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
 const roles = [
 	{ key: "guest", value: "Guest", roleCode: "GST" },
@@ -165,7 +166,7 @@ const FormUserRoleUpdate = props => {
 
 	return (
 		<div className="form-wrapper">
-			<div className="form-container ">
+			<div className="form-container user-role-update ">
 				<Formik
 					initialValues={data.customClaims.roles}
 					onSubmit={onSubmit}
@@ -176,11 +177,11 @@ const FormUserRoleUpdate = props => {
 						// console.log(`formik.values`, formik.values);
 						return (
 							<>
-								<Form className="user-role-update" onChange={handleChange}>
-									<HeaderGeneric2
+								<Form onChange={handleChange}>
+									<HeaderGeneric
 										hl1="User Role Updater Form"
 										hr1={`${data.displayName}`}
-									/>
+									><FormCloseBtn /></HeaderGeneric>
 
 									<div className="user-role-update">
 										<div className="uru uru-sub-heading">

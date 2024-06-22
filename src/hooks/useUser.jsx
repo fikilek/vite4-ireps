@@ -3,8 +3,15 @@ import { useEffect, useState } from "react";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useFirestore } from "./useFirestore";
 
-export const useUser = uid => {
+export const useUser = (uid) => {
 	// console.log(`uid`, uid);
+
+	// get user details from firestore on snapshot
+	const { getDocument, response } = useFirestore("users");
+	// console.log(`response`, response);
+
+	// const [workbase, setWorkbase] = useState(null);
+	// console.log(`workbase`, workbase);
 
 	// const userUid = useMemo(()=>uid, [uid])
 	// console.log(`userUid`, userUid);
@@ -16,8 +23,14 @@ export const useUser = uid => {
 	const { user } = useAuthContext() || {};
 	const { displayName } = user;
 
-	const { response, getDocument } = useFirestore("users");
-	// console.log(`response`, response);
+	// useEffect(() => {
+	// 	if (response.success) {
+	// 		// console.log(`response`, response);
+	// 		const { workbase } = response?.document;
+	// 		// console.log(`workbase`, workbase)
+	// 		setWorkbase(workbase);
+	// 	}
+	// }, [response.success]);
 
 	useEffect(() => {
 		if (uid) getDocument(uid);
@@ -37,10 +50,13 @@ export const useUser = uid => {
 				.split(" ")[0]
 				.slice(0, 1)
 				.toUpperCase();
-			const firstLetterName = displayName.split(" ")[1].slice(0, 1).toUpperCase();
+			const firstLetterName = displayName
+				.split(" ")[1]
+				.slice(0, 1)
+				.toUpperCase();
 			setInitials(`${firstLetterSurname}${firstLetterName}`);
 		}
 	}, [displayName]);
 
-	return { initials, userFromUsers };
+	return { initials, userFromUsers, workbase: userFromUsers.workbase };
 };

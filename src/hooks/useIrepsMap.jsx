@@ -24,7 +24,7 @@ import za_ec_nelson_mandela from "@/maps/za/za_ec_nelson_mandela.geojson";
 import za_ec_bufallo_city from "@/maps/za/za_ec_bufallo_city.geojson";
 import za_kzn_ethekwini from "@/maps/za/za_kzn_ethekwini.geojson";
 import za_gp_ekurhuleni from "@/maps/za/za_gp_ekurhuleni.geojson";
-import za_gp_jhb from "@/maps/za/za_gp_jhb.geojson";
+import za_gp_coj from "@/maps/za/za_gp_coj.geojson";
 import za_gp_tshwane from "@/maps/za/za_gp_tshwane.geojson";
 import za_wc_cape_town from "@/maps/za/za_wc_cape_town.geojson";
 
@@ -139,7 +139,7 @@ const useIrepsMap = () => {
 				displayMap(map, za_gp_tshwane, isSelected);
 				break;
 			case "Johhanesburg":
-				displayMap(map, za_gp_jhb, isSelected);
+				displayMap(map, za_gp_coj, isSelected);
 				break;
 			case "Ekurhuleni":
 				displayMap(map, za_gp_ekurhuleni, isSelected);
@@ -269,7 +269,7 @@ const useIrepsMap = () => {
 					const jsonData = await fetch(za_mp_nkangala_vk);
 					const data = await jsonData.json();
 					let myBounds = new window.google.maps.LatLngBounds();
-					data.features[0].geometry.coordinates[0][0].forEach(latLng => {
+					data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
 						myBounds.extend({ lat: latLng[1], lng: latLng[0] });
 					});
 					map.fitBounds(myBounds);
@@ -352,23 +352,59 @@ const useIrepsMap = () => {
 		// console.log(`map`, map);
 
 		selected && map?.data?.loadGeoJson(boundaryFile);
+
 		const jsonData = await fetch(boundaryFile);
+
 		const data = await jsonData.json();
+
 		let myBounds = new window.google.maps.LatLngBounds();
-		data.features[0].geometry.coordinates[0][0].forEach(latLng => {
+		data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
 			myBounds.extend({ lat: latLng[1], lng: latLng[0] });
 		});
+
 		map.fitBounds(myBounds);
+
 		selected && map?.data?.loadGeoJson(cadastralFile);
-		  map.data.setStyle({
-					fillColor: "green",
-					fillOpacity: 0.1,
-				strokeWeight: 1,
-					title: 'qqqqqq'
-				});
+		map.data.setStyle({
+			fillColor: "green",
+			illOpacity: 0.1,
+			strokeWeight: 1,
+			title: "qqqqqq",
+		});
 	};
 
-	return { showBoundaries };
+	// This method displays lm boundary. Pass it the bondary polygon geojson file
+	const displayLmBondary = async (map, boundaryFile) => {
+		// console.log(`map`, map);
+		// console.log(`boundaryFile`, boundaryFile);
+
+		map?.data?.loadGeoJson(boundaryFile);
+
+		const jsonData = await fetch(boundaryFile);
+
+		const data = await jsonData.json();
+
+		let myBounds = new window.google.maps.LatLngBounds();
+		data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
+			myBounds.extend({ lat: latLng[1], lng: latLng[0] });
+		});
+
+		map.fitBounds(myBounds);
+		map.data.setStyle({
+			fillOpacity: 0,
+			strokeWeight: 3,
+			strokeColor: "blue",
+			title: "qqqqqq",
+		});
+	};
+
+	// This method dipalys all ward bondaries passed in the  = pass it an array of war bondaries
+	const displayLmWardBondaries = async (map, wardBondaries) => {
+
+
+	}
+
+	return { showBoundaries, displayLmBondary };
 };
 
 export default useIrepsMap;

@@ -7,7 +7,7 @@ const ServiceProviderData = props => {
 	console.log(`props`, props);
 	const { data } = props;
 	const { infoName } = data;
-	const displayData = data[infoName];
+	const displayData = data.data[infoName];
 	// console.log(`displayData`, displayData);
 	const colDefs = [
 		{ field: "name", headerName: "Name" },

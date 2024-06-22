@@ -69,7 +69,7 @@ const useGetCollection = col => {
 					colRef,
 					...constraints,
 					orderBy("metadata.updatedAtDatetime", "desc"),
-					limit(100)
+					// limit(100)
 				);
 			} else {
 				newQuery = query(

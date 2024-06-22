@@ -8,13 +8,13 @@ import { BsSend } from "react-icons/bs";
 const FormSubmitBtn = props => {
 	// console.log(`props`, props);
 	const { formik, title, signState } = props;
-	// console.log(`formik.errors`, formik.errors);
+	// console.log(`formik`, formik);
 	// console.log(`formik.isValid`, formik.isValid);
 	// console.log(`formik.dirty`, formik.dirty);
 	// console.log(`signState?.isPending`, signState?.isPending);
 
 	let disable = null;
-	if (Object.keys(formik.values).includes("newPhoneNumber")) {
+	if (Object.keys(formik?.values).includes("newPhoneNumber")) {
 		disable = false;
 	} else {
 		disable = !(formik?.isValid && formik?.dirty) || signState?.isPending;

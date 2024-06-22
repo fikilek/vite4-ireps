@@ -27,11 +27,12 @@ const FormikReactSelect = props => {
 			}
 		});
 		setOptions(options => {
-			return [...options, ...sps];
+			return [...sps, ...options, ];
 		});
 	}, []);
 
 	const { serviceProviders } = useServiceProviders();
+
 	useEffect(() => {
 		const sps = [];
 		serviceProviders?.spOptions?.forEach(sp => {
@@ -43,7 +44,7 @@ const FormikReactSelect = props => {
 			}
 		});
 		setOptions(options => {
-			return [...options, ...sps];
+			return [...sps, ...options, ];
 		});
 	}, [serviceProviders]);
 
@@ -54,14 +55,18 @@ const FormikReactSelect = props => {
 					// console.log(`props`, props);
 					const { field, form, meta } = props;
 
-					const handleChange = e => {
+					const handleChange = async e => {
 						// console.log(`e`, e);
-						form.setFieldValue(field.name, e.value);
+						await form.setFieldValue(field.name, e.value);
 					};
 
 					return (
 						<Select
-							defaultValue={{
+							// defaultValue={{
+							// 	label: field.value,
+							// 	value: field.value,
+							// }}
+							value={{
 								label: field.value,
 								value: field.value,
 							}}

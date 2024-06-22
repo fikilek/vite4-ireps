@@ -9,6 +9,7 @@ import "@/components/forms/formTrn/installation/FormMeterInstallation.css";
 // custome hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
+import { useTrns } from "@/hooks/useTrns";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -40,12 +41,23 @@ const FormMeterInstallation = (props) => {
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
 
+	const {updateFormState} = useTrns()
+
+		const [trnState, setTrnState] = useState(data?.metadata?.trnState)
+	// console.log(`trnState`, trnState)
+
 	const onSubmit = useCallback(
 		(values) => {
-			console.log(`values`, values);
-			setDocument(values, values.metadata.trnId);
+			// console.log(`values`, values);
+			setDocument({
+			...values,
+				metadata: {
+					...values.metadata,
+					trnState
+				}
+			}, values.metadata.trnId);
 		},
-		[setDocument]
+		[setDocument, trnState]
 	);
 
 	useEffect(() => {
@@ -84,10 +96,12 @@ const FormMeterInstallation = (props) => {
 				>
 					{(formik) => {
 						// const disabled = !(formik.isValid && formik.dirty);
-						console.log(`formik.errors`, formik.errors);
+						// console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
 						// console.log(`disabled`, disabled);
-						console.log(`formik.values`, formik.values);
+						// console.log(`formik.values`, formik.values);
+
+						updateFormState(formik, setTrnState)
 
 						return (
 							<Form>
@@ -102,7 +116,7 @@ const FormMeterInstallation = (props) => {
 										}
 										hl2={
 											<span className="text-emphasis2">
-												{formik.values.metadata.trnState}
+												{trnState}
 											</span>
 										}
 										hr1={

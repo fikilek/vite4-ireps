@@ -46,6 +46,7 @@ import { TrnsContextProvider } from "@/contexts/TrnsContext";
 import { AstsContextProvider } from "@/contexts/AstsContext";
 import GeocodingContextProvider from "@/contexts/GeocodingContext";
 import TrnsLayout from "@/components/layouts/TrnsLayout";
+import { ErfsMapContextProvider } from "./contexts/ErfsMapContext";
 
 // Lazy loading
 const Erfs = lazy(() => import("@/pages/erfs/Erfs"));
@@ -120,30 +121,30 @@ const router = createBrowserRouter(
 							>
 								{/* astCat - 'meter', 'cb', 'seal', etc */}
 								{/* trnType = 'audit', 'tid', 'installation', etc  */}
-								<Trns astCat={'all'} trnType={'all'} key={"all"} />
+								<Trns astCat={"all"} trnType={"all"} key={"all"} />
 							</RequireAuth>
 						</Suspense>
 					}
-				/>				
-				
+				/>
+
 				<Route
-				path="audits"
-				element={
-					<Suspense fallback={loader}>
-						<RequireAuth
-							allowedRoles={[
-								"guest",
-								"fieldworker",
-								"supervisor",
-								"manager",
-								"superuser",
-							]}
-						>
-							<Trns astCat={'meter'} trnType={"audit"} key={"audit"} />
-						</RequireAuth>
-					</Suspense>
-				}
-			/>
+					path="audits"
+					element={
+						<Suspense fallback={loader}>
+							<RequireAuth
+								allowedRoles={[
+									"guest",
+									"fieldworker",
+									"supervisor",
+									"manager",
+									"superuser",
+								]}
+							>
+								<Trns astCat={"meter"} trnType={"audit"} key={"audit"} />
+							</RequireAuth>
+						</Suspense>
+					}
+				/>
 				<Route
 					path="tid"
 					element={
@@ -157,7 +158,7 @@ const router = createBrowserRouter(
 									"superuser",
 								]}
 							>
-								<Trns astCat={'meter'} trnType={"tid"} key={"tid"} />
+								<Trns astCat={"meter"} trnType={"tid"} key={"tid"} />
 							</RequireAuth>
 						</Suspense>
 					}
@@ -175,7 +176,11 @@ const router = createBrowserRouter(
 									"superuser",
 								]}
 							>
-								<Trns astCat={'meter'} trnType={"installation"} key={"installation"} />
+								<Trns
+									astCat={"meter"}
+									trnType={"installation"}
+									key={"installation"}
+								/>
 							</RequireAuth>
 						</Suspense>
 					}
@@ -193,7 +198,7 @@ const router = createBrowserRouter(
 									"superuser",
 								]}
 							>
-								<Trns astCat={'meter'} trnType={"decomissionings"} />
+								<Trns astCat={"meter"} trnType={"decomissionings"} />
 							</RequireAuth>
 						</Suspense>
 					}
@@ -211,7 +216,7 @@ const router = createBrowserRouter(
 									"superuser",
 								]}
 							>
-								<Trns astCat={'meter'} trnType={"disconnections"} />
+								<Trns astCat={"meter"} trnType={"disconnections"} />
 							</RequireAuth>
 						</Suspense>
 					}
@@ -229,7 +234,7 @@ const router = createBrowserRouter(
 									"superuser",
 								]}
 							>
-								<Trns astCat={'meter'} trnType={"reconnections"} />
+								<Trns astCat={"meter"} trnType={"reconnections"} />
 							</RequireAuth>
 						</Suspense>
 					}
@@ -257,9 +262,15 @@ const router = createBrowserRouter(
 				path="admin"
 				element={
 					<Suspense fallback={loader}>
-						<RequireAuth allowedRoles={[
+						<RequireAuth
+							allowedRoles={[
 								"guest",
-								"fieldworker","supervisor", "manager", "superuser"]}>
+								"fieldworker",
+								"supervisor",
+								"manager",
+								"superuser",
+							]}
+						>
 							<AdminLayout />
 						</RequireAuth>
 					</Suspense>
@@ -269,9 +280,15 @@ const router = createBrowserRouter(
 					path="users"
 					element={
 						<Suspense fallback={loader}>
-							<RequireAuth allowedRoles={[
-								"guest",
-								"fieldworker","supervisor", "manager", "superuser"]}>
+							<RequireAuth
+								allowedRoles={[
+									"guest",
+									"fieldworker",
+									"supervisor",
+									"manager",
+									"superuser",
+								]}
+							>
 								<Users />
 							</RequireAuth>
 						</Suspense>
@@ -308,9 +325,15 @@ const router = createBrowserRouter(
 					path="administrativeAreas"
 					element={
 						<Suspense fallback={loader}>
-							<RequireAuth allowedRoles={[
-								"guest",
-								"fieldworker","supervisor", "manager", "superuser"]}>
+							<RequireAuth
+								allowedRoles={[
+									"guest",
+									"fieldworker",
+									"supervisor",
+									"manager",
+									"superuser",
+								]}
+							>
 								<AdministrativeAreas />
 							</RequireAuth>
 						</Suspense>
@@ -320,7 +343,9 @@ const router = createBrowserRouter(
 					path="serviceProviders"
 					element={
 						<Suspense fallback={loader}>
-							<RequireAuth allowedRoles={["supervisor", "manager", "superuser"]}>
+							<RequireAuth
+								allowedRoles={["supervisor", "manager", "superuser"]}
+							>
 								<ServiceProviders />
 							</RequireAuth>
 						</Suspense>
@@ -333,13 +358,13 @@ const router = createBrowserRouter(
 					// TODO: bug: upon signup, the user does not have roles updated until refresh. Roles shoud update immediaetly
 					<Suspense fallback={loader}>
 						<RequireAuth
-							// allowedRoles={[
-							// 	"guest",
-							// 	"fieldworker",
-							// 	"supervisor",
-							// 	"manager",
-							// 	"superuser",
-							// ]}
+						// allowedRoles={[
+						// 	"guest",
+						// 	"fieldworker",
+						// 	"supervisor",
+						// 	"manager",
+						// 	"superuser",
+						// ]}
 						>
 							<UserProfile />
 						</RequireAuth>
@@ -362,37 +387,39 @@ const router = createBrowserRouter(
 
 function App() {
 	return (
-		<ReverseGeocodingContextProvider>
-			<GeocodingContextProvider>
-				<AstsContextProvider>
-					<TrnsContextProvider>
-						<AnomalyContextProvider>
-							<MediaContextProvider>
-								<ReverseGeocodingContextProvider>
-									<ErfsContextProvider>
-										{/* <QueryClientProvider client={queryClient}> */}
-										<AreaTreeContextProvider>
-											<ClaimsContextProvider>
-												<AuthContextProvider>
-													<ModalContextProvider>
-														<div className="App">
-															<RouterProvider router={router} />
-															<ToastContainer />
-														</div>
-														<Modal />
-													</ModalContextProvider>
-												</AuthContextProvider>
-											</ClaimsContextProvider>
-										</AreaTreeContextProvider>
-										{/* </QueryClientProvider> */}
-									</ErfsContextProvider>
-								</ReverseGeocodingContextProvider>
-							</MediaContextProvider>
-						</AnomalyContextProvider>
-					</TrnsContextProvider>
-				</AstsContextProvider>
-			</GeocodingContextProvider>
-		</ReverseGeocodingContextProvider>
+		<ErfsMapContextProvider>
+			<ReverseGeocodingContextProvider>
+				<GeocodingContextProvider>
+					<AstsContextProvider>
+						<TrnsContextProvider>
+							<AnomalyContextProvider>
+								<MediaContextProvider>
+									<ReverseGeocodingContextProvider>
+										<ErfsContextProvider>
+											{/* <QueryClientProvider client={queryClient}> */}
+											<AreaTreeContextProvider>
+												<ClaimsContextProvider>
+													<AuthContextProvider>
+														<ModalContextProvider>
+															<div className="App">
+																<RouterProvider router={router} />
+																<ToastContainer />
+															</div>
+															<Modal />
+														</ModalContextProvider>
+													</AuthContextProvider>
+												</ClaimsContextProvider>
+											</AreaTreeContextProvider>
+											{/* </QueryClientProvider> */}
+										</ErfsContextProvider>
+									</ReverseGeocodingContextProvider>
+								</MediaContextProvider>
+							</AnomalyContextProvider>
+						</TrnsContextProvider>
+					</AstsContextProvider>
+				</GeocodingContextProvider>
+			</ReverseGeocodingContextProvider>
+		</ErfsMapContextProvider>
 	);
 }
 

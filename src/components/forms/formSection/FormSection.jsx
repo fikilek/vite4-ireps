@@ -35,6 +35,7 @@ const FormSection = props => {
 						sectionName={sectionName}
 						active={active}
 						setActive={setActive}
+						formik={formik}
 					/>
 					<div className="property-type">
 						{/* {formik ? formik.values?.propertyType?.type : ""} */}

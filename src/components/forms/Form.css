@@ -38,7 +38,6 @@
 .form-container.form-meter-reconnection,
 .form-container.form-meter-inspection,
 .form-container.update-user,
-.form-container .user-role-update,
 .form-container.signup {
   width: 30rem;
   height: 33rem;
@@ -68,8 +67,13 @@
   height: 16rem;
 }
 
+.form-container .user-role-update,
 .form-container.update-user {
   width: 30rem;
+}
+
+.form-container.user-role-update {
+  height: 22rem;
 }
 
 
@@ -117,7 +121,7 @@
 
 .form-container form .form-control input.error,
 .form-container form .form-control select.error {
-  border: 0.05rem solid var(--form-field-border-error);
+  border: 0.1rem solid var(--form-field-border-error);
 }
 
 .form-container form .form-control {

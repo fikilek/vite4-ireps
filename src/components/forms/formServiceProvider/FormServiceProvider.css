@@ -1,4 +1,5 @@
-.service-provider {}
+.service-provider {
+position: relative}
 
 .service-provider .form-body .tabs .tabs-header .tabs-btn {
   height: 2rem;

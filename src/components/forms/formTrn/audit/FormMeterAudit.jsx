@@ -9,6 +9,7 @@ import "@/components/forms/formTrn/audit/FormMeterAudit.css";
 // custom hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
+import { useTrns } from "@/hooks/useTrns";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -19,7 +20,6 @@ import HeaderGeneric from "@/components/header/HeaderGeneric";
 import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
-import { useTrns } from "../../../../hooks/useTrns";
 
 const FormMeterAudit = (props) => {
 	// console.log(`props`, props);
@@ -57,7 +57,7 @@ const FormMeterAudit = (props) => {
 			}
 			, values.metadata.trnId);
 		},
-		[setDocument]
+		[setDocument, trnState]
 	);
 
 	useEffect(() => {
@@ -97,10 +97,10 @@ const FormMeterAudit = (props) => {
 				>
 					{(formik) => {
 						// const disabled = !(formik.isValid && formik.dirty);
-						console.log(`formik.errors`, formik.errors);
+						// console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
 						// console.log(`disabled`, disabled);
-						console.log(`formik.values`, formik.values);
+						// console.log(`formik.values`, formik.values);
 
 						updateFormState(formik, setTrnState)
 

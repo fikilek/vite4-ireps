@@ -33,7 +33,7 @@ const FormikSelectSetAnomalyDetail = props => {
 					};
 
 					return (
-						<select {...field} onChange={handleChange}>
+						<select {...field} onChange={handleChange} className={meta.error ? 'error' : ''}>
 							{options &&
 								options.map(option => {
 									return (

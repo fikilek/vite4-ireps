@@ -24,21 +24,21 @@ import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 import { useServiceProviders } from "@/hooks/useServiceProviders";
 import { useState } from "react";
 
-const EditUserWorkbase = props => {
+const EditUserWorkbase = (props) => {
 	// console.log(`props`, props);
 
-	const {response, getDocument} = useFirestore("users")
+	const { response, getDocument } = useFirestore("users");
 	// console.log(`response`, response);
 	// console.log(`getDocument`, getDocument);
-	
+
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
-	
+
 	// get user uid from userContext
-	const {uid} = user
+	const { uid } = user;
 	// console.log(`uid`, uid);
 
-	const [companyName, setCompanyName] = useState(null)
+	const [companyName, setCompanyName] = useState(null);
 	// console.log(`companyName`, companyName);
 
 	// get user comppany name from users collection
@@ -50,12 +50,12 @@ const EditUserWorkbase = props => {
 
 	const { updateUserWorkbase, signupState } = useSignup();
 
-		const {
-			serviceProviders,
-			getSpClients,
-			getSpDetailsFromSpName,
-			getSpClientsFromName,
-		} = useServiceProviders();
+	const {
+		serviceProviders,
+		getSpClients,
+		getSpDetailsFromSpName,
+		getSpClientsFromName,
+	} = useServiceProviders();
 
 	// This will use regular ecpresion to search for matching companyName form list of all service providers
 	const sp = getSpDetailsFromSpName(companyName);
@@ -63,9 +63,9 @@ const EditUserWorkbase = props => {
 
 	let spClients = getSpClients(sp);
 
-	const result = spClients.find(client => {
-	const clientStr = client.key.toLowerCase().trim();
-	// console.log(`clientStr`, clientStr);
+	const result = spClients.find((client) => {
+		const clientStr = client.key.toLowerCase().trim();
+		// console.log(`clientStr`, clientStr);
 
 		// user regular expresions to search for a matching nameStr in spStr
 		const re = new RegExp("rste", "gi");
@@ -87,7 +87,7 @@ const EditUserWorkbase = props => {
 		password: "",
 	};
 
-	const onSubmit = values => {
+	const onSubmit = (values) => {
 		// console.log(`Form values`, values);
 		updateUserWorkbase(values);
 	};
@@ -110,19 +110,18 @@ const EditUserWorkbase = props => {
 		}
 	}, [signupState.success, closeModal]);
 
-	useEffect(()=>{
-		if(response.success) {
+	useEffect(() => {
+		if (response.success) {
 			// console.log(`response`, response);
-			const {companyName} = response?.document
+			const { companyName } = response?.document;
 			// console.log(`companyName`, companyName)
-			setCompanyName(companyName)
-		};
+			setCompanyName(companyName);
+		}
+	}, [response.success]);
 
-	},[response.success])
-
-	useEffect(()=>{
-		getDocument(uid)
-	},[uid])
+	useEffect(() => {
+		getDocument(uid);
+	}, [uid]);
 
 	return (
 		<div className="form-wrapper">
@@ -132,7 +131,7 @@ const EditUserWorkbase = props => {
 					onSubmit={onSubmit}
 					validationSchema={validationSchema}
 				>
-					{formik => {
+					{(formik) => {
 						// console.log(`formik`, formik);
 						return (
 							<>
@@ -167,7 +166,9 @@ const EditUserWorkbase = props => {
 											autoComplete="user password"
 										/>
 									</div>
-									{signupState.error && <FormError errorMsg={signupState.error} />}
+									{signupState.error && (
+										<FormError errorMsg={signupState.error} />
+									)}
 									<FormFooter formik={formik} signState={signupState} />
 								</Form>
 							</>

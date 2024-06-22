@@ -642,18 +642,19 @@ export const useTrns = (trnType, astCat) => {
 				access: object().shape({
 					meterAccess: string()
 						.required("Required")
-						?.notOneOf(["choose", ""], "Required"),
+						.notOneOf(["choose", ""], "Required"),
 					noAccessReason: string().when(
 						"meterAccess",
 						(meterAccess, schema) => {
-							// console.log(`meterAccess`, meterAccess);
-							if (meterAccess === "no") {
+							if (meterAccess[0] === "no") {
 								return schema
 									?.required("no access reason required")
 									?.notOneOf(["choose", ""], "Required");
 							}
-							if (meterAccess === "yes") {
-								return schema?.oneOf(["choose"], "Must Be Choose");
+							if (meterAccess[0] === "yes") {
+								return schema
+									.notRequired()
+									.oneOf(["", "choose"], "Must Be 'choose' ");
 							}
 						}
 					),
@@ -676,7 +677,7 @@ export const useTrns = (trnType, astCat) => {
 							if (meterAccess === "no" || tidDone === "no") {
 								return schema.notRequired();
 							}
-							if (tidDone === "yes") {
+							if (tidDone[0] === "yes") {
 								return schema
 									.required("Required")
 									.notOneOf(["choose"], "Required");
@@ -1617,6 +1618,26 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+				
+				// ast Data
+				{
+					headerName: "Ast Data",
+					children: [
+						{
+							field: "astData.astNo",
+							headerName: "Ast No",
+							width: 150,
+							hide: false,
+						},
+						// {
+						// 	field: "astData.astCatergory",
+						// 	headerName: "Ast Catergory",
+						// 	width: 150,
+						// 	hide: false,
+						// },
+					],
+				},
+
 				// tid form edit
 				{
 					field: "",
@@ -1661,24 +1682,6 @@ export const useTrns = (trnType, astCat) => {
 							field: "access.noAccessReason",
 							headerName: "No Access Reason",
 							width: 220,
-							hide: false,
-						},
-					],
-				},
-				// ast Data
-				{
-					headerName: "Ast Data",
-					children: [
-						{
-							field: "astData.astNo",
-							headerName: "Ast No",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astCatergory",
-							headerName: "Ast Catergory",
-							width: 150,
 							hide: false,
 						},
 					],
@@ -2149,6 +2152,43 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+
+					// Ast Description
+				{
+					headerName: "Ast Description",
+					children: [
+						// astCat
+						// {
+						// 	field: "astData.astCatergory",
+						// 	// columnGroupShow: "closed",
+						// 	headerName: "Ast Cat",
+						// 	width: 150,
+						// 	hide: false,
+						// },
+						{
+							field: "astData.astNo",
+							// columnGroupShow: "open",
+							headerName: "Ast No",
+							width: 150,
+							hide: false,
+						},
+						// {
+						// 	field: "astData.astManufacturer",
+						// 	// columnGroupShow: "open",
+						// 	headerName: "Manufacturer",
+						// 	width: 150,
+						// 	hide: false,
+						// },
+						// {
+						// 	field: "astData.astName",
+						// 	// columnGroupShow: "open",
+						// 	headerName: "Ast Name",
+						// 	width: 150,
+						// 	hide: false,
+						// },
+					],
+				},
+
 				// erf - data comes from the erf that created the trn
 				{
 					headerName: "Erf for Ast",
@@ -2278,42 +2318,7 @@ export const useTrns = (trnType, astCat) => {
 				// 	},
 				// },
 
-				// Ast Description
-				{
-					headerName: "Ast Description",
-					children: [
-						// astCat
-						{
-							field: "astData.astCatergory",
-							// columnGroupShow: "closed",
-							headerName: "Ast Cat",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "astData.astNo",
-							// columnGroupShow: "open",
-							headerName: "Ast No",
-							width: 150,
-							hide: false,
-						},
-						// {
-						// 	field: "astData.astManufacturer",
-						// 	// columnGroupShow: "open",
-						// 	headerName: "Manufacturer",
-						// 	width: 150,
-						// 	hide: false,
-						// },
-						// {
-						// 	field: "astData.astName",
-						// 	// columnGroupShow: "open",
-						// 	headerName: "Ast Name",
-						// 	width: 150,
-						// 	hide: false,
-						// },
-					],
-				},
-
+			
 				// Ast Location
 				// {
 				// 	headerName: "Ast Location",

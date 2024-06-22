@@ -487,8 +487,9 @@ export const useAsts = () => {
 			children: [
 				{
 					field: "astData.astNo",
-					headerName: "Ast (Meter) No",
+					headerName: "Meter No",
 					width: 150,
+					columnGroupShow: "closed",
 					// cellRenderer: params => {
 						// console.log(`params`, params);
 						// return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
@@ -504,24 +505,28 @@ export const useAsts = () => {
 				{
 					field: "astData.astCatergory",
 					headerName: "Catergory",
+					columnGroupShow: "open",
 					width: 150,
 					hide: true,
 				},
 				{
 					field: "astData.astManufacturer",
 					headerName: "Manufacturer (Brand)",
+					columnGroupShow: "open",
 					width: 200,
 					hide: false,
 				},
 				{
 					field: "astData.astName",
 					headerName: "Ast Technical Name",
+					columnGroupShow: "open",
 					width: 150,
 					hide: false,
 				},
 				{
 					field: "astData.astState",
 					headerName: "State",
+					columnGroupShow: "open",
 					width: 150,
 					hide: true,
 				},
@@ -629,7 +634,7 @@ export const useAsts = () => {
 			children: [
 				{
 					field: "anomalies.anomaly",
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 					headerName: "Anomaly",
 					width: 200,
 				},

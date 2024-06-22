@@ -6,9 +6,13 @@ import {
 } from "@vis.gl/react-google-maps";
 import { useContext, useState } from "react";
 
+// css
 import "./MapAdminstrativeAreas.css";
 
+// hooks
 import useGeoLocation from "@/hooks/useGeolocation";
+
+// hooks
 import MapCenterMap from "@/components/maps/MapCenterMap";
 import MapBoundaries from "@/components/maps/MapBoundaries";
 import { AreaTreeContext } from "@/contexts/AreaTreeContext";

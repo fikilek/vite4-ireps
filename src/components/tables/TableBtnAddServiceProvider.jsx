@@ -10,7 +10,7 @@ const TableBtnAddServiceProvider = () => {
 	const newServiceProvider = e => {
 		openModal({
 			modalName: "serviceProvider",
-			payload: newFormData,
+			payload: {data: newFormData} ,
 		});
 	};
 	return (

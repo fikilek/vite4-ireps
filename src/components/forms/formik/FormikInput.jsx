@@ -18,7 +18,7 @@ const FormikInput = props => {
 					// input border must be red if there is an error and its touched
 					const error = meta.error && meta.touched ? "error" : "";
 
-					return <input {...field} {...rest} className={`${error} ${hide}`} />;
+					return <input {...field} {...rest} className={`${meta.error ? 'error' : ''} ${hide}`} />;
 				}}
 			</Field>
 			<label className={`label`} htmlFor={name}>

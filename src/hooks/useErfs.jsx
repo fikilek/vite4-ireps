@@ -154,7 +154,7 @@ export const useErfs = () => {
 			],
 		},
 		{
-			headerName: "Updated",
+			headerName: "Last Updated",
 			children: [
 				{
 					field: "metadata.updatedByUser",
@@ -312,22 +312,15 @@ export const useErfs = () => {
 				},
 			],
 		},
-		{
-			field: "erfStatus",
-			headerName: "Status",
-			width: 150,
-		},
-		{
-			field: "address.systemAdr",
-			headerName: "Google Address",
-			width: 300,
-		},
-		{
-			// A click displays a modal that shows the Purchase Order
-			field: "standUse",
-			headerName: "Stand Use", //[business, residentail-suburb, residential-township, church, government, school]
-			width: 160,
-		},
+
+		// // erf status
+		// {
+		// 	field: "erfStatus",
+		// 	headerName: "Status",
+		// 	width: 150,
+		// },
+		
+		// customer address
 		{
 			headerName: "Customer Address",
 			children: [
@@ -353,7 +346,7 @@ export const useErfs = () => {
 					field: "address.lmMetro",
 					headerName: "LM or Metro",
 					width: 120,
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 				},
 				{
 					field: "address.town",
@@ -364,7 +357,7 @@ export const useErfs = () => {
 					field: "address.ward",
 					headerName: "Ward",
 					width: 120,
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 				},
 				{
 					field: "address.suburbTownship",
@@ -376,11 +369,18 @@ export const useErfs = () => {
 					field: "address.street",
 					headerName: "Street",
 					width: 170,
+					columnGroupShow: "open",
 				},
 			],
 		},
 		{
+			field: "address.systemAdr",
+			headerName: "Google Address",
+			width: 300,
+		},
+		{
 			headerName: "Customer Warm Body",
+			width: 120,
 			children: [
 				{
 					field: "customer.warmBody.surname",
@@ -413,45 +413,41 @@ export const useErfs = () => {
 		},
 		{
 			headerName: "Customer Juristic Person",
+			width: 120,
 			children: [
-				{
-					field: "customer.juristicPerson.name",
-					// columnGroupShow: "closed",
-					headerName: "Name",
-					width: 120,
-				},
 				{
 					field: "customer.juristicPerson.tradingName",
 					columnGroupShow: "open",
 					headerName: "Trading Name",
-					width: 120,
+					width: 160,
 				},
 				{
 					field: "customer.juristicPerson.registeredName",
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 					headerName: "Registered Name",
-					width: 120,
+					width: 160,
 				},
 				{
 					field: "customer.juristicPerson.registeredNo",
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 					headerName: "Registered No",
-					width: 120,
+					width: 160,
 				},
 			],
 		},
 		{
 			headerName: "Customer Contact Person",
+			width: 120,
 			children: [
 				{
 					field: "customer.contactPerson.surname",
-					// columnGroupShow: "closed",
+					columnGroupShow: "closed",
 					headerName: "Surname",
 					width: 120,
 				},
 				{
 					field: "customer.contactPerson.name",
-					// columnGroupShow: "closed",
+					columnGroupShow: "closed",
 					headerName: "Name",
 					width: 120,
 				},
@@ -475,7 +471,7 @@ export const useErfs = () => {
 				},
 				{
 					field: "customer.contactPerson.cellNo",
-					// columnGroupShow: "closed",
+					columnGroupShow: "open",
 					headerName: "Cell No",
 					width: 120,
 				},

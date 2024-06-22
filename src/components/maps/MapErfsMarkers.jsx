@@ -13,7 +13,7 @@ const MapErfsMarkers = () => {
 	return (
 		<div className="map-erfs-markers">
 			{erfs &&
-				erfs.map(erf => {
+				erfs.map((erf) => {
 					const point = {
 						lat: erf.address.gps.latitude,
 						lng: erf.address.gps.longitude,

@@ -106,7 +106,7 @@ export const useSignup = () => {
 			});
 
 			// update claims with workbase using onCall cloud function
-			// console.log(`workbase`, workbase)
+			console.log(`workbase`, workbase)
 			const updateUserWorkbase = httpsCallable(functions, "updateUserWorkbase");
 			const wbResult = await updateUserWorkbase({
 				roles: {

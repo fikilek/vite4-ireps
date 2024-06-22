@@ -4,6 +4,7 @@ import "@/components/forms/Form.css";
 
 import FormFieldError from "@/components/forms/formError/FormFieldError";
 import { useServiceProviders } from "@/hooks/useServiceProviders.jsx";
+import { useState } from "react";
 
 const FormikSelect = props => {
 	// console.log(`props`, props);
@@ -13,9 +14,13 @@ const FormikSelect = props => {
 	const { serviceProviders } = useServiceProviders();
 	// console.log(`serviceProviders`, serviceProviders);
 
+
+
 	return (
 		<div className={`form-control ${name} `}>
 			<Field id={name} name={name} {...rest}>
+
+
 				{props => {
 					// console.log(`props`, props);
 					const { field, form, meta } = props;
@@ -40,7 +45,7 @@ const FormikSelect = props => {
 					};
 
 					return (
-						<select {...field} onChange={handleChange}>
+						<select {...field} onChange={handleChange} className={meta.error ? 'error' : ''}>
 							{options &&
 								options.map(option => {
 									return (

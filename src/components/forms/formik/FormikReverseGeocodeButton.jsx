@@ -16,7 +16,7 @@ const FormikReverseGeocodeButton = props => {
 	const handleClick = (e, pprops) => {
 		e.preventDefault();
 		// console.log(`e.target`, e.target);
-		console.log(`pprops`, pprops);
+		// console.log(`pprops`, pprops);
 		// const { field, meta, form } = props;
 
 		// open geocoding modal

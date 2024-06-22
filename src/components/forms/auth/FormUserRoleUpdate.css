@@ -1,6 +1,11 @@
 .user-role-update {
   display: grid;
   gap: 1rem;
+  position: relative;
+}
+
+.user-role-update .uru-sub-heading {
+margin-top: 1rem;
 }
 
 .user-role-update .uru {

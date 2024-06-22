@@ -16,32 +16,30 @@ const FormikSelectTidDone = props => {
 					// console.log(`props`, props);
 					const { field, form, meta } = props;
 
-					const handleChange = e => {
+					const handleChange = async e => {
 						console.log(`e.target.value`, e.target.value);
 						console.log(`field.name`, field.name);
 
-						form.setFieldValue("tidOperation.tidDone", e.target.value);
-						form.validateField("tidOperation.tidDone");
+						await form.setFieldValue("tidOperation.tidDone", e.target.value);
+						await form.validateField("tidOperation.tidDone");
 
 						if (e.target.value === "no") {
-							form.setFieldValue("tidBefore.tariff", "");
-							form.validateField("tidBefore.tariff");
+							await form.setFieldValue("tidBefore.tariff", "");
+							await form.setFieldValue("tidBefore.krn", "");
+							await form.validateField("tidBefore.krn");
 
-							form.setFieldValue("tidBefore.krn", "");
-							form.validateField("tidBefore.krn");
+							await form.setFieldValue("tidAfter.tariff", "");
+							await form.validateField("tidAfter.tariff");
 
-							form.setFieldValue("tidAfter.tariff", "");
-							form.validateField("tidAfter.tariff");
+							await form.setFieldValue("tidAfter.krn", "");
+							await form.validateField("tidAfter.krn");
 
-							form.setFieldValue("tidAfter.krn", "");
-							form.validateField("tidAfter.krn");
-
-							form.validateField("tidOperation.comment");
+							await form.validateField("tidOperation.comment");
 						}
 					};
 
 					return (
-						<select {...field} onChange={handleChange}>
+						<select {...field} onChange={handleChange} className={meta.error ? 'error' : ''}>
 							{options &&
 								options.map(option => {
 									return (
