@@ -7,7 +7,11 @@ import useIrepsMap from "@/hooks/useIrepsMap";
 import useAuthContext from "@/hooks/useAuthContext";
 import useCadastral from "@/hooks/useCadastral";
 
-const MapLmBoundary = () => {
+const MapLmBoundary = (props) => {
+
+	// console.log(`props`, props)
+	// const {mapRef} = props
+	// console.log(`mapRef`, mapRef)
 
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
@@ -21,6 +25,7 @@ const MapLmBoundary = () => {
 
 	// get map object
 	const map = useMap();
+	// const map = mapRef.current;
 	// console.log(`map`, map);
 
 	const { displayLmBondary } = useIrepsMap();
@@ -52,6 +57,7 @@ const MapLmBoundary = () => {
 		});
 
 		if (!map) return;
+		
 		displayLmBondary(map, lmBoundaryFile);
 
 		return () => {

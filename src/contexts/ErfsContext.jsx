@@ -5,7 +5,7 @@ export const ErfsContext = createContext();
 
 const initSettings = {
 	filterBtn: false,
-	activeTab: "table",
+	activeTab: "map",
 	activeArea: "",
 	erfs: [],
 };

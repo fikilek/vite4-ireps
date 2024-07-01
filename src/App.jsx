@@ -47,6 +47,7 @@ import { AstsContextProvider } from "@/contexts/AstsContext";
 import GeocodingContextProvider from "@/contexts/GeocodingContext";
 import TrnsLayout from "@/components/layouts/TrnsLayout";
 import { ErfsMapContextProvider } from "./contexts/ErfsMapContext";
+import { GmrContextProvider } from "./contexts/GmrContext";
 
 // Lazy loading
 const Erfs = lazy(() => import("@/pages/erfs/Erfs"));
@@ -387,39 +388,41 @@ const router = createBrowserRouter(
 
 function App() {
 	return (
-		<ErfsMapContextProvider>
-			<ReverseGeocodingContextProvider>
-				<GeocodingContextProvider>
-					<AstsContextProvider>
-						<TrnsContextProvider>
-							<AnomalyContextProvider>
-								<MediaContextProvider>
-									<ReverseGeocodingContextProvider>
-										<ErfsContextProvider>
-											{/* <QueryClientProvider client={queryClient}> */}
-											<AreaTreeContextProvider>
-												<ClaimsContextProvider>
-													<AuthContextProvider>
-														<ModalContextProvider>
-															<div className="App">
-																<RouterProvider router={router} />
-																<ToastContainer />
-															</div>
-															<Modal />
-														</ModalContextProvider>
-													</AuthContextProvider>
-												</ClaimsContextProvider>
-											</AreaTreeContextProvider>
-											{/* </QueryClientProvider> */}
-										</ErfsContextProvider>
-									</ReverseGeocodingContextProvider>
-								</MediaContextProvider>
-							</AnomalyContextProvider>
-						</TrnsContextProvider>
-					</AstsContextProvider>
-				</GeocodingContextProvider>
-			</ReverseGeocodingContextProvider>
-		</ErfsMapContextProvider>
+		<GmrContextProvider>
+			<ErfsMapContextProvider>
+				<ReverseGeocodingContextProvider>
+					<GeocodingContextProvider>
+						<AstsContextProvider>
+							<TrnsContextProvider>
+								<AnomalyContextProvider>
+									<MediaContextProvider>
+										<ReverseGeocodingContextProvider>
+											<ErfsContextProvider>
+												{/* <QueryClientProvider client={queryClient}> */}
+												<AreaTreeContextProvider>
+													<ClaimsContextProvider>
+														<AuthContextProvider>
+															<ModalContextProvider>
+																<div className="App">
+																	<RouterProvider router={router} />
+																	<ToastContainer />
+																</div>
+																<Modal />
+															</ModalContextProvider>
+														</AuthContextProvider>
+													</ClaimsContextProvider>
+												</AreaTreeContextProvider>
+												{/* </QueryClientProvider> */}
+											</ErfsContextProvider>
+										</ReverseGeocodingContextProvider>
+									</MediaContextProvider>
+								</AnomalyContextProvider>
+							</TrnsContextProvider>
+						</AstsContextProvider>
+					</GeocodingContextProvider>
+				</ReverseGeocodingContextProvider>
+			</ErfsMapContextProvider>
+		</GmrContextProvider>
 	);
 }
 

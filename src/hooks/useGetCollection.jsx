@@ -59,9 +59,11 @@ const useGetCollection = col => {
 
 	const getCollection = constraints => {
 		// console.log(`constraints`, constraints);
+		
 
 		useEffect(()=>{
 
+			if(!constraints?.length) return
 			let newQuery;
 			if (constraints) {
 	

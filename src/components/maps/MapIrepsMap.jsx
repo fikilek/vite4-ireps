@@ -4,7 +4,7 @@ import {
 	Map,
 	MapControl,
 } from "@vis.gl/react-google-maps";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 import "@/components/maps/MapIrepsMap.css";
 
@@ -56,4 +56,4 @@ const MapIrepsMap = props => {
 	);
 };
 
-export default MapIrepsMap;
+export default memo(MapIrepsMap);

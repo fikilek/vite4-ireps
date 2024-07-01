@@ -1,6 +1,10 @@
 import { useMap, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
 import { useEffect, useState, useRef, useContext } from "react";
+
+// css
+import '@/components/maps/MapMarkers.css'
+
 // import { trees } from "../../data/tree";
 import { ErfsMapContext } from "@/contexts/ErfsMapContext";
 // [{ name: "Oak, English", lat: 43.64, lng: -79.41, key: "ABCD" }]
@@ -24,22 +28,19 @@ export const MapMarkers = () => {
 	useEffect(() => {
 		if (!map) return;
 		if (!clusterer.current) {
-			clusterer.current = new MarkerClusterer({ map });
+			clusterer.current = new MarkerClusterer({ map: map, maxZoom: 10	 });
 		}
 	}, [map]);
 
 	useEffect(() => {
-		console.log(Date.now());
-		// console.log(`markers`,markers )
-
 		clusterer.current?.clearMarkers();
 		clusterer.current?.addMarkers(Object.values(markers));
-		console.log(`clusterer.current`, clusterer.current);
+		// console.log(`clusterer.current`, clusterer.current);
 	}, [markers]);
 
 	const setMarkerRef = (marker, key) => {
 		if (marker && markers[key]) return;
-		if (!marker && !markers[key]) return;
+		if (!marker ) return;
 
 		setMarkers((prev) => {
 			if (marker) {
@@ -54,22 +55,24 @@ export const MapMarkers = () => {
 
 	return (
 		<>
-			{erfs.map((point, index) => {
-				// console.log(`point`, point)
-				const gpsPoint = {
-					lat: point?.address?.gps?.latitude,
-					lng: point?.address?.gps?.longitude,
-				};
+			{erfs.map((erf) => {
 				return (
 					<AdvancedMarker
-						position={gpsPoint}
-						key={index}
+						position={{
+							lat: erf?.address?.gps?.latitude,
+							lng: erf?.address?.gps?.longitude,
+						}}
+						key={erf.id}
 						ref={marker => {
 							// console.log(`marker`, marker)
-							setMarkerRef(marker, index);
+							setMarkerRef(marker, erf.id);
 						}}
 					>
-						<span style={{ fontSize: "2rem" }}>🌳</span>
+						{/* <span style={{ fontSize: "2rem" }}>🌳</span> */}
+						
+						<button className="erf-no-btn">
+								<span className="erf-no">{erf.erfNo}</span>
+							</button>
 					</AdvancedMarker>
 				);
 			})}

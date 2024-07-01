@@ -148,11 +148,11 @@ import za_kzn_uthungulu_nkandla from "@/maps/za/za_kzn_uthungulu_nkandla.geojson
 // za_kzn_king_cetshwayo_nkandla
 import za_kzn_king_cetshwayo_nkandla from "@/maps/za/za_kzn_king_cetshwayo_nkandla.geojson";
 // za_kzn_king_cetshwayo_nkandla Wards bondaries
-// import za_kzn_king_cetshwayo_nkandla_w1 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w1.geojson"
+import za_kzn_king_cetshwayo_nkandla_w1 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w1.geojson"
 // import za_kzn_king_cetshwayo_nkandla_w2 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w2.geojson"
 // import za_kzn_king_cetshwayo_nkandla_w3 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w3.geojson"
 // import za_kzn_king_cetshwayo_nkandla_w4 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w4.geojson"
-// import za_kzn_king_cetshwayo_nkandla_w5 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w5.geojson"
+import za_kzn_king_cetshwayo_nkandla_w5 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w5.geojson"
 
 // za_kzn_king_cetshwayo_nkandla Wards cadastral
 // import za_kzn_king_cetshwayo_nkandla_w1_cadastral from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w1_cadastral.geojson"
@@ -179,12 +179,18 @@ const useCadastral = (workbase) => {
 	// console.log(`workbase`, workbase)
 
 	let lmBoundaryFile = {};
+	let lmWardsBoundaries = [];
 
 	if (!workbase) return lmBoundaryFile;
 
 	switch (workbase) {
 		case "Nkandla LM":
 			lmBoundaryFile = za_kzn_king_cetshwayo_nkandla;
+			lmWardsBoundaries.push(za_kzn_king_cetshwayo_nkandla_w1)
+			// lmWardsBoundaries.push(za_kzn_king_cetshwayo_nkandla_w2)
+			// lmWardsBoundaries.push(za_kzn_king_cetshwayo_nkandla_w3)
+			// lmWardsBoundaries.push(za_kzn_king_cetshwayo_nkandla_w4)
+			lmWardsBoundaries.push(za_kzn_king_cetshwayo_nkandla_w5)
 			break;
 		// case "Nkandla LM w1" : lmBoundaryFile = za_kzn_king_cetshwayo_nkandla_w1
 		// case "Nkandla LM w2" : lmBoundaryFile = za_kzn_king_cetshwayo_nkandla_w2
@@ -198,7 +204,6 @@ const useCadastral = (workbase) => {
 			break;
 
 		case "eDumbe LM":
-            console.log(`at eDumbe`)
 			lmBoundaryFile = za_kzn_zululand_edumbe;
 			break;
 
@@ -214,7 +219,7 @@ const useCadastral = (workbase) => {
 			break;
 	}
 
-	return { lmBoundaryFile };
+	return { lmBoundaryFile, lmWardsBoundaries };
 };
 
 export default useCadastral;

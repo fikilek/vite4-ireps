@@ -23,9 +23,9 @@ export const useErfsMap = () => {
 	// const { workbase } = useUser(uid);
 	const [workbase, setWorkbase] = useState(null);
 	// console.log(`workbase`, workbase);
-	// console.log(`workbase`, workbase);
-
+	
 	const { erfsMapContext, setErfsMapContext } = useContext(ErfsMapContext);
+	// console.log(`erfsMapContext`, erfsMapContext);
 
 	const [constraints, setConstraints] = useState([]);
 	// console.log(`constraints`, constraints);

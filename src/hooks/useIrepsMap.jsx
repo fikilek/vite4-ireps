@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 // country
 import za from "@/maps/za/za.geojson";
 
@@ -38,13 +40,9 @@ import za_kzn_uthungulu_nkandla from "@/maps/za/za_kzn_uthungulu_nkandla.geojson
 // za_gp_sedidbeng_lesedi
 import za_gp_sedidbeng_lesedi_w1 from "@/maps/za/za_gp_sedibeng_lesedi_w1.geojson";
 import za_gp_sedidbeng_lesedi_w1_cadastral from "@/maps/za/gp/sedibeng/lesedi/w1/za_gp_sedibeng_lesedi_w1_cadastral.geojson";
-
 import za_gp_sedidbeng_lesedi_w2 from "@/maps/za/za_gp_sedibeng_lesedi_w2.geojson";
-
 import za_gp_sedidbeng_lesedi_w3 from "@/maps/za/za_gp_sedibeng_lesedi_w3.geojson";
-
 import za_gp_sedidbeng_lesedi_w4 from "@/maps/za/za_gp_sedibeng_lesedi_w4.geojson";
-
 import za_gp_sedidbeng_lesedi_w5 from "@/maps/za/za_gp_sedibeng_lesedi_w5.geojson";
 import za_gp_sedidbeng_lesedi_w6 from "@/maps/za/za_gp_sedibeng_lesedi_w6.geojson";
 import za_gp_sedidbeng_lesedi_w7 from "@/maps/za/za_gp_sedibeng_lesedi_w7.geojson";
@@ -72,10 +70,215 @@ import za_mp_nkangala_vk_w9 from "@/maps/za/za_mp_nkangala_vk_w9.geojson";
 // import za_gp_sed_lsd_obn_C from "@/maps/za/za_gp_sed_lsd_obn_C.geojson";
 // import { useEffect, useState } from "react";
 
-const useIrepsMap = () => {
+// ********************************************************************
+// KZN LMs
+// ********************************************************************
+
+// za_kzn_king_cetshwayo_nkandla lm boundary
+import za_kzn_king_cetshwayo_nkandla from "@/maps/za/za_kzn_king_cetshwayo_nkandla.geojson";
+// za_kzn_king_cetshwayo_nkandla Wards bondaries
+import za_kzn_king_cetshwayo_nkandla_w1 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w1.geojson";
+import za_kzn_king_cetshwayo_nkandla_w2 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w2.geojson";
+import za_kzn_king_cetshwayo_nkandla_w3 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w3.geojson";
+import za_kzn_king_cetshwayo_nkandla_w4 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w4.geojson";
+import za_kzn_king_cetshwayo_nkandla_w5 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w5.geojson";
+import za_kzn_king_cetshwayo_nkandla_w6 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w6.geojson";
+import za_kzn_king_cetshwayo_nkandla_w7 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w7.geojson";
+import za_kzn_king_cetshwayo_nkandla_w8 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w8.geojson";
+import za_kzn_king_cetshwayo_nkandla_w9 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w9.geojson";
+import za_kzn_king_cetshwayo_nkandla_w10 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w10.geojson";
+import za_kzn_king_cetshwayo_nkandla_w11 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w11.geojson";
+import za_kzn_king_cetshwayo_nkandla_w12 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w12.geojson";
+import za_kzn_king_cetshwayo_nkandla_w13 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w13.geojson";
+import za_kzn_king_cetshwayo_nkandla_w14 from "@/maps/za/za_kzn_king_cetshwayo_nkandla_w14.geojson";
+
+// za_kzn_umgungundlovu_mpofana lm boundary
+import za_kzn_umgungundlovu_mpofana from "@/maps/za/za_kzn_umgungundlovu_mpofana.geojson";
+// za_kzn_umgungundlovu_mpofana ward boundaries
+import za_kzn_umgungundlovu_mpofana_w1 from "@/maps/za/za_kzn_umgungundlovu_mpofana_w1.geojson";
+import za_kzn_umgungundlovu_mpofana_w2 from "@/maps/za/za_kzn_umgungundlovu_mpofana_w2.geojson";
+import za_kzn_umgungundlovu_mpofana_w3 from "@/maps/za/za_kzn_umgungundlovu_mpofana_w3.geojson";
+import za_kzn_umgungundlovu_mpofana_w4 from "@/maps/za/za_kzn_umgungundlovu_mpofana_w4.geojson";
+import za_kzn_umgungundlovu_mpofana_w5 from "@/maps/za/za_kzn_umgungundlovu_mpofana_w5.geojson";
+// za_kzn_umgungundlovu_mpofana ward cadastral
+import za_kzn_umgungundlovu_mpofana_w1_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w1_cadastral.geojson";
+import za_kzn_umgungundlovu_mpofana_w2_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w2_cadastral.geojson";
+import za_kzn_umgungundlovu_mpofana_w3_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w3_cadastral.geojson";
+import za_kzn_umgungundlovu_mpofana_w4_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w4_cadastral.geojson";
+import za_kzn_umgungundlovu_mpofana_w5_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w5_cadastral.geojson";
+
+const useIrepsMap = (workbase) => {
 	// console.log(`data.features[0]`, data?.features[0]?.geometry?.coordinates);
 
-	const showBoundaries = (name, isSelected, map, maps) => {
+	const [wardBoundaries, setWardBoundaries] = useState([]);
+	// console.log(`wardBoundaries`, wardBoundaries);
+
+	useEffect(() => {
+		// let lmBoundaryFile = {};
+		let lmWardsBoundaries = [];
+		switch (workbase) {
+			case "Nkandla LM":
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w1,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w2,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w3,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w4,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w5,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w6,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w7,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w8,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w9,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w10,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w11,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w12,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w13,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla_w14,
+					boundaryType: "ward",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_king_cetshwayo_nkandla,
+					boundaryType: "lm",
+				});
+				setWardBoundaries(lmWardsBoundaries);
+				break;
+			// case "Nkandla LM cadastral w1" : lmBoundaryFile = za_kzn_king_cetshwayo_nkandla_cadastral_w1
+
+			case "Mpofana LM":
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w1,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w1_cadastral,
+					boundaryType: "erf",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w2,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w2_cadastral,
+					boundaryType: "erf",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w3,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w3_cadastral,
+					boundaryType: "erf",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w4,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w4_cadastral,
+					boundaryType: "erf",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w5,
+					boundaryType: "ward",
+				});
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana_w5_cadastral,
+					boundaryType: "erf",
+				});
+
+				lmWardsBoundaries.push({
+					lmBoundary: za_kzn_umgungundlovu_mpofana,
+					boundaryType: "lm",
+				});
+
+				setWardBoundaries(lmWardsBoundaries);
+				break;
+
+			case "eDumbe LM":
+				// lmBoundaryFile = za_kzn_zululand_edumbe;
+				break;
+
+			case "Victor Khanye LM":
+				// lmBoundaryFile = za_mp_nkangala_vk;
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w1);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w2);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w3);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w4);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w5);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w6);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w7);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w8);
+				lmWardsBoundaries.push(za_mp_nkangala_vk_w9);
+				setWardBoundaries(lmWardsBoundaries);
+				break;
+
+			case "Lesedi LM":
+				// lmBoundaryFile = za_gp_sedibeng_lesedi;
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w1);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w2);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w3);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w4);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w5);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w6);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w7);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w8);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w9);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w10);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w11);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w12);
+				lmWardsBoundaries.push(za_gp_sedidbeng_lesedi_w13);
+				setWardBoundaries(lmWardsBoundaries);
+				break;
+
+			default:
+				break;
+		}
+	}, [workbase]);
+
+	const showBoundaries = (name, isSelected, map) => {
 		if (!name) return;
 
 		switch (name) {
@@ -265,16 +468,16 @@ const useIrepsMap = () => {
 				isSelected && map?.data?.loadGeoJson(za_mp_nkangala_vk_w8);
 				isSelected && map?.data?.loadGeoJson(za_mp_nkangala_vk_w9);
 
-				const drawBrondary = async () => {
-					const jsonData = await fetch(za_mp_nkangala_vk);
-					const data = await jsonData.json();
-					let myBounds = new window.google.maps.LatLngBounds();
-					data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
-						myBounds.extend({ lat: latLng[1], lng: latLng[0] });
-					});
-					map.fitBounds(myBounds);
-				};
-				drawBrondary();
+				// const drawBrondary = async () => {
+				// 	const jsonData = await fetch(za_mp_nkangala_vk);
+				// 	const data = await jsonData.json();
+				// 	let myBounds = new window.google.maps.LatLngBounds();
+				// 	data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
+				// 		myBounds.extend({ lat: latLng[1], lng: latLng[0] });
+				// 	});
+				// 	map.fitBounds(myBounds);
+				// };
+				// drawBrondary();
 				break;
 
 			case "Victor Khanye W1":
@@ -365,46 +568,85 @@ const useIrepsMap = () => {
 		map.fitBounds(myBounds);
 
 		selected && map?.data?.loadGeoJson(cadastralFile);
-		map.data.setStyle({
-			fillColor: "green",
-			illOpacity: 0.1,
-			strokeWeight: 1,
-			title: "qqqqqq",
-		});
+
+		// map.data.setStyle({
+		// 	fillColor: "green",
+		// 	fillOpacity: 0.1,
+		// 	strokeWeight: 1,
+		// 	// title: "qqqqqq",
+		// });
 	};
 
 	// This method displays lm boundary. Pass it the bondary polygon geojson file
-	const displayLmBondary = async (map, boundaryFile) => {
+	const displayLmBondary = async (map, boundary) => {
 		// console.log(`map`, map);
-		// console.log(`boundaryFile`, boundaryFile);
+		console.log(`boundary`, boundary);
 
-		map?.data?.loadGeoJson(boundaryFile);
+		const { lmBoundary, boundaryType } = boundary;
 
-		const jsonData = await fetch(boundaryFile);
+		map?.data?.loadGeoJson(lmBoundary);
+
+		const jsonData = await fetch(lmBoundary);
 
 		const data = await jsonData.json();
 
 		let myBounds = new window.google.maps.LatLngBounds();
-		data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
+		await data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
 			myBounds.extend({ lat: latLng[1], lng: latLng[0] });
 		});
 
-		map.fitBounds(myBounds);
-		map.data.setStyle({
-			fillOpacity: 0,
-			strokeWeight: 3,
-			strokeColor: "blue",
-			title: "qqqqqq",
-		});
+		await map.fitBounds(myBounds);
+
+		if (boundaryType.trim() === "lm") {
+			// console.log(`boundaryType`, boundaryType);
+			await map.data.setStyle({});
+			await map.data.setStyle({
+				fillOpacity: 0,
+				strokeWeight: 1,
+				strokeColor: "blue",
+				// title: "qqqqqq",
+			});
+		}
+
+		if (boundaryType.trim() === "ward") {
+			// console.log(`boundaryType`, boundaryType);
+			await map.data.setStyle({});
+			await map.data.setStyle({
+				fillOpacity: 0,
+				strokeWeight: 1,
+				strokeColor: "red",
+				// title: "qqqqqq",
+			});
+		}
+
+		if (boundaryType.trim() === "erf") {
+			// console.log(`boundaryType`, boundaryType);
+			await map.data.setStyle({});
+			await map.data.setStyle({
+				fillOpacity: 0,
+				strokeWeight: 1,
+				strokeColor: "black",
+				// title: "qqqqqq",
+			});
+		}
 	};
 
-	// This method dipalys all ward bondaries passed in the  = pass it an array of war bondaries
-	const displayLmWardBondaries = async (map, wardBondaries) => {
+	// This method dipalys all ward bondaries.
+	// Both map to draw on and aray of ward boundaries are passed as method erguments.
+	const displayLmWardBondaries = (map) => {
+		// console.log(`wardBoundaries`, wardBoundaries);
+		wardBoundaries &&
+			wardBoundaries.map((wardBoundary) => {
+				displayLmBondary(map, wardBoundary);
+			});
+	};
 
-
-	}
-
-	return { showBoundaries, displayLmBondary };
+	return {
+		showBoundaries,
+		displayLmBondary,
+		displayLmWardBondaries,
+		wardBoundaries,
+	};
 };
 
 export default useIrepsMap;

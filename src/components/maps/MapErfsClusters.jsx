@@ -1,88 +1,127 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { AdvancedMarker, Pin, useMap } from "@vis.gl/react-google-maps";
-import { MarkerClusterer } from "@googlemaps/markerclusterer";
 
 import "@/components/maps/MapErfsClusters.css";
 
 import { ErfsMapContext } from "@/contexts/ErfsMapContext";
+import useSupercluster from "use-supercluster";
+
+const Marker = ({ children }) => children;
 
 const MapErfsClusters = () => {
+	const { map } = useMap();
+
+	const [zoom, setZoom] = useState(12);
+	const [bounds, setBounds] = useState([]);
+
+	const [ervens, setErvens] = useState([]);
+	// console.log(`ervens`, ervens);
+
 	const { erfsMapContext } = useContext(ErfsMapContext);
 	// console.log(`erfsMapContext`, erfsMapContext);
 
-	const erfs = erfsMapContext?.erfs?.slice(0, 50);
-
-	const map = useMap();
-	const [markers, setMarkers] = useState({});
-	const clusterer = useRef();
+	const erfs = useMemo(() => erfsMapContext?.erfs, [erfsMapContext?.erfs]);
 
 	useEffect(() => {
-		// console.log(`useEffect running - map`, map)
-		if (!map) return;
-		if (!clusterer.current) {
-			// console.log(`create new clusterer`)
-			clusterer.current = new MarkerClusterer(map);
-			console.log(`new clusterer`, clusterer);
-		}
-	}, [map]);
+		setErvens(erfs.slice(0, 50));
+	}, [erfs]);
 
-	const setMarkerRef = (marker, key) => {
-		console.log(`marker`, marker);
-		// console.log(`key`, key)
-
-		if (marker && markers[key]) return;
-		if (!marker ) return;
-
-		setMarkers((prev) => {
-			if (marker) {
-				return { ...prev, [key]: marker };
-			} else {
-				const newMarkers = { ...prev };
-				delete newMarkers[key];
-				return newMarkers;
-			}
+	const points = useMemo(() => {
+		const _erfs = ervens.slice(0, 5).map((erf) => {
+			// console.log(`erf`, erf);
+			const lat = Number(erf?.address?.gps?.latitude);
+			// console.log(`lat`, lat);
+			const lng = Number(erf?.address?.gps?.longitude);
+			// console.log(`lng`, lng);
+			return {
+				type: "Feature",
+				properties: {
+					erf,
+					cluster: false,
+				},
+				geometry: {
+					type: "Point",
+					coordinates: [lng, lat],
+				},
+			};
 		});
-	};
+		// console.log(`_erfs`, _erfs);
+		return _erfs;
+	}, [ervens]);
+	// console.log(`points`, points);
 
-	useEffect(() => {
-		// console.log(`markers`,markers )
-		// const objValues = Object.values(markers)
-		// console.log(`objValues`,objValues )
-		console.log(`clusterer.current`, clusterer.current);
-		
-		clusterer.current?.clearMarkers();
-		console.log(`clusterer.current`, clusterer.current);
-
-		clusterer.current?.addMarkers(Object.values(markers), true);
-		console.log(`clusterer.current`, clusterer.current);
-
-	}, [markers]);
+	const { clusters } = useSupercluster({
+		points,
+		bounds,
+		zoom,
+		options: { radius: 75, maxZoom: 20 },
+	});
+	console.log(`clusters`, clusters);
+	// console.log(`supercluster`, supercluster);
 
 	return (
 		<div className="map-erfs-markers">
-			{erfs &&
-				erfs.map((erf) => {
-					const point = {
-						lat: erf.address.gps.latitude,
-						lng: erf.address.gps.longitude,
-					};
-					return (
-						<AdvancedMarker
-							position={point}
-							key={erf.id}
-							ref={(marker) => {
-								// console.log(`marker`, marker)
+			{clusters.map((cluster) => {
+				console.log(`cluster`, cluster);
 
-								setMarkerRef(marker, erf.id);
-							}}
+				const [longitude, latitude] = cluster.geometry.coordinates;
+				const point = {
+					lat: latitude,
+					lng: longitude,
+				};
+				const {
+					cluster: isCluster,
+					point_count: pointCount,
+					erf,
+				} = cluster.properties;
+
+				if (isCluster) {
+					return (
+						<Marker
+							key={`cluster-${cluster.id}`}
+							lat={latitude}
+							lng={longitude}
 						>
-							<Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={1}>
-								{/* children are rendered as 'glyph' of pin */}
-								<span className="erf">{erf.erfNo}</span>
-							</Pin>
-						</AdvancedMarker>
+							<div
+								className="cluster-marker"
+								style={{
+									width: `${10 + (pointCount / points.length) * 20}px`,
+									height: `${10 + (pointCount / points.length) * 20}px`,
+								}}
+								onClick={() => {}}
+							>
+								{pointCount}
+							</div>
+						</Marker>
 					);
-				})}
+				}
+
+				return (
+					<AdvancedMarker position={point} key={erf.id}>
+						<Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={1}>
+							{/* <span className="erf">{erf.erfNo}</span> */}
+						</Pin>
+					</AdvancedMarker>
+				);
+			})}
+
+			{
+			// erfs &&
+			// 	erfs.map((erf) => {
+			// 		const point = {
+			// 			lat: erf.address.gps.latitude,
+			// 			lng: erf.address.gps.longitude,
+			// 		};
+
+			// 		return (
+			// 			<AdvancedMarker position={point} key={erf.id}>
+			// 				<Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={1}>
+			// 					{/* <span className="erf">{erf.erfNo}</span> */}
+			// 				</Pin>
+			// 			</AdvancedMarker>
+			// 		);
+			// 	})
+				}
 		</div>
 	);
 };
