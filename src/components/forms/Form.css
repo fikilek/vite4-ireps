@@ -40,7 +40,7 @@
 .form-container.update-user,
 .form-container.signup {
   width: 30rem;
-  height: 33rem;
+  /* height: 33rem; */
   overflow: hidden;
   position: relative;
 }
@@ -54,17 +54,17 @@
 .form-container.password-reset {
   width: 20rem;
   position: relative;
-  height: 23rem;
+  /* height: 23rem; */
 }
 
 .form-container.edit-user-workbase,
 .form-container.edit-user-email {
-  height: 28rem;
+  /* height: 28rem; */
 }
 
 
 .form-container.edit-user-phoneNumber {
-  height: 16rem;
+  /* height: 16rem; */
 }
 
 .form-container .user-role-update,
@@ -73,7 +73,7 @@
 }
 
 .form-container.user-role-update {
-  height: 22rem;
+  /* height: 22rem; */
 }
 
 
@@ -81,7 +81,7 @@
   background-color: var(--form-background);
   border: 0.1rem solid var(--form-border-color);
   padding: var(--form-padding);
-  margin-top: var(--form-margin-top);
+  /* margin-top: var(--form-margin-top); */
   box-shadow: 0px 0px 24px 2px rgba(139, 166, 158, 1);
 }
 
@@ -109,7 +109,7 @@
   border: 0.1rem solid;
   height: 3rem;
   padding: 0.5rem;
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .form-container form .form-control input:focus,
@@ -137,7 +137,7 @@
   transition: 250ms;
   background-color: white;
   padding: 0.1rem;
-  font-size: 1rem;
+  font-size: 0.7rem;
   color: var(--form-label-color);
   font-size: 0.9rem;
 }
@@ -207,6 +207,10 @@
   top: -110rem;
 }
 
+.form-container {
+  height: 100Vh;
+}
+
 @media (max-width: 1200px) {}
 
 @media (max-width: 1024px) {}
@@ -215,6 +219,13 @@
 
 @media (max-width: 475px) {
 
+  .form-container.erf,
+  .form-container.form-meter-decommission,
+  .form-container.form-meter-reconnection,
+  .form-container.form-meter-disconnection,
+  .form-container.form-meter-inspection,
+  .form-container.form-meter-tid,
+  .form-container.form-meter-audit,
   .form-container.service-provider,
   .form-container.meter-audit-trn,
   .form-container.update-user,

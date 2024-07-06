@@ -579,10 +579,10 @@ export const useTrns = (trnType, astCat) => {
 							}
 						}),
 						anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
-							const { anomaly } = context.anomalies;
+							const { anomaly } = context?.anomalies;
 							// console.log(`anomaly`, anomaly)
 							// console.log(`meterAccess_`, meterAccess_);
-							const { meterAccess } = context.access;
+							const { meterAccess } = context?.access;
 							if (meterAccess === "no") {
 								return schema.notRequired();
 							}
@@ -1509,8 +1509,8 @@ export const useTrns = (trnType, astCat) => {
 								width: "7rem",
 							},
 							valueGetter: (params) => {
-								const lat = Number(params.data.location.gps.lat).toFixed(3);
-								const lng = Number(params.data.location.gps.lng).toFixed(3);
+								const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
+								const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
 								return `${lat}/${lng}`;
 							},
 							width: 140,

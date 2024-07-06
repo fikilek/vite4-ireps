@@ -1,4 +1,3 @@
-
 // css
 import "@/components/trns/TrnsHeader.css";
 
@@ -9,12 +8,11 @@ import { useUser } from "@/hooks/useUser";
 // components
 import PageTitle from "@/pages/PageTitle";
 
-
-const TrnsHeader = props => {
+const TrnsHeader = (props) => {
 	const { phLl, phL2 } = props;
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
-	
+
 	const { userFromUsers } = useUser(user.uid);
 	// console.log(`userFromUsers`, userFromUsers);
 	return (
@@ -23,16 +21,14 @@ const TrnsHeader = props => {
 				<div className="phLl">
 					{/* <FilterBtn /> */}
 					<PageTitle title={phLl} />
-					<PageTitle title={phL2} />
-				</div>
-				<div className="phLr">
+					{/* <PageTitle title={phL2} /> */}
 					<PageTitle title={userFromUsers.workbase} />
 				</div>
+				<div className="phLr"></div>
 			</div>
 
 			<div className="ph ph-right">
-				<div className="phRl">
-				</div>
+				<div className="phRl"></div>
 				<div className="phRr">
 					<button className="trnsTable" id="table">
 						Table

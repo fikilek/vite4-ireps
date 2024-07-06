@@ -46,7 +46,7 @@ const Signup = () => {
 	const initialValues = {
 		surname: "",
 		name: "",
-		nickName: "",
+		// nickName: "",
 		companyName: "",
 		email: "",
 		password: "",
@@ -55,7 +55,7 @@ const Signup = () => {
 		workbase: "",
 	};
 
-	const onSubmit = values => {
+	const onSubmit = (values) => {
 		// console.log(`Form values`, values);
 		const newValues = capitalizeFirstLetters(values);
 		signup(newValues);
@@ -63,23 +63,26 @@ const Signup = () => {
 
 	// TODO: bug  - does not show formik error
 	const validationSchema = object({
-		surname: string().required("Surname is required."),
+		surname: string().required("required."),
 		name: string().required("required."),
-		nickName: string().required("required."),
-		companyName: string().ensure().required("Company name is required."),
-		email: string().email("Email is NOT valid.").required("Email is required."),
-		password: string()
-			.min(6, "At least 6 characters")
-			.required("Password is required."),
+		nickName: string().notRequired(),
+		companyName: string()
+			.ensure()
+			.required("required.")
+			.notOneOf(["choose", ""], "required"),
+		email: string().email("Email is NOT valid.").required("required."),
+		password: string().min(6, "At least 6 characters").required("required."),
 		confirmPassword: string()
-			.oneOf([ref("password"), null], "Passwords must match")
-			.required("Confirn password is required."),
+			.oneOf([ref("password"), null], "must match")
+			.required("required."),
 		phoneNumber: string()
 			.min(10, "At least 10 characters")
 			// .matches(phoneRegExp, "Phone number is not valid")
-			.required("Cell number is required."),
-		workbase: string().required("Workbase is required"),
-		spId: string().required("spId is required"),
+			.required("required."),
+		workbase: string()
+			.required("required")
+			.notOneOf(["choose", ""], "required"),
+		// spId: string().notRequired(),
 	});
 
 	useEffect(() => {
@@ -103,8 +106,8 @@ const Signup = () => {
 					validationSchema={validationSchema}
 					enableReinitialize={true}
 				>
-					{formik => {
-						// console.log(`formik`, formik);
+					{(formik) => {
+						// console.log(`formik.errors`, formik.errors);
 
 						// This will use regular ecpresion to search for matching companyName form list of all service providers
 						const sp = getSpDetailsFromSpName(formik.values.companyName);
@@ -112,7 +115,7 @@ const Signup = () => {
 
 						let spClients = getSpClients(sp);
 
-						const result = spClients.find(client => {
+						const result = spClients.find((client) => {
 							const clientStr = client.key.toLowerCase().trim();
 							// console.log(`clientStr`, clientStr);
 
@@ -133,24 +136,85 @@ const Signup = () => {
 						return (
 							<>
 								<Form>
-									<HeaderGeneric hl1="Singup/Register" hr1={<p></p>}  ><FormCloseBtn/></HeaderGeneric>
+									<HeaderGeneric hl1="Singup/Register" hr1={<p></p>}>
+										<FormCloseBtn />
+									</HeaderGeneric>
 									<FormMsg msg="Complete the fields below so as to gain access to iREPS." />
 									<div className="signup-form">
 										<div className="form-row">
-											<FormikControl
-												control="input"
-												type="text"
-												label="Surname"
-												name={"surname"}
-												placeholder=""
-												autoFocus={true}
-											/>
 											<div className="row-50-50">
+												<FormikControl
+													control="input"
+													type="text"
+													label="Surname"
+													name={"surname"}
+													placeholder=""
+													autoFocus={true}
+												/>
 												<FormikControl
 													control="input"
 													type="text"
 													label="Name"
 													name={"name"}
+													placeholder=""
+												/>
+											</div>
+											<div className="row-50-50">
+												<FormikControl
+													control="select"
+													type="text"
+													label="Company Name"
+													name={"companyName"}
+													placeholder=""
+													options={serviceProviders.spOptions}
+												/>
+												<FormikControl
+													control="select"
+													type="text"
+													label="Workbase"
+													name={"workbase"}
+													placeholder=""
+													options={spClients}
+												/>
+											</div>
+										</div>
+										<div className="form-row">
+											<div className="row-50-50">
+												<FormikControl
+													control="inputPwd"
+													type="password"
+													label="Pwd"
+													name={"password"}
+													placeholder=""
+													autoComplete="user password"
+												/>
+
+												<FormikControl
+													control="inputPwd"
+													type="password"
+													label="Confirm Pwd"
+													name={"confirmPassword"}
+													placeholder=""
+													autoComplete="Confirm password"
+												/>
+											</div>
+											<div>
+												<FormikControl
+													control="input"
+													type="email"
+													label="Email"
+													name={"email"}
+													placeholder=""
+												/>
+											</div>
+										</div>
+										<div className="form-row">
+											<div className="row-50-50">
+												<FormikControl
+													control="phoneNumberInput"
+													type="text"
+													label="Phone No"
+													name={"phoneNumber"}
 													placeholder=""
 												/>
 												<FormikControl
@@ -162,68 +226,24 @@ const Signup = () => {
 												/>
 											</div>
 										</div>
-										<div className="form-row">
-											<FormikControl
-												control="select"
-												type="text"
-												label="Company Name"
-												name={"companyName"}
-												placeholder=""
-												options={serviceProviders.spOptions}
-											/>
-											<FormikControl
-												control="select"
-												type="text"
-												label="Workbase"
-												name={"workbase"}
-												placeholder=""
-												options={spClients}
-											/>
-										</div>
-										<div className="form-row">
+										<div className="form-row"></div>
+										<div className="form-row-hidden">
 											<FormikControl
 												control="input"
-												type="email"
-												label="Email"
-												name={"email"}
-												placeholder=""
+												type="hidden"
+												name={"spId"}
 											/>
-											<FormikControl
-												control="phoneNumberInput"
-												type="text"
-												label="Phone No"
-												name={"phoneNumber"}
-												placeholder=""
-											/>
-										</div>
-										<div className="form-row">
-											<FormikControl
-												control="inputPwd"
-												type="password"
-												label="Password"
-												name={"password"}
-												placeholder=""
-												autoComplete="user password"
-											/>
-
-											<FormikControl
-												control="inputPwd"
-												type="password"
-												label="Confirm Password"
-												name={"confirmPassword"}
-												placeholder=""
-												autoComplete="Confirm password"
-											/>
-										</div>
-										<div className="form-row-hidden">
-											<FormikControl control="input" type="hidden" name={"spId"} />
 										</div>
 									</div>
 									{signupState.error && (
 										<FormError errorMsg={getCustomError(signupState.error)} />
 									)}
 									<FormFooter formik={formik} signState={signupState}>
-										<FormLinkBtn icon={<CiLogin />} title="Signin" linkName="signin" />
+										<FormLinkBtn
+											icon={<CiLogin />}
+											title="Signin"
+											linkName="signin"
+										/>
 									</FormFooter>
 								</Form>
 							</>

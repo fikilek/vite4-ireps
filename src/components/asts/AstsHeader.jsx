@@ -9,20 +9,20 @@ import useModal from "@/hooks/useModal.jsx";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useUser } from "@/hooks/useUser";
 
-const AstsHeader = props => {
+const AstsHeader = (props) => {
 	const { phLl } = props;
-	
+
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
-	
+
 	const { userFromUsers } = useUser(user.uid);
 	// console.log(`userFromUsers`, userFromUsers);
 
 	const { astsContext, setAstsContext } = useContext(AstsContext);
 
 	// handle event - active tab
-	const handleActiveTab = e => {
-		setAstsContext(prev => {
+	const handleActiveTab = (e) => {
+		setAstsContext((prev) => {
 			return {
 				...prev,
 				activeTab: e.target.id,
@@ -36,18 +36,15 @@ const AstsHeader = props => {
 				<div className="phLl">
 					<FilterBtn />
 					<PageTitle title={phLl} />
-				</div>
-				<div className="phLr">
 					<PageTitle title={userFromUsers.workbase} />
-
 				</div>
+				<div className="phLr"></div>
 			</div>
 
 			<div className="ph ph-right">
-				<div className="phRl">
-				</div>
+				<div className="phRl"></div>
 				<div className="phRr">
-				<button
+					<button
 						className={astsContext.activeTab === "table" ? "active" : null}
 						id="table"
 						onClick={handleActiveTab}

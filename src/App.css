@@ -7,10 +7,12 @@
 html,
 body {
   height: 100vh;
+  /* width: 100vw; */
 }
 
 #root {
-  height: inherit;
+  /* height: inherit; */
+  /* width: inherit; */
 }
 
 .App {

@@ -1,25 +1,26 @@
 import { useMap, AdvancedMarker } from "@vis.gl/react-google-maps";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef, useContext, useMemo } from "react";
 
 // css
-import '@/components/maps/MapMarkers.css'
+import "@/components/maps/MapMarkers.css";
 
 // import { trees } from "../../data/tree";
-import { ErfsMapContext } from "@/contexts/ErfsMapContext";
-// [{ name: "Oak, English", lat: 43.64, lng: -79.41, key: "ABCD" }]
-
-// type Point = google.maps.LatLngLiteral & { key: string };
-// type Props = { points: Point[] };
+// import { ErfsMapContext } from "@/contexts/ErfsMapContext";
+import { ErfsContext } from "@/contexts/ErfsContext";
 
 export const MapMarkers = () => {
+	// const { erfsMapContext } = useContext(ErfsMapContext);
+	// // console.log(`erfsMapContext`, erfsMapContext);
 
-	const { erfsMapContext } = useContext(ErfsMapContext);
-	// console.log(`erfsMapContext`, erfsMapContext);
+	const { erfsContext } = useContext(ErfsContext);
+	// console.log(`erfsContext`, erfsContext)
 
-	const erfs = erfsMapContext?.erfs;
-  // console.log(`erfs`, erfs)
+	const erfs = useMemo(() => erfsContext?.erfs, [erfsContext?.erfs]);
+	console.log(`erfs`, erfs);
 
+	// const erfs = erfsContext?.erfs
+	// console.log(`erfs`, erfs)
 
 	const map = useMap();
 	const [markers, setMarkers] = useState({});
@@ -28,7 +29,7 @@ export const MapMarkers = () => {
 	useEffect(() => {
 		if (!map) return;
 		if (!clusterer.current) {
-			clusterer.current = new MarkerClusterer({ map: map, maxZoom: 10	 });
+			clusterer.current = new MarkerClusterer({ map: map, maxZoom: 10 });
 		}
 	}, [map]);
 
@@ -40,7 +41,7 @@ export const MapMarkers = () => {
 
 	const setMarkerRef = (marker, key) => {
 		if (marker && markers[key]) return;
-		if (!marker ) return;
+		if (!marker) return;
 
 		setMarkers((prev) => {
 			if (marker) {
@@ -55,27 +56,27 @@ export const MapMarkers = () => {
 
 	return (
 		<>
-			{erfs.map((erf) => {
-				return (
-					<AdvancedMarker
-						position={{
-							lat: erf?.address?.gps?.latitude,
-							lng: erf?.address?.gps?.longitude,
-						}}
-						key={erf.id}
-						ref={marker => {
-							// console.log(`marker`, marker)
-							setMarkerRef(marker, erf.id);
-						}}
-					>
-						{/* <span style={{ fontSize: "2rem" }}>🌳</span> */}
-						
-						<button className="erf-no-btn">
+			{erfs &&
+				erfs.map((erf) => {
+					return (
+						<AdvancedMarker
+							position={{
+								lat: erf?.address?.gps?.latitude,
+								lng: erf?.address?.gps?.longitude,
+							}}
+							key={erf.id}
+							ref={(marker) => {
+								// console.log(`marker`, marker)
+								setMarkerRef(marker, erf.id);
+							}}
+						>
+							{/* <span style={{ fontSize: "2rem" }}>🌳</span> */}
+							<button className="erf-no-btn">
 								<span className="erf-no">{erf.erfNo}</span>
 							</button>
-					</AdvancedMarker>
-				);
-			})}
+						</AdvancedMarker>
+					);
+				})}
 		</>
 	);
 };

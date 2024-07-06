@@ -10,4 +10,5 @@
   border: 0.1rem solid rosybrown;
   border-radius: 0.5rem;
   font-size: var(--fb-fs-1p5);
+  margin: 0.2rem;
 }

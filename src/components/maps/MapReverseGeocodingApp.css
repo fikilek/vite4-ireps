@@ -105,7 +105,7 @@
 
 @media (max-width: 700px) {
   .map-reverse-geocoding-app {
-    width: 27.8rem;
+    /* width: 27.8rem; */
   }
 
   .map-reverse-geocoding-app .body .map-reverse-geocoding-map .map-container {

@@ -11,7 +11,7 @@
   align-items: center;
   width: 100%;
   z-index: 1000;
-  height: 2rem;
+  height: 3rem;
 }
 
 .media-action-camera .mac {
@@ -100,8 +100,13 @@
 @media (max-width: 768px) {}
 
 @media (max-width: 475px) {
+
+  .media-action-camera {
+    width: inherit;
+  }
+
   .media-action-camera .macpp .webcam {
-    width: 60%;
+    width: 100%;
     height: auto;
   }
 }

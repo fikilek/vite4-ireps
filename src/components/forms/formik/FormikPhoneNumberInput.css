@@ -9,7 +9,7 @@
 }
 
 .form-container form .form-row .phoneNumber input {
-  padding-left: 3rem;
+  padding-left: 2.3rem;
 }
 
 .form-container form .form-row .phoneNumber .flag-dropdown {
@@ -29,4 +29,10 @@
 .form-container form .hide {
   visibility: hidden;
   position: absolute;
+}
+
+.react-tel-input .form-control.invalid-number {
+  border: 0.1rem solid #ff0000;
+  background-color: #fdfdfd;
+  border-left-color: #cacaca;
 }

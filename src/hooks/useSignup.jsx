@@ -68,6 +68,7 @@ const signupReducer = (state, action) => {
 
 export const useSignup = () => {
 	const [signupState, signupDispatch] = useReducer(signupReducer, initSignup);
+	// console.log(`signupState`, signupState);
 	const { user, dispatch } = useAuthContext();
 	// console.log(`user`, user);
 
@@ -106,7 +107,7 @@ export const useSignup = () => {
 			});
 
 			// update claims with workbase using onCall cloud function
-			console.log(`workbase`, workbase)
+			// console.log(`workbase`, workbase)
 			const updateUserWorkbase = httpsCallable(functions, "updateUserWorkbase");
 			const wbResult = await updateUserWorkbase({
 				roles: {

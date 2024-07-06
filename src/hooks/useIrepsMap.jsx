@@ -580,7 +580,7 @@ const useIrepsMap = (workbase) => {
 	// This method displays lm boundary. Pass it the bondary polygon geojson file
 	const displayLmBondary = async (map, boundary) => {
 		// console.log(`map`, map);
-		console.log(`boundary`, boundary);
+		// console.log(`boundary`, boundary);
 
 		const { lmBoundary, boundaryType } = boundary;
 
@@ -637,6 +637,7 @@ const useIrepsMap = (workbase) => {
 		// console.log(`wardBoundaries`, wardBoundaries);
 		wardBoundaries &&
 			wardBoundaries.map((wardBoundary) => {
+				// console.log(`wardBoundary`, wardBoundary)
 				displayLmBondary(map, wardBoundary);
 			});
 	};

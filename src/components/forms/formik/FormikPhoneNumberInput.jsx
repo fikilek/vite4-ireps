@@ -16,7 +16,7 @@ const FormikPhoneNumberInput = props => {
 			<Field name={name} {...rest}>
 				{props => {
 					// console.log(`props`, props);
-					const { field, form } = props;
+					const { field, form, meta } = props;
 
 					const handleChange = e => {
 						form.setFieldValue(field.name, e);
@@ -30,6 +30,7 @@ const FormikPhoneNumberInput = props => {
 							value={field?.value}
 							onChange={handleChange}
 							masks={{ za: "(..) ...-...." }}
+							isValid={meta.error ? false : true}
 						/>
 					);
 				}}

@@ -256,7 +256,7 @@ export const useErfs = () => {
 		// media on erf
 		{
 			field: "",
-			headerName: "Media",
+			headerName: "Erf Media",
 			width: 120,
 			cellRenderer: params => {
 				// console.log(`params`, params);

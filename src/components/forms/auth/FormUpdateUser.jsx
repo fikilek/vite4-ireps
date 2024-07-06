@@ -20,7 +20,7 @@ import { capitalizeFirstLetters } from "@/utils/utils";
 import FormCloseBtn from "../formBtns/FormCloseBtn";
 import HeaderGeneric from "@/components/header/HeaderGeneric";
 
-const UpdateUser = props => {
+const UpdateUser = (props) => {
 	// console.log(`props`, props)
 	const { surname, name, nickName, companyName, workbase } = props.formData;
 
@@ -37,7 +37,7 @@ const UpdateUser = props => {
 
 	const { closeModal } = useModal();
 
-	const onSubmit = values => {
+	const onSubmit = (values) => {
 		// console.log(`Form values`, values);
 		const newValues = capitalizeFirstLetters(values);
 		// console.log(`Form newValues`, newValues);
@@ -75,7 +75,7 @@ const UpdateUser = props => {
 					onSubmit={onSubmit}
 					validationSchema={validationSchema}
 				>
-					{formik => {
+					{(formik) => {
 						// console.log(`formik`, formik);
 
 						// This will use regular ecpresion to search for matching companyName form list of all service providers
@@ -84,7 +84,7 @@ const UpdateUser = props => {
 
 						let spClients = getSpClients(sp);
 
-						const result = spClients.find(client => {
+						const result = spClients.find((client) => {
 							const clientStr = client.key.toLowerCase().trim();
 							// console.log(`clientStr`, clientStr);
 
@@ -111,23 +111,24 @@ const UpdateUser = props => {
 									<FormMsg msg="Complete the fields below and submit to update user info on iREPS." />
 									<div className="updateuser-form">
 										<div className="form-row">
-											<FormikControl
-												control="input"
-												type="text"
-												label="Surname"
-												name={"surname"}
-												placeholder=""
-												autoFocus={true}
-											/>
-											<FormikControl
-												control="input"
-												type="text"
-												label="Name"
-												name={"name"}
-												placeholder=""
-											/>
+											<div className="row-50-50">
+												<FormikControl
+													control="input"
+													type="text"
+													label="Surname"
+													name={"surname"}
+													placeholder=""
+													autoFocus={true}
+												/>
+												<FormikControl
+													control="input"
+													type="text"
+													label="Name"
+													name={"name"}
+													placeholder=""
+												/>
 											</div>
-											<div className="form-row">
+											<div className="row-50-50">
 												<FormikControl
 													control="input"
 													type="text"
@@ -144,6 +145,7 @@ const UpdateUser = props => {
 													options={serviceProviders.spOptions}
 												/>
 											</div>
+										</div>
 									</div>
 									{signupState.error && (
 										<FormError errorMsg={getCustomError(signupState.error)} />

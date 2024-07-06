@@ -139,7 +139,7 @@ exports.updateUserRole = onCall(async request => {
 	console.log(`auth`, auth);
 	console.log(`auth.token.email`, auth.token.email);
 
-	const { uid: claimUid, changeSet } = data;
+	const { uid: claimUid } = data;
 
 	const customClaims = { roles: data.roles };
 
@@ -201,7 +201,7 @@ exports.updateUserRole = onCall(async request => {
 		);
 	}
 
-	// validation rule 5: only fikilekentane@gmail.com can set a superuser rle
+	// validation rule 5: only fikilekentane@gmail.com can set a superuser role
 	if (
 		changeSet["superuser"]["change"] === true &&
 		auth.token.email !== "fikilekentane@gmail.com"
@@ -216,7 +216,7 @@ exports.updateUserRole = onCall(async request => {
 		.auth()
 		.setCustomUserClaims(claimUid, customClaims)
 		.then(result => {
-			console.log(`result`)
+			console.log(`result`, result)
 			return admin.auth().getUser(claimUid);
 		})
 		.then(userRecord => {
@@ -276,7 +276,7 @@ exports.updateUserWorkbase = onCall(async request => {
 
 // When a media (image, audio or video) is created and uploaded into storage, an assosciated document
 // is also created on 'media' collection. The creation of a media document then triggers a
-// function that will update an assosciated madia property of the erf document.
+// function that will update an associated media property of the erf document.
 exports.erfMedia = onDocumentCreated("mediaErfs/{mediaId}", async event => {
 	// console.log(`event-------------------------`, event);
 	// console.log(`event.data-------------------------`, event.data);

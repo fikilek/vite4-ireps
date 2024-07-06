@@ -11,23 +11,25 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { ErfsContext } from "@/contexts/ErfsContext";
 import PageTitle from "@/pages/PageTitle";
 import FilterBtn from "@/components/filters/FilterBtn";
+import BtnPageHeaderBtn from "../buttons/BtnPageHeaderBtn";
 
-const ErfsHeader = props => {
+const ErfsHeader = (props) => {
 	// props
 	const { phLl } = props;
 
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
-	
+
 	const { userFromUsers } = useUser(user.uid);
 	// console.log(`userFromUsers`, userFromUsers);
 
 	// context
-	const { erfsContext, setErfsContext } = useContext(ErfsContext);
+	const { setErfsContext } = useContext(ErfsContext);
 
 	// handle event - active tab
-	const handleActiveTab = e => {
-		setErfsContext(prev => {
+	const handleActiveTab = (e) => {
+		// console.log(`e.target.id`, e.target.id);
+		setErfsContext((prev) => {
 			return {
 				...prev,
 				activeTab: e.target.id,
@@ -41,8 +43,6 @@ const ErfsHeader = props => {
 				<div className="phLl">
 					<FilterBtn />
 					<PageTitle title={phLl} />
-				</div>
-				<div className="phLr">
 					<PageTitle title={userFromUsers.workbase} />
 				</div>
 			</div>
@@ -50,27 +50,18 @@ const ErfsHeader = props => {
 			<div className="ph ph-right">
 				<div className="phRl"></div>
 				<div className="phRr">
-					<button
-						className={erfsContext.activeTab === "table" ? "active" : null}
-						id="table"
-						onClick={handleActiveTab}
-					>
-						Table
-					</button>
-					{/* <button
-						className={erfsContext.activeTab === "split" ? "active" : null}
-						id="split"
-						onClick={handleActiveTab}
-					>
-						Split
-					</button> */}
-					<button
-						className={erfsContext.activeTab === "map" ? "active" : null}
-						id="map"
-						onClick={handleActiveTab}
-					>
-						Map
-					</button>
+					<BtnPageHeaderBtn
+						handleClick={handleActiveTab}
+						tabName="table"
+					/>
+					{/* <BtnPageHeaderBtn
+						handleClick={handleActiveTab}
+						tabName="split"
+					/> */}
+					<BtnPageHeaderBtn
+						handleClick={handleActiveTab}
+						tabName="map"
+					/>
 				</div>
 			</div>
 		</div>

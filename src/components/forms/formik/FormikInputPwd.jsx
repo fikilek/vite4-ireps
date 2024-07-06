@@ -10,7 +10,7 @@ import FormFieldError from "@/components/forms/formError/FormFieldError";
 const FormikInputPwd = props => {
 	
 	// console.log(`props`, props);
-	const { label, name, type, ...rest } = props;
+	const { label, name, type, hide, ...rest } = props;
 
 	const [pwdEyeToggle, SetPwdEyeToggle] = useState(false);
 	const attrType = pwdEyeToggle ? "text" : "password";
@@ -34,7 +34,7 @@ const FormikInputPwd = props => {
 
 					return (
 						<>
-							<input {...field} {...rest} className={`${error}`} type={attrType} />
+							<input {...field} {...rest} className={`${meta.error ? 'error' : ''} ${hide}`} type={attrType} />
 							<IconContext.Provider value={{ className: "icon-password" }}>
 								{pwdEyeToggle ? (
 									<GoEye onClick={handleClick} />

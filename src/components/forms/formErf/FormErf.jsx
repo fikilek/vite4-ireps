@@ -20,7 +20,7 @@ import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
-const FormErf = props => {
+const FormErf = (props) => {
 	// console.log(`props`, props);
 
 	const { data: formData } = props.data;
@@ -38,7 +38,7 @@ const FormErf = props => {
 	// const resp = useMemo(() => response, [response]);
 
 	const onSubmit = useCallback(
-		values => {
+		(values) => {
 			console.log(`values`, values);
 
 			if (values.id) {
@@ -89,7 +89,7 @@ const FormErf = props => {
 					// 	trn.metaData.trnType
 					// )}
 				>
-					{formik => {
+					{(formik) => {
 						// const disabled = !(formik.isValid && formik.dirty);
 						// console.log(`formik`, formik);
 						// console.log(`formik.isValid`, formik.isValid);
@@ -100,11 +100,13 @@ const FormErf = props => {
 							<Form>
 								<div className="erf-form">
 									<HeaderGeneric
-										hl1={"Erf Form"}
-										hl2={
+										hl1={
 											<div className="hl2">
 												<span className="erf-no">
-													Erf : <span className="text-emphasis2">{formData.erfNo}</span>
+													ErfNo:{" "}
+													<span className="text-emphasis2">
+														{formData.erfNo}
+													</span>
 												</span>
 											</div>
 										}
@@ -113,7 +115,9 @@ const FormErf = props => {
 												<span>
 													Ward :{" "}
 													<span className="text-emphasis2">
-														{formData.address.ward ? formData.address.ward : "?"}
+														{formData.address.ward
+															? formData.address.ward
+															: "?"}
 													</span>
 												</span>
 											</>

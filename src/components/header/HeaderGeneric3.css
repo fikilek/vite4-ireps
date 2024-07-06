@@ -3,8 +3,13 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: max-content;
   gap: 0.3rem;
+
   opacity: 1;
   position: static;
+
+  /* opacity: 0;
+  position: absolute;
+  left: -110rem; */
 }
 
 .header-generic3 .hl,
@@ -53,9 +58,9 @@
 }
 
 @media (max-width: 475px) {
-  .header-generic3 {
+  /* .header-generic3 {
     opacity: 0;
     position: absolute;
     left: -110rem;
-  }
+  } */
 }

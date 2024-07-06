@@ -34,7 +34,7 @@ const MediaActionBtns = () => {
 				color={"blue"}
 				active={mediaData.activeMediaAction === "camera" ? "active" : ""}
 			/>
-			<MediaActionBtn
+			{/* <MediaActionBtn
 				id={"voice"}
 				actionClassname={"mab-voice voice"}
 				title={"make a voice clipa"}
@@ -60,7 +60,7 @@ const MediaActionBtns = () => {
 				clickHanderFunction={handleClick}
 				color={"blue"}
 				active={mediaData.activeMediaAction === "gallery" ? "active" : ""}
-			/>
+			/> */}
 		</div>
 	);
 };
