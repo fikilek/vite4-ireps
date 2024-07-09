@@ -45,6 +45,7 @@ const signinReducer = (state, action) => {
 export const useSignin = () => {
 	const { dispatch } = useAuthContext();
 	const [signinState, signinDispatch] = useReducer(signinReducer, initSignin);
+	console.log(`signinState`, signinState)
 
 	const signin = async userCredentials => {
 		const { email, password } = userCredentials;
@@ -76,6 +77,8 @@ export const useSignin = () => {
 	};
 
 	const passwordReset = async userCredentials => {
+		console.log(`userCredentials`, userCredentials)
+		
 		const { email } = userCredentials;
 
 		try {

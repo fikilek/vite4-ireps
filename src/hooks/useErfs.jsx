@@ -27,47 +27,45 @@ export const useErfs = () => {
 	const { getDocument, response } = useFirestore("users");
 	// console.log(`response`, response);
 
-	const [workbase, setWorkbase] = useState(null)
+	const [workbase, setWorkbase] = useState(null);
 	// console.log(`workbase`, workbase);
 
-	const [constraints, setConstraints] = useState([])
+	const [constraints, setConstraints] = useState([]);
 	// console.log(`constraints`, constraints);
 
 	const { user } = useAuthContext();
-	// console.log(`user`, user);	
+	// console.log(`user`, user);
 
 	const { state, getCollection } = useGetCollection("erfs");
 	// console.log(`state`, state);
 
-	getCollection(constraints)
+	getCollection(constraints);
 
 	useEffect(() => {
 		setErfsContext({
 			...erfsContext,
 			erfs: state.data,
-			erfsTableFields
+			erfsTableFields,
 		});
 	}, [state]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		// console.log(`workbase changed:`, workbase)
-		if(workbase) {
-			setConstraints( prev => {
-					return [ ...prev,where("address.lmMetro", "==", workbase?.trim()) ]
-				}
-			)
+		if (workbase) {
+			setConstraints((prev) => {
+				return [...prev, where("address.lmMetro", "==", workbase?.trim())];
+			});
 		}
-	},[workbase])
+	}, [workbase]);
 
-	useEffect(()=>{
-		if(response.success) {
+	useEffect(() => {
+		if (response.success) {
 			// console.log(`response`, response);
-			const {workbase} = response?.document
+			const { workbase } = response?.document;
 			// console.log(`workbase`, workbase)
-			setWorkbase(workbase)
+			setWorkbase(workbase);
 		}
-
-	},[response.success])
+	}, [response.success]);
 
 	useEffect(() => {
 		if (user?.uid) {
@@ -80,7 +78,7 @@ export const useErfs = () => {
 	// 2. all attached asts
 	// TODO: check what else to strip when  duplicting an erf
 
-	const duplicateErf = erfData => {
+	const duplicateErf = (erfData) => {
 		// console.log(`duplicating erfData`, formData);
 
 		// clone the erf data
@@ -137,16 +135,18 @@ export const useErfs = () => {
 					columnGroupShow: "open",
 					headerName: "Date Created",
 					width: 150,
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						// console.log(`params`, params)
 						const timestamp = new Timestamp(
 							params?.value?.seconds,
 							params?.value?.nanoseconds
 						);
 						const newDate = timestamp.toDate();
-						return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+						return (
+							<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+						);
 					},
-					valueGetter: params => {
+					valueGetter: (params) => {
 						return params.data.metadata.createdAtDatetime;
 					},
 					hide: false,
@@ -175,15 +175,17 @@ export const useErfs = () => {
 					columnGroupShow: "open",
 					headerName: "Last Updated",
 					width: 150,
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
 							params?.value?.seconds,
 							params?.value?.nanoseconds
 						);
 						const newDate = timestamp.toDate();
-						return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+						return (
+							<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+						);
 					},
-					valueGetter: params => {
+					valueGetter: (params) => {
 						return params.data.metadata.updatedAtDatetime;
 					},
 					hide: false,
@@ -194,7 +196,7 @@ export const useErfs = () => {
 			field: "erfNo",
 			headerName: "Erf No",
 			width: 100,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`params`, params);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
@@ -210,7 +212,7 @@ export const useErfs = () => {
 			field: "",
 			headerName: "Map",
 			width: 80,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`params`, params)
 				return (
 					<TableModalBtn data={params}>
@@ -224,9 +226,9 @@ export const useErfs = () => {
 				modalName: "erfOnMap",
 				width: "2rem",
 			},
-			valueGetter: params => {
-				const lat = params.data.address.gps.latitude;
-				const lng = params.data.address.gps.longitude;
+			valueGetter: (params) => {
+				const lat = params.data?.address?.gps?.latitude;
+				const lng = params.data?.address?.gps?.longitude;
 				return `${Number(lat).toFixed(4)} | ${Number(lng).toFixed(4)}`;
 			},
 			hide: false,
@@ -237,11 +239,11 @@ export const useErfs = () => {
 			field: "asts.length",
 			headerName: "Asts",
 			width: 100,
-			valueGetter: params => {
+			valueGetter: (params) => {
 				return params.data?.asts?.length ? params.data?.asts?.length : 0;
 			},
 			// tooltipField: "asts",
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`ast on erf params`, params);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
@@ -258,7 +260,7 @@ export const useErfs = () => {
 			field: "",
 			headerName: "Erf Media",
 			width: 120,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`params`, params);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
@@ -268,9 +270,11 @@ export const useErfs = () => {
 				irepsKeyItem: "erfs",
 				displayMode: "modal",
 			},
-			valueGetter: params => {
+			valueGetter: (params) => {
 				// console.log(`params`, params);
-				const media = params?.data?.media?.length ? params?.data?.media?.length : 0;
+				const media = params?.data?.media?.length
+					? params?.data?.media?.length
+					: 0;
 				return media;
 			},
 		},
@@ -319,7 +323,7 @@ export const useErfs = () => {
 		// 	headerName: "Status",
 		// 	width: 150,
 		// },
-		
+
 		// customer address
 		{
 			headerName: "Customer Address",
@@ -378,6 +382,21 @@ export const useErfs = () => {
 			headerName: "Google Address",
 			width: 300,
 		},
+
+		// Customer cartegory
+		{
+			field: "customer.cartegory",
+			headerName: "Customer Category",
+			width: 180,
+		},
+
+		// Customer Type
+		{
+			field: "customer.type",
+			headerName: "Customer Type",
+			width: 180,
+		},
+
 		{
 			headerName: "Customer Warm Body",
 			width: 120,

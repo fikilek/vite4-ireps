@@ -1,6 +1,5 @@
 import { object, string } from "yup";
 import { Formik, Form } from "formik";
-import { CiLogin } from "react-icons/ci";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -15,29 +14,21 @@ import useModal from "@/hooks/useModal.jsx";
 import FormikControl from "@/components/forms/formik/FormikControl";
 import FormFooter from "@/components/forms/formFooter/FormFooter";
 import FormMsg from "@/components/forms/formMsg/FormMsg";
-import FormLinkBtn from "@/components/forms/formBtns/FormLinkBtn";
 import FormError from "@/components/forms/formError/FormError";
 import HeaderGeneric from "@/components/header/HeaderGeneric";
 import FormCloseBtn from "../formBtns/FormCloseBtn";
 
-const linkTo = {
-	icon: <CiLogin />,
-	title: "Signin/Logon",
-	linkName: "signin",
-};
-
-const FormPasswordReset = props => {
-	// console.log(`FormPasswordReset`, props);
+const FormPasswordReset = () => {
 
 	const { closeModal } = useModal();
 
-	const { passwordReset, error, success } = useSignin();
+	const { passwordReset, signinState } = useSignin();
 
 	const initialValues = {
 		email: "",
 	};
 
-	const onSubmit = values => {
+	const onSubmit = (values) => {
 		console.log(`Password Reset Form values`, values);
 		passwordReset(values);
 	};
@@ -47,16 +38,16 @@ const FormPasswordReset = props => {
 	});
 
 	useEffect(() => {
-		if (success) {
+		if (signinState.success) {
 			closeModal();
 			toast.success(
-				`Visit inbox for the email adr and follow the instructins to reset iREPS password.`,
+				`Visit inbox for the email adr and follow the instructions to reset iREPS password.`,
 				{
 					position: "bottom-left",
 				}
 			);
 		}
-	}, [success, closeModal]);
+	}, [signinState.success, closeModal]);
 
 	return (
 		<div className="form-wrapper">
@@ -66,12 +57,14 @@ const FormPasswordReset = props => {
 					onSubmit={onSubmit}
 					validationSchema={validationSchema}
 				>
-					{formik => {
+					{(formik) => {
 						// console.log(`formik`, formik);
 						return (
 							<>
 								<Form>
-									<HeaderGeneric hl1="Password Reset" ><FormCloseBtn /></HeaderGeneric>
+									<HeaderGeneric hl1="Password Reset" hr1={<p></p>}>
+										<FormCloseBtn />
+									</HeaderGeneric>
 									<FormMsg msg="A password RESET email will be sent to the inbox that signup/registered with iREPS." />
 									<div className="password-reset-form">
 										<FormikControl
@@ -83,10 +76,10 @@ const FormPasswordReset = props => {
 											autoFocus={true}
 										/>
 									</div>
-									{error && <FormError errorMsg={error} />}
-									<FormFooter formik={formik} linkTo={linkTo} currentForm="fpw">
-										<FormLinkBtn icon={<CiLogin />} title="Signin" linkName="signin" />
-									</FormFooter>
+									{signinState.error && (
+										<FormError errorMsg={signinState.error} />
+									)}
+									<FormFooter formik={formik} signState={signinState} />
 								</Form>
 							</>
 						);

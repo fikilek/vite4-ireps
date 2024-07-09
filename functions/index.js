@@ -136,10 +136,11 @@ exports.disableUserAcc = onCall(async request => {
 
 exports.updateUserRole = onCall(async request => {
 	const { data, auth } = request;
-	console.log(`auth`, auth);
-	console.log(`auth.token.email`, auth.token.email);
+	// console.log(`auth`, auth);
+	// console.log(`auth.token.email`, auth.token.email);
 
-	const { uid: claimUid } = data;
+	const { uid: claimUid, changeSet } = data;
+
 
 	const customClaims = { roles: data.roles };
 
@@ -216,7 +217,7 @@ exports.updateUserRole = onCall(async request => {
 		.auth()
 		.setCustomUserClaims(claimUid, customClaims)
 		.then(result => {
-			console.log(`result`, result)
+			// console.log(`result`, result)
 			return admin.auth().getUser(claimUid);
 		})
 		.then(userRecord => {
@@ -231,21 +232,21 @@ exports.updateUserRole = onCall(async request => {
 });
 
 exports.updateUserWorkbase = onCall(async request => {
-	console.log(`request--------------------------------`, request);
+	// console.log(`request--------------------------------`, request);
 
 	const { data, auth } = request;
-	console.log(`auth--------------------------------`, auth);
-	console.log(`data--------------------`, data);
+	// console.log(`auth--------------------------------`, auth);
+	// console.log(`data--------------------`, data);
 
 	const { workbase } = data.roles;
-	console.log(`workbase------------------`, workbase);
+	// console.log(`workbase------------------`, workbase);
 
 	const userRecord = await getAuth().getUser(auth.uid);
-	console.log(`userRecord------------------`, userRecord);
+	// console.log(`userRecord------------------`, userRecord);
 
 	// desructure roles from userRecord
 	const { roles } = userRecord.customClaims;
-	console.log(`roles------------------`, roles);
+	// console.log(`roles------------------`, roles);
 
 	// create a new customeclaaims object and update it with workbase
 	const customClaims = {
@@ -254,13 +255,13 @@ exports.updateUserWorkbase = onCall(async request => {
 			workbase: workbase,
 		},
 	};
-	console.log(`customClaims--------------------`, customClaims);
+	// console.log(`customClaims--------------------`, customClaims);
 
 	return admin
 		.auth()
 		.setCustomUserClaims(auth.uid, customClaims)
 		.then(result => {
-			console.log(`claim update result -----------------------------`, result);
+			// console.log(`claim update result -----------------------------`, result);
 			return admin.auth().getUser(auth.uid);
 		})
 		.then(userRecord => {

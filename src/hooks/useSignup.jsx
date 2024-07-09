@@ -73,6 +73,7 @@ export const useSignup = () => {
 	// console.log(`user`, user);
 
 	const signup = async userCredentials => {
+		console.log(`userCredentials`, userCredentials)
 		const {
 			email,
 			password,

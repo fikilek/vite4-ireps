@@ -107,7 +107,7 @@
   width: 100%;
   border-radius: 0.6rem;
   border: 0.1rem solid;
-  height: 3rem;
+  /* height: 3rem; */
   padding: 0.5rem;
   font-size: 0.7rem;
 }
@@ -125,21 +125,21 @@
 }
 
 .form-container form .form-control {
-  height: 5rem;
+  height: 3.5rem;
   position: relative;
 }
 
 .form-container form .form-control label {
   position: absolute;
   left: 1rem;
-  top: 0.8rem;
+  top: 0.35rem;
   cursor: text;
   transition: 250ms;
   background-color: white;
   padding: 0.1rem;
   font-size: 0.7rem;
   color: var(--form-label-color);
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
 
 .form-container form .form-control button:focus~label,
@@ -149,7 +149,7 @@
 .form-container form .form-control .react-datepicker-wrapper~label,
 .form-container form .form-control select:not(:placeholder-shown)~label,
 .form-container form .form-control .label-react-select {
-  top: -1rem;
+  top: -0.7rem;
   /* font-size: 1rem; */
   left: 0.5rem;
   /* color: white; */
@@ -162,7 +162,7 @@
   width: 100%;
   border-radius: 0.6rem;
   border: 0.1rem solid;
-  height: 3rem;
+  /* height: 3rem; */
   padding: 0.5rem;
   font-size: 1rem;
 }

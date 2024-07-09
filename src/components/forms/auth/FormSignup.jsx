@@ -46,7 +46,7 @@ const Signup = () => {
 	const initialValues = {
 		surname: "",
 		name: "",
-		// nickName: "",
+		nickName: "type nickname",
 		companyName: "",
 		email: "",
 		password: "",
@@ -56,7 +56,7 @@ const Signup = () => {
 	};
 
 	const onSubmit = (values) => {
-		// console.log(`Form values`, values);
+		console.log(`Form values`, values);
 		const newValues = capitalizeFirstLetters(values);
 		signup(newValues);
 	};
@@ -108,6 +108,7 @@ const Signup = () => {
 				>
 					{(formik) => {
 						// console.log(`formik.errors`, formik.errors);
+						console.log(`formik.values`, formik.values);
 
 						// This will use regular ecpresion to search for matching companyName form list of all service providers
 						const sp = getSpDetailsFromSpName(formik.values.companyName);
