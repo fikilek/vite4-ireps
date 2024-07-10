@@ -373,7 +373,7 @@ export const useErfs = () => {
 					field: "address.street",
 					headerName: "Street",
 					width: 170,
-					columnGroupShow: "open",
+					columnGroupShow: "closed",
 				},
 			],
 		},

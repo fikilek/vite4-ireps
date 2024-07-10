@@ -441,6 +441,8 @@ irepsDictionary.set("installationData", "Installation Data");
 irepsDictionary.set("activeArea", "Active Area");
 irepsDictionary.set("reports", "Reports");
 irepsDictionary.set("dataFilter", "Data Filter");
+irepsDictionary.set("existingMeter", "Existing Meter");
+irepsDictionary.set("inspectionData", "Inspection Data");
 
 export const irepsIcons = {
 	ICON_TOTAL: <TbSum />,
