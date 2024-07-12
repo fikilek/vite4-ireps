@@ -25,6 +25,7 @@ const TrnsLayout = () => {
 				<NavLink to="audits">Audits </NavLink>
 				<NavLink to="tid">Tid </NavLink>
 				<NavLink to="installations">Installations</NavLink>
+				<NavLink to="inspections">Inspections</NavLink>
 				<NavLink to="decomissionings">Decomissionings</NavLink>
 				<NavLink to="disconnections">Disconnections</NavLink>
 				<NavLink to="reconnections">Reconnections</NavLink>

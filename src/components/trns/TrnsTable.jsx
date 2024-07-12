@@ -11,6 +11,7 @@ import TableTrns from "@/components/tables/TableTrns";
 import { TrnsContext } from "@/contexts/TrnsContext";
 
 const TrnsTable = props => {
+	// console.log(`props`, props)
 	const { trnType, astCat } = props;
 
 	useTrns(trnType, astCat);

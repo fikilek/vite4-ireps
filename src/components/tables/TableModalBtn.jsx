@@ -18,6 +18,7 @@ const TableModalBtn = props => {
 	} = props.data;
 	// console.log(`data`, data)
 	// console.log(`modalName`, modalName);
+	// console.log(`validationSchema`, validationSchema);
 
 	const { openModal } = useModal();
 	const handleClick = e => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Formik, Form, useFormikContext } from "formik";
+import { Formik, Form } from "formik";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 
@@ -9,7 +9,7 @@ import "@/components/forms/formTrn/audit/FormMeterAudit.css";
 // custom hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
-import { useTrns } from "@/hooks/useTrns";
+// import { useTrns } from "@/hooks/useTrns";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -20,14 +20,16 @@ import HeaderGeneric from "@/components/header/HeaderGeneric";
 import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
+import { updateFormState } from "@/utils/utils";
 
 const FormMeterInspection = (props) => {
-	// console.log(`props`, props);
+	console.log(`props`, props);
 
 	const { data, validationSchema } = props?.data;
 	// console.log(`data`, data);
+	// console.log(`validationSchema`, validationSchema);
 
-	const { erfNo, erfId, address } = data.erf;
+	const { erfNo } = data.erf;
 
 	// destructure trn id
 	const { trnId } = data.metadata;
@@ -40,10 +42,8 @@ const FormMeterInspection = (props) => {
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
 
-	const { updateFormState } = useTrns();
-
 	const [trnState, setTrnState] = useState(data?.metadata?.trnState);
-	// console.log(`trnState`, trnState)
+	console.log(`trnState`, trnState)
 
 	const onSubmit = useCallback(
 		(values) => {
@@ -86,11 +86,10 @@ const FormMeterInspection = (props) => {
 				<Formik
 					initialValues={{
 						...data,
-						erf: {
-							...data?.erf,
-							erfNo,
-							erfId,
-							address,
+						inspectionData: {
+							isMeterStillThere:"",
+							tempered: '',
+							newMeter: '',
 						},
 					}}
 					onSubmit={onSubmit}
@@ -101,8 +100,9 @@ const FormMeterInspection = (props) => {
 						// const disabled = !(formik.isValid && formik.dirty);
 						// console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
+						// console.log(`formik`, formik);
 						// console.log(`disabled`, disabled);
-						console.log(`formik.values`, formik.values);
+						// console.log(`formik.values`, formik.values);
 
 						updateFormState(formik, setTrnState);
 
@@ -112,18 +112,15 @@ const FormMeterInspection = (props) => {
 									<HeaderGeneric
 										hl1={
 											<span>
-												<span className="text-emphasis2">Inspection</span>
-											</span>
-										}
-										hl2={<span className="text-emphasis2">{trnState}</span>}
-										hr1={
-											<span>
+												{/* <span className="text-emphasis2">Inspection</span> */}
 												Erf:<span className="text-emphasis2">{erfNo}</span>
 											</span>
 										}
-										hr2={
+										hl2={<span className="text-emphasis2">{trnState || 'draft'}</span>}
+
+										hr1={
 											<span>
-												Meter:
+												Mn:
 												<span className="text-emphasis2">
 													{formik.values.astData.astNo}
 												</span>
@@ -143,7 +140,7 @@ const FormMeterInspection = (props) => {
 										active={active}
 										setActive={setActive}
 									>
-										<div className="existing=meter-data">
+										<div className="existing-meter-data">
 											<div className="row-0 form-row">
 												<div className="row-50-50">
 													<FormikControl
@@ -233,46 +230,46 @@ const FormMeterInspection = (props) => {
 									>
 										<div className="form-row-wrapper">
 											<div className="row-1 form-row">
-												<div className="row-50-50">
+												{/* <div className="row-50-50"> */}
 													<FormikControl
 														control="select"
 														type="text"
-														label={`${formik.values?.astData?.astNo}: StillThere?`}
-														name={`astData.meter.phase`}
+														label={`${formik.values?.astData?.astNo}: Still There?`}
+														name={`inspectionData.isMeterStillThere`}
 														options={formSelectOptions.yesNoOptions}
 													/>
 													<FormikControl
 														control="mediaButton"
 														type="button"
-														label="existing meter media"
-														name={`astData.media.insideBox`}
+														label="existing meter"
+														name={`inspectionData.media.isMeterStillThere`}
 														ml1="asts"
 													/>
-												</div>
+												{/* </div> */}
 												<div className="row-50-50">
 													<FormikControl
 														control="select"
 														type="text"
-														label="tempered?"
-														name={`astData.meter.phase`}
+														label="tempered?bypassed?"
+														name={`inspectionData.tempered`}
 														options={formSelectOptions.yesNoOptions}
 													/>
 													<FormikControl
 														control="mediaButton"
 														type="button"
 														label="temper media"
-														name={`astData.media.insideBox`}
+														name={`inspectionData.media.tempered`}
 														ml1="asts"
 													/>
 												</div>
-											</div>
-											<div className="row-5 form-row">
+											{/* </div>
+											<div className="row-5 form-row"> */}
 												<div className="row-50-50">
 													<FormikControl
 														control="select"
 														type="text"
 														label="newMeter(s)?"
-														name={`location.insideBox`}
+														name={`inspectionData.newMeter`}
 														options={formSelectOptions.yesNoOptions}
 													/>
 												</div>

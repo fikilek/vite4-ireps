@@ -9,7 +9,6 @@ import "@/components/forms/formTrn/installation/FormMeterInstallation.css";
 // custome hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
-import { useTrns } from "@/hooks/useTrns";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -20,6 +19,7 @@ import HeaderGeneric from "@/components/header/HeaderGeneric";
 import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
+import { updateFormState } from "@/utils/utils";
 
 const FormMeterInstallation = (props) => {
 	// console.log(`props`, props);
@@ -40,8 +40,6 @@ const FormMeterInstallation = (props) => {
 
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
-
-	const {updateFormState} = useTrns()
 
 		const [trnState, setTrnState] = useState(data?.metadata?.trnState)
 	// console.log(`trnState`, trnState)

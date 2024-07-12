@@ -3,7 +3,7 @@ const {
 	onDocumentCreated,
 	onDocumentWritten,
 	// onDocumentWrittenWithAuthContext,
-// eslint-disable-next-line no-undef
+	// eslint-disable-next-line no-undef
 } = require("firebase-functions/v2/firestore");
 
 const { onCall, HttpsError } = require("firebase-functions/v2/https");
@@ -27,7 +27,7 @@ const db = getFirestore();
 // TODO: take care of the situation where the user migrates from one sp to another or is deleted
 exports.updateServiceProvider = onDocumentCreated(
 	"users/{spId}",
-	async event => {
+	async (event) => {
 		console.log(`event-----------------------------`, event);
 
 		// step X: Get an object representing the document created
@@ -53,7 +53,7 @@ exports.updateServiceProvider = onDocumentCreated(
 	}
 );
 
-exports.addDefaultUserRole = functions.auth.user().onCreate(async user => {
+exports.addDefaultUserRole = functions.auth.user().onCreate(async (user) => {
 	console.log(`user ------------------------------------`, user);
 	let uid = user.uid;
 
@@ -73,13 +73,13 @@ exports.addDefaultUserRole = functions.auth.user().onCreate(async user => {
 		.then(() => {
 			return null;
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log("Error setting custom claim:", err.message);
 			return err.msg;
 		});
 });
 
-exports.listAllUsers = onCall(async request => {
+exports.listAllUsers = onCall(async (request) => {
 	let users = [];
 
 	if (!request.auth) {
@@ -90,18 +90,18 @@ exports.listAllUsers = onCall(async request => {
 	return admin
 		.auth()
 		.listUsers(1000)
-		.then(listUsersResult => {
-			listUsersResult.users.forEach(userRecord => {
+		.then((listUsersResult) => {
+			listUsersResult.users.forEach((userRecord) => {
 				users.push({ id: userRecord.uid, ...userRecord });
 			});
 			return users;
 		})
-		.catch(error => {
+		.catch((error) => {
 			return `Error listing users: ${error.message}`;
 		});
 });
 
-exports.disableUserAcc = onCall(async request => {
+exports.disableUserAcc = onCall(async (request) => {
 	// log(`request`, request);
 
 	const { uid, action } = request.data;
@@ -118,7 +118,7 @@ exports.disableUserAcc = onCall(async request => {
 		.updateUser(uid, {
 			disabled: action,
 		})
-		.then(updatedUserRecord => {
+		.then((updatedUserRecord) => {
 			log(`updatedUserRecord ----`, updatedUserRecord);
 			// log(`User Account succesfully ${action ? "DISABLED" : "ENABLED"} ......`);
 			return {
@@ -128,19 +128,18 @@ exports.disableUserAcc = onCall(async request => {
 				success: true,
 			};
 		})
-		.catch(error => {
+		.catch((error) => {
 			error(`Error enabling/disabling users account: ${error.message}`, error);
 			return `Error enabling/disabling users account: ${error.message}`;
 		});
 });
 
-exports.updateUserRole = onCall(async request => {
+exports.updateUserRole = onCall(async (request) => {
 	const { data, auth } = request;
 	// console.log(`auth`, auth);
 	// console.log(`auth.token.email`, auth.token.email);
 
 	const { uid: claimUid, changeSet } = data;
-
 
 	const customClaims = { roles: data.roles };
 
@@ -216,22 +215,22 @@ exports.updateUserRole = onCall(async request => {
 	return admin
 		.auth()
 		.setCustomUserClaims(claimUid, customClaims)
-		.then(result => {
+		.then((result) => {
 			// console.log(`result`, result)
 			return admin.auth().getUser(claimUid);
 		})
-		.then(userRecord => {
+		.then((userRecord) => {
 			return {
 				userRecord,
 			};
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log("Error updating custom claim:", err);
 			return `${err.message}`;
 		});
 });
 
-exports.updateUserWorkbase = onCall(async request => {
+exports.updateUserWorkbase = onCall(async (request) => {
 	// console.log(`request--------------------------------`, request);
 
 	const { data, auth } = request;
@@ -260,16 +259,16 @@ exports.updateUserWorkbase = onCall(async request => {
 	return admin
 		.auth()
 		.setCustomUserClaims(auth.uid, customClaims)
-		.then(result => {
+		.then((result) => {
 			// console.log(`claim update result -----------------------------`, result);
 			return admin.auth().getUser(auth.uid);
 		})
-		.then(userRecord => {
+		.then((userRecord) => {
 			return {
 				userRecord,
 			};
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.log("Error updating custom claim:", err);
 			return `${err.message}`;
 		});
@@ -278,7 +277,7 @@ exports.updateUserWorkbase = onCall(async request => {
 // When a media (image, audio or video) is created and uploaded into storage, an assosciated document
 // is also created on 'media' collection. The creation of a media document then triggers a
 // function that will update an associated media property of the erf document.
-exports.erfMedia = onDocumentCreated("mediaErfs/{mediaId}", async event => {
+exports.erfMedia = onDocumentCreated("mediaErfs/{mediaId}", async (event) => {
 	// console.log(`event-------------------------`, event);
 	// console.log(`event.data-------------------------`, event.data);
 	// console.log(
@@ -332,7 +331,7 @@ exports.erfMedia = onDocumentCreated("mediaErfs/{mediaId}", async event => {
 });
 
 // When ast media (image, audio or video) is created and uploaded into storage, an assosciated document is also created on 'mediaAst' collection. The creation of a media document then triggers a function that will update an assosciated madia property of the ast document as well as the trn linked to the ast..
-exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
+exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async (event) => {
 	// console.log(`event-------------------------`, event);
 	// console.log(`event.data-------------------------`, event.data);
 	// console.log(
@@ -362,14 +361,13 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 
 	// step : query 'mediaAst' for all media associated with astId
 	// first check if the 'mediaAsts' collection exists
-	db
-		.collection("mediaAsts")
+	db.collection("mediaAsts")
 		.where("metadata.astId", "==", astId)
 		.get()
-		.then(querySnapshot => {
+		.then((querySnapshot) => {
 			// console.log(`querySnapshot------------------------------`, querySnapshot);
 			const media = [];
-			querySnapshot.forEach(doc => {
+			querySnapshot.forEach((doc) => {
 				// doc.data() is never undefined for query doc snapshots
 				// console.log(`Doc id --------------------------`, doc.id);
 				media.push({
@@ -380,7 +378,7 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 			// console.log(`media------------------------------`, media);
 
 			// step : create the media array that will replace existing the ast media  array
-			const updatedAstMedia = media.map(data => {
+			const updatedAstMedia = media.map((data) => {
 				return {
 					mediaId: data.id,
 					mediaCategory: data.metadata.mediaCategory,
@@ -408,7 +406,7 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 					"metadata.updatedByUser": data?.metadata.createdByUser,
 					"metadata.updatedByUid": data?.metadata.createdByUid,
 				})
-				.then(result => {
+				.then((result) => {
 					// console.log(
 					// 	`mediaAst update result------------------------------`,
 					// 	result
@@ -416,7 +414,7 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 				});
 		})
 
-		.catch(error => {
+		.catch((error) => {
 			console.log("Error getting documents:....................... ", error);
 		});
 
@@ -425,18 +423,17 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 	// console.log(`trnId------------------------------`, trnId);
 
 	// Update the trn where the media was cuptured
-	db
-		.collection("trns")
+	db.collection("trns")
 		.doc(trnId)
 		.update({
 			"metadata.updatedAtDatetime": Timestamp.now(),
 			"metadata.updatedByUser": data?.metadata.createdByUser,
 			"metadata.updatedByUid": data?.metadata.createdByUid,
 		})
-		.then(result => {
+		.then((result) => {
 			// console.log(`trn update result------------------------------`, result);
 		})
-		.catch(error => {
+		.catch((error) => {
 			console.log(
 				`Error updating trn------------------------------`,
 				error.message
@@ -445,7 +442,7 @@ exports.astMedia = onDocumentCreated("mediaAsts/{mediaId}", async event => {
 });
 
 // create new ast
-const createNewAst = async trnAfter => {
+const createNewAst = async (trnAfter) => {
 	// console.log(`creating ast -------------------`, trnAfter);
 	// console.log(`ast - line 439`, ast);
 	// console.log(`ast.astId - line 440`, ast.astId);
@@ -510,24 +507,24 @@ const createNewAst = async trnAfter => {
 	// console.log(`newAst------------------------------`, newAst);
 
 	// add the new ast to the asts collection
-	db
-		.collection("asts")
+	db.collection("asts")
 		.doc(astId)
 		.set(newAst)
-		.then(docRef => {
+		.then((docRef) => {
 			// console.log(
 			// 	"Document set with docRef: ----------------------------- ",
 			// 	docRef
 			// );
 			return `Document set with docRef: ${docRef}`;
 		})
-		.catch(error => {
+		.catch((error) => {
 			// console.error("Error adding document ): --------------------- ", error.msg);
 			return "Error adding document: ", error.msg;
 		});
 };
 
-const updateAstTrns = async trnAfter => {
+const updateAstTrns = async (trnAfter) => {
+	// console.log(`trnAfter------------------------------`, trnAfter);
 	// retrieve trnId from trnAfter
 	const { trnId } = trnAfter.metadata;
 	// console.log(`trnId------------------------------`, trnId);
@@ -536,7 +533,7 @@ const updateAstTrns = async trnAfter => {
 	const { trnType } = trnAfter.metadata;
 	// console.log(`trnType------------------------------`, trnType);
 
-	// retrive trn displayName and user uid from trn metadata
+	// retrieve trn displayName and user uid from trn metadata
 	const userDisplayname = trnAfter.metadata.updatedByUser;
 	// console.log(`userDisplayname------------------------------`, userDisplayname);
 
@@ -549,6 +546,7 @@ const updateAstTrns = async trnAfter => {
 
 	// get reference to the ast at astId
 	const astRef = db.collection("asts").doc(astId);
+	// console.log(`astRef------------------------------`, astRef);
 
 	// step X: update the 'ast' document with the trn details
 	await astRef.update({
@@ -567,7 +565,7 @@ const updateAstTrns = async trnAfter => {
 // update Erf through a cloud function onCreate everytime an ast is created
 exports.updateErfOnAstCreation = onDocumentCreated(
 	"asts/{astId}",
-	async event => {
+	async (event) => {
 		// console.log(`event -------------------------`, event);
 
 		// step X: Get an object representing the ast document created
@@ -637,13 +635,13 @@ const setTrnState = (trnSnapshot, newState) => {
 			"metadata.updatedByUser": userDisplayname,
 			"metadata.updatedByUid": userUid,
 		})
-		.then(updateTrn => {
+		.then((updateTrn) => {
 			console.log(`updatedTrn`, updateTrn);
 			return updateTrn;
 		});
 };
 
-exports.trnAction = onDocumentWritten("trns/{trnId}", async event => {
+exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 	const snapshot = event.data.after;
 	// console.log(`trnAfter snapshot-------------------------`, snapshot);
 	if (!snapshot) {
@@ -667,17 +665,18 @@ exports.trnAction = onDocumentWritten("trns/{trnId}", async event => {
 			return;
 		case "N/A":
 		case "submitted":
-			// console.log(
-				// `Trn state is ${trnState}: --------------------dont do anything`
-			// );
+		case "draft":
+			// console.log(`Trn state is ${trnState}: --------------------do not do anything`);
 			break;
 		case "valid":
-			// console.log(`Trn state is ${trnState}: --------------------create an "ast"`);
 			// 1. create a new ast (this is only for 'audit' and 'installation')
+			// console.log(`trnType is : ------------------------------`, trnType);
 			if (trnType === "audit" || trnType === "installation") {
 				await createNewAst(data);
 			}
 			if (trnType === "inspection" || trnType === "tid") {
+				// console.log(`updateAstTrns with data: --------------------`, data	);
+				// console.log(`updating 'trns' array on ast with data: --------------------`, data	);
 				await updateAstTrns(data);
 			}
 

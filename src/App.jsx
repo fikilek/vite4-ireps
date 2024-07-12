@@ -187,6 +187,28 @@ const router = createBrowserRouter(
 					}
 				/>
 				<Route
+					path="inspections"
+					element={
+						<Suspense fallback={loader}>
+							<RequireAuth
+								allowedRoles={[
+									"guest",
+									"fieldworker",
+									"supervisor",
+									"manager",
+									"superuser",
+								]}
+							>
+								<Trns
+									astCat={"meter"}
+									trnType={"inspection"}
+									key={"inspection"}
+								/>
+							</RequireAuth>
+						</Suspense>
+					}
+				/>
+				<Route
 					path="decomissionings"
 					element={
 						<Suspense fallback={loader}>

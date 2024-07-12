@@ -24,13 +24,13 @@ import { BiSolidVideoRecording, BiVideoRecording } from "react-icons/bi";
 import { FcPicture } from "react-icons/fc";
 import { RiDraftLine } from "react-icons/ri";
 
-export const capitalizeFirstLetter = string => {
+export const capitalizeFirstLetter = (string) => {
 	if (!string) return;
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
 // capitalize first letter of surnamem, name and nickName
-export const capitalizeFirstLetters = obj => {
+export const capitalizeFirstLetters = (obj) => {
 	for (const property in obj) {
 		if (
 			property === "surname" ||
@@ -359,7 +359,7 @@ export const formSelectOptions = {
 	],
 };
 
-export const getAstCatMediaCat = namePath => {
+export const getAstCatMediaCat = (namePath) => {
 	// namePath = namePath
 	// 	.replaceAll("[", ".")
 	// 	.replaceAll("]", ".")
@@ -443,6 +443,8 @@ irepsDictionary.set("reports", "Reports");
 irepsDictionary.set("dataFilter", "Data Filter");
 irepsDictionary.set("existingMeter", "Existing Meter");
 irepsDictionary.set("inspectionData", "Inspection Data");
+irepsDictionary.set("isMeterStillThere", "Existing Meter");
+irepsDictionary.set("tempered", "Temper");
 
 export const irepsIcons = {
 	ICON_TOTAL: <TbSum />,
@@ -475,7 +477,7 @@ export const irepsConstants = {
 	IC_DATE_FORMAT2: "yyyy-MMM-dd HH:mm:ss",
 };
 
-export const getAstCat = fieldNameStr => {
+export const getAstCat = (fieldNameStr) => {
 	// if (!gcData) return null;
 	// let fieldNameStr = gcData?.data?.field?.name;
 	if (!fieldNameStr) return null;
@@ -489,40 +491,60 @@ export const getAstCat = fieldNameStr => {
 	return astCategory;
 };
 
-  const choices = {
-			"Meter Faulty": [
-				"Not Accepting SGC Tokens",
-				"Negative Credit Units",
-				"Zero Readings Conventional Meter",
-				"Meter Wheel Not Moving",
-				"Meter Wheel Running In Reverse Mode",
-			],
-			"Meter Ok": [
-				"Operationally Ok",
-				"Meter Not On Portal",
-				"No TID KC Tokens on Portal",
-				"No SGC Tokens Avaiable",
-				"Not Accepting TID Tokens",
-			],
-			"Meter Damaged": [
-				"Meter Number Unclear",
-				"Meter Burnt",
-				"Buttons Not Working",
-				"Meter Broken",
-				"Meter Display Blank",
-				"Cable Stolen",
-			],
-			"Meter Illegally Connected": [
-				"Staight Connection (Meter Bypassed)",
-				"Bridge Wire on Meter",
-			],
-			"Meter Missing": [
-				"Property Has Power (Illegal Conection)",
-				"No Power Supply To Property",
-				"Access Refused",
-			],
-			"Meter Disconneted": [
-				"Property Has Power (Illegal Conection)",
-				"No Power Supply To Property",
-			],
-		};
+const choices = {
+	"Meter Faulty": [
+		"Not Accepting SGC Tokens",
+		"Negative Credit Units",
+		"Zero Readings Conventional Meter",
+		"Meter Wheel Not Moving",
+		"Meter Wheel Running In Reverse Mode",
+	],
+	"Meter Ok": [
+		"Operationally Ok",
+		"Meter Not On Portal",
+		"No TID KC Tokens on Portal",
+		"No SGC Tokens Avaiable",
+		"Not Accepting TID Tokens",
+	],
+	"Meter Damaged": [
+		"Meter Number Unclear",
+		"Meter Burnt",
+		"Buttons Not Working",
+		"Meter Broken",
+		"Meter Display Blank",
+		"Cable Stolen",
+	],
+	"Meter Illegally Connected": [
+		"Staight Connection (Meter Bypassed)",
+		"Bridge Wire on Meter",
+	],
+	"Meter Missing": [
+		"Property Has Power (Illegal Conection)",
+		"No Power Supply To Property",
+		"Access Refused",
+	],
+	"Meter Disconneted": [
+		"Property Has Power (Illegal Conection)",
+		"No Power Supply To Property",
+	],
+};
+
+export const updateFormState = async (formik, setFormState) => {
+	// console.log(`formik`, formik);
+	const { trnState } = formik?.values?.metadata;
+
+	const { meterAccess } = await formik?.values?.access;
+	// console.log(`meterAccess` , meterAccess)
+
+	const { dirty, isValid } = formik;
+	// console.log(`dirty` , dirty)
+	// console.log(`isValid` , isValid)
+
+	const newState =
+		isValid && dirty && meterAccess === "yes" ? "valid" : trnState;
+	// console.log(`newState` , newState)
+
+	setFormState(newState);
+
+	return { state: newState };
+};

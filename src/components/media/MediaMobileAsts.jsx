@@ -18,7 +18,7 @@ const MediaAction = lazy(() => import("@/components/media/MediaAction"));
 const MediaMobileAsts = props => {
 	// console.log(`props`, props);
 	// props will bring in  ast data from the asts table
-	const { data, displayMode, irepsKeyItem, trnId } = props.data;
+	const { data, displayMode, irepsKeyItem, trnId } = props?.data;
 	// console.log(`data`, data)
 	// const { displayMode, irepsKeyItem } = props;
 	// console.log(`displayMode`, displayMode)

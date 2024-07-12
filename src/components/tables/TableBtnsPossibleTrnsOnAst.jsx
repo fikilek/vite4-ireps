@@ -5,18 +5,26 @@ import { useTrns } from "@/hooks/useTrns.jsx";
 
 import TableModalBtn from "@/components/tables/TableModalBtn";
 
-const TableBtnsPossibleTrnsOnAst = props => {
-	console.log(`props`, props);
+const TableBtnsPossibleTrnsOnAst = (props) => {
+	// console.log(`props`, props);
 	const { trns, erf } = props.data;
-	const { astNo, astId, astCatergory } = props.data.astData;
-
+	const {
+		astNo,
+		astId,
+		astCatergory,
+		astState,
+		astManufacturer,
+		astName,
+		meter,
+	} = props.data.astData;
+	const { phase, type } = meter;
 	const { trnsNewFormData, trnsValidationSchema } = useTrns(null);
 	// console.log(`trnsNewFormData`, trnsNewFormData);
 	// console.log(`trnsValidationSchema`, trnsValidationSchema);
 
 	const { openModal } = useModal();
 
-	const handleTrnsOnAst = e => {
+	const handleTrnsOnAst = (e) => {
 		openModal({
 			modalName: "iwTrnsOnAst",
 			payload: { data: props.data, width: "4rem" },
@@ -47,7 +55,7 @@ const TableBtnsPossibleTrnsOnAst = props => {
 							astId,
 							astCatergory,
 						},
-						erf
+						erf,
 					},
 					validationSchema: trnsValidationSchema["meter"]["tid"],
 					infoName: "",
@@ -64,7 +72,24 @@ const TableBtnsPossibleTrnsOnAst = props => {
 			<TableModalBtn
 				data={{
 					modalName: "meter-inspection",
-					data: props.data,
+					data: {
+						...trnsNewFormData["meter"]["inspection"],
+						astData: {
+							astNo, // for meters this is a meter no
+							// astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
+							astState, // ['stores', 'field', 'service', 'etc']
+							astManufacturer,
+							astName,
+							astCatergory,
+							astId,
+							meter: {
+								...trnsNewFormData["meter"]["inspection"].astData?.meter,
+								phase: phase,
+								type: type,
+							},
+						},
+						erf,
+					},
 					validationSchema: trnsValidationSchema["meter"]["inspection"],
 					infoName: "",
 					irepsKeyItem: "trns",

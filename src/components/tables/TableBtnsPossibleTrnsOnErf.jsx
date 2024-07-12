@@ -62,7 +62,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 				Installation
 			</TableModalBtn>
 			{/* Meter Inspection */}
-			<TableModalBtn
+			{/* <TableModalBtn
 				data={{
 					modalName: "meter-inspection",
 					data: {
@@ -81,7 +81,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 				}}
 			>
 				Inspection
-			</TableModalBtn>
+			</TableModalBtn> */}
 		</div>
 	);
 };

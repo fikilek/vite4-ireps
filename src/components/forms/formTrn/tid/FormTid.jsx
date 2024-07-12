@@ -9,7 +9,6 @@ import "@/components/forms/formTrn/tid/FormTid.css";
 // custom hooks
 import useModal from "@/hooks/useModal.jsx";
 import { useFirestore } from "@/hooks/useFirestore.jsx";
-import { useTrns } from "@/hooks/useTrns";
 
 // components
 import FormikControl from "@/components/forms/formik/FormikControl";
@@ -19,6 +18,7 @@ import FormFooter from "@/components/forms/formFooter/FormFooter";
 import HeaderGeneric from "@/components/header/HeaderGeneric";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
+import { updateFormState } from "@/utils/utils";
 
 const FormTid = (props) => {
 	// console.log(`props`, props);
@@ -36,8 +36,6 @@ const FormTid = (props) => {
 
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
-
-	const { updateFormState } = useTrns();
 
 	const [trnState, setTrnState] = useState(data?.metadata?.trnState);
 	// console.log(`trnState`, trnState)

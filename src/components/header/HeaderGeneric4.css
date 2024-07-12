@@ -4,7 +4,14 @@
   grid-template-rows: max-content;
   gap: 0.3rem;
 
-  
+  /* opacity: 0;
+  position: absolute;
+  left: -110rem; */
+
+  .header-generic4 {
+    opacity: 1;
+    position: static;
+  }
 
 }
 
@@ -51,8 +58,7 @@
 
 @media (max-width: 475px) {
   /* .header-generic4 {
-    opacity: 0;
-    position: absolute;
-    left: -110rem;
+    opacity: 1;
+    position: static;
   } */
 }
