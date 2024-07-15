@@ -23,7 +23,7 @@ import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 import { updateFormState } from "@/utils/utils";
 
 const FormMeterInspection = (props) => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 
 	const { data, validationSchema } = props?.data;
 	// console.log(`data`, data);
@@ -43,7 +43,7 @@ const FormMeterInspection = (props) => {
 	// console.log(`response`, response)
 
 	const [trnState, setTrnState] = useState(data?.metadata?.trnState);
-	console.log(`trnState`, trnState)
+	// console.log(`trnState`, trnState)
 
 	const onSubmit = useCallback(
 		(values) => {
@@ -230,40 +230,6 @@ const FormMeterInspection = (props) => {
 									>
 										<div className="form-row-wrapper">
 											<div className="row-1 form-row">
-												{/* <div className="row-50-50"> */}
-													<FormikControl
-														control="select"
-														type="text"
-														label={`${formik.values?.astData?.astNo}: Still There?`}
-														name={`inspectionData.isMeterStillThere`}
-														options={formSelectOptions.yesNoOptions}
-													/>
-													<FormikControl
-														control="mediaButton"
-														type="button"
-														label="existing meter"
-														name={`inspectionData.media.isMeterStillThere`}
-														ml1="asts"
-													/>
-												{/* </div> */}
-												<div className="row-50-50">
-													<FormikControl
-														control="select"
-														type="text"
-														label="tempered?bypassed?"
-														name={`inspectionData.tempered`}
-														options={formSelectOptions.yesNoOptions}
-													/>
-													<FormikControl
-														control="mediaButton"
-														type="button"
-														label="temper media"
-														name={`inspectionData.media.tempered`}
-														ml1="asts"
-													/>
-												</div>
-											{/* </div>
-											<div className="row-5 form-row"> */}
 												<div className="row-50-50">
 													<FormikControl
 														control="select"

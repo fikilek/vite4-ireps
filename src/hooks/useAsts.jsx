@@ -16,7 +16,6 @@ import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrn
 import TableBtn from "@/components/tables/TableBtn";
 
 export const useAsts = () => {
-
 	const { astsContext, setAstsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext);
 
@@ -24,57 +23,54 @@ export const useAsts = () => {
 	const { getDocument, response } = useFirestore("users");
 	// console.log(`response`, response);
 
-	const [workbase, setWorkbase] = useState(null)
+	const [workbase, setWorkbase] = useState(null);
 	// console.log(`workbase`, workbase);
 
-	const [constraints, setConstraints] = useState([])
+	const [constraints, setConstraints] = useState([]);
 	// console.log(`constraints`, constraints);
 
 	const { user } = useAuthContext();
-	// console.log(`user`, user);	
+	// console.log(`user`, user);
 
 	const { state, getCollection } = useGetCollection("asts");
 	// console.log(`state`, state);
 
-	getCollection(constraints)
+	getCollection(constraints);
 
 	useEffect(() => {
 		setAstsContext({
 			...astsContext,
 			asts: state.data,
-			astsTableFields
+			astsTableFields,
 		});
 	}, [state]);
 
-	useEffect(()=>{
+	useEffect(() => {
 		// console.log(`workbase changed:`, workbase)
 		// if(workbase) {
 		// 	setConstraints(where("erf.address.lmMetro", "==", workbase?.trim()))
 		// }
-		if(workbase) {
-			setConstraints( prev => {
-					return [ ...prev,where("erf.address.lmMetro", "==", workbase?.trim()) ]
-				}
-			)
+		if (workbase) {
+			setConstraints((prev) => {
+				return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
+			});
 		}
-	},[workbase])
+	}, [workbase]);
 
-	useEffect(()=>{
-		if(response.success) {
+	useEffect(() => {
+		if (response.success) {
 			// console.log(`response`, response);
-			const {workbase} = response?.document
+			const { workbase } = response?.document;
 			// console.log(`workbase`, workbase)
-			setWorkbase(workbase)
+			setWorkbase(workbase);
 		}
-
-	},[response.success])
+	}, [response.success]);
 
 	useEffect(() => {
 		if (user?.uid) {
 			getDocument(user?.uid);
 		}
-	}, [user?.uid]);	
-
+	}, [user?.uid]);
 
 	// const auditAstValidationSchema = {
 	// 	meter: {
@@ -396,7 +392,7 @@ export const useAsts = () => {
 	// 		}),
 	// 	},
 	// };
-		
+
 	const astsTableFields = [
 		// ast id
 		{
@@ -428,15 +424,17 @@ export const useAsts = () => {
 					columnGroupShow: "open",
 					headerName: "Date Created",
 					width: 150,
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
 							params.value.seconds,
 							params.value.nanoseconds
 						);
 						const newDate = timestamp.toDate();
-						return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+						return (
+							<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+						);
 					},
-					valueGetter: params => {
+					valueGetter: (params) => {
 						return params.data.metadata.createdAtDatetime;
 					},
 					hide: false,
@@ -466,15 +464,17 @@ export const useAsts = () => {
 					columnGroupShow: "open",
 					headerName: "Date Created",
 					width: 150,
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
 							params.value.seconds,
 							params.value.nanoseconds
 						);
 						const newDate = timestamp.toDate();
-						return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
+						return (
+							<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
+						);
 					},
-					valueGetter: params => {
+					valueGetter: (params) => {
 						return params.data.metadata.updatedAtDatetime;
 					},
 					hide: false,
@@ -491,8 +491,8 @@ export const useAsts = () => {
 					width: 150,
 					columnGroupShow: "closed",
 					// cellRenderer: params => {
-						// console.log(`params`, params);
-						// return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+					// console.log(`params`, params);
+					// return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 					// },
 					// cellRendererParams: {
 					// 	modalName: "meterEdit",
@@ -528,7 +528,7 @@ export const useAsts = () => {
 					headerName: "State",
 					columnGroupShow: "open",
 					width: 150,
-					hide: true,
+					hide: false,
 				},
 			],
 		},
@@ -544,7 +544,7 @@ export const useAsts = () => {
 			field: "",
 			headerName: "Ast Media",
 			width: 150,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`props`, props);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
@@ -554,9 +554,11 @@ export const useAsts = () => {
 				irepsKeyItem: "asts",
 				displayMode: "modal",
 			},
-			valueGetter: params => {
+			valueGetter: (params) => {
 				// console.log(`params`, params);
-				const media = params?.data?.media?.length ? params?.data?.media?.length : 0;
+				const media = params?.data?.media?.length
+					? params?.data?.media?.length
+					: 0;
 				return media;
 			},
 		},
@@ -605,6 +607,10 @@ export const useAsts = () => {
 			// },
 			hide: false,
 			// tooltipComponent: TableTrnsForAstsTooltip,
+			valueGetter: (params) => {
+				// console.log(`params.data`, params.data);
+				return params.data;
+			},
 		},
 
 		// Ast Specific data
@@ -662,7 +668,7 @@ export const useAsts = () => {
 					columnGroupShow: "closed",
 					headerName: "Ast Gps",
 
-					cellRenderer: params => {
+					cellRenderer: (params) => {
 						// console.log(`params`, params)
 						return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 					},
@@ -670,7 +676,7 @@ export const useAsts = () => {
 						modalName: "showAstOnMap",
 						width: "7rem",
 					},
-					valueGetter: params => {
+					valueGetter: (params) => {
 						const lat = Number(params.data.location.gps.lat);
 						const lng = Number(params.data.location.gps.lng);
 						return `${lat.toFixed(3)} / ${lng.toFixed(3)}`;
@@ -690,6 +696,89 @@ export const useAsts = () => {
 					width: 120,
 				},
 			],
+		},
+
+		// Meter Keypad
+		{
+			headerName: "Keypad",
+			children: [
+				{
+					field: "astData.meter.keypad.keypadAccess",
+					columnGroupShow: "open",
+					headerName: "Keypad Access?",
+					width: 150,
+				},
+				{
+					field: "astData.meter.keypad.serialNo",
+					columnGroupShow: "open",
+					headerName: "Serial No",
+					width: 150,
+				},
+				{
+					field: "astData.meter.keypad.comment",
+					columnGroupShow: "open",
+					headerName: "Comment",
+					width: 300,
+				},
+			],
+		},
+
+		// Meter CB
+		{
+			headerName: "Circuit Breaker",
+			children: [
+				{
+					field: "astData.meter.cb.isThereCb",
+					columnGroupShow: "open",
+					headerName: "Cb There?",
+					width: 150,
+				},
+				{
+					field: "astData.meter.cb.size",
+					columnGroupShow: "open",
+					headerName: "CB size",
+					width: 150,
+				},
+				{
+					field: "astData.meter.cb.comment",
+					columnGroupShow: "open",
+					headerName: "Comment",
+					width: 300,
+				},
+			],
+		},
+
+		// Meter Seal
+		{
+			headerName: "Seal",
+			children: [
+				{
+					field: "astData.meter.seal.meterSealed",
+					columnGroupShow: "open",
+					headerName: "Meter SEaled?",
+					width: 150,
+				},
+				{
+					field: "astData.meter.seal.sealNo",
+					columnGroupShow: "open",
+					headerName: "Seal No",
+					width: 150,
+				},
+				{
+					field: "astData.meter.seal.comment",
+					columnGroupShow: "open",
+					headerName: "Comment",
+					width: 300,
+				},
+			],
+		},
+
+		// Service connection
+		{
+			field: "serviceConnection.configuration",
+			columnGroupShow: "open",
+			headerName: "Service Connection",
+			width: 300,
 		},
 	];
 

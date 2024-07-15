@@ -6,7 +6,7 @@ import { useCallback } from "react";
 // css
 import "@/components/forms/formTrn/installation/FormMeterInstallation.css";
 
-// custome hooks
+// custom hooks
 import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useModal from "@/hooks/useModal.jsx";
 
@@ -62,7 +62,7 @@ const FormMeterInstallation = (props) => {
 		// console.log(`response`, response);
 		if (response.success) {
 			closeModal();
-			toast(`Transaction UPDATED succeesfully!`, {
+			toast(`Transaction UPDATED successfully!`, {
 				position: "bottom-left",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -167,7 +167,7 @@ const FormMeterInstallation = (props) => {
 													label="no access media"
 													name={`astData.media.noAccess`}
 													ml1="asts"
-													mediaCat="noAcces"
+													mediaCat="noAccess"
 												/>
 											</div>
 										</div>

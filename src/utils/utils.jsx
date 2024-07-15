@@ -79,11 +79,11 @@ export const loader = (
 
 // auth
 export const userRoles = [
-	{ key: "guest", abreviation: "GST", name: "Guest" },
-	{ key: "fieldworker", abreviation: "FWR", name: "Field Worker" },
-	{ key: "supervisor", abreviation: "SPV", name: "Supervisor" },
-	{ key: "manager", abreviation: "MNG", name: "Manager" },
-	{ key: "superuser", abreviation: "SPU", name: "Super User" },
+	{ key: "guest", abbreviation: "GST", name: "Guest" },
+	{ key: "fieldworker", abbreviation: "FWR", name: "Field Worker" },
+	{ key: "supervisor", abbreviation: "SPV", name: "Supervisor" },
+	{ key: "manager", abbreviation: "MNG", name: "Manager" },
+	{ key: "superuser", abbreviation: "SPU", name: "Super User" },
 ];
 
 // erf
@@ -105,12 +105,13 @@ export const formSelectOptions = {
 		{ key: "choose", value: "choose" },
 		{ key: "seal has no seal no", value: "seal has no seal no" },
 		{ key: "seal hard to read", value: "seal no hard to read" },
+		{ key: "seal missing", value: "seal missing" },
 	],
 	anomaliesOptions: [
 		{ key: "choose", value: "choose" },
 		{ key: "meterDamaged", value: "meterDamaged" },
 		{ key: "meterFaulty", value: "meterFaulty" },
-		{ key: "meterIllegalyConnected", value: "meterIllegalyConnected" },
+		{ key: "meterIllegallyConnected", value: "meterIllegallyConnected" },
 		{ key: "meterOk", value: "meterOk" },
 		{ key: "meterMissing", value: "meterMissing" },
 	],
@@ -219,7 +220,7 @@ export const formSelectOptions = {
 		{ key: "average", value: "average" },
 	],
 
-	cbPoleOtions: [
+	cbPoleOptions: [
 		{ key: "choose", value: "choose" },
 		{ key: "single pole", value: "single pole" },
 		{ key: "double pole", value: "double pole" },
@@ -347,7 +348,7 @@ export const formSelectOptions = {
 	],
 	tidCommentsOptions: [
 		{ key: "choose", value: "choose" },
-		{ key: "Unsuccsseful", value: "Unsuccsseful" },
+		{ key: "Unsuccessful", value: "Unsuccessful" },
 		{ key: "Successful - On Field", value: "Successful - On Field" },
 		{ key: "Successful - From Factory", value: "Successful - From Factory" },
 	],

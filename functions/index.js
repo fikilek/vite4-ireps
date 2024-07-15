@@ -522,6 +522,56 @@ const createNewAst = async (trnAfter) => {
 			return "Error adding document: ", error.msg;
 		});
 };
+// This updates the ast after a successful inspection
+const updateAst = async (trnAfter) => {
+	console.log(`trnAfter------------------------------`, trnAfter);
+
+	// update astState
+	// retrieve anomaly data
+	const { anomaly } = trnAfter.anomalies;
+	console.log(`anomaly------------------------------`, anomaly);
+
+	// retrieve seal data
+	const { meterSealed, sealComment } = trnAfter.astData.meter.seal;
+	console.log(`meterSealed------------------------------`, meterSealed);
+	console.log(`sealComment------------------------------`, sealComment);
+
+	let astState = "";
+	if (anomaly === "meterMissing") {
+		astState = "missing";
+	} else if (meterSealed === "no" || sealComment === "seal missing") {
+		astState = "temper";
+	} else {
+		astState = "service";
+	}
+	console.log(`astState------------------------------`, astState);
+
+	// retrieve the astId from trn metatada
+	const { astId } = trnAfter.astData;
+	console.log(`astId------------------------------`, astId);
+
+	// get reference to the ast at astId
+	const astRef = db.collection("asts").doc(astId);
+	console.log(`astRef------------------------------`, astRef);
+
+	// step X: update the 'ast' document with the trn details
+	await astRef.update({
+		serviceConnection: trnAfter.serviceConnection,
+		"astData.astState": astState,
+		// "astData.meter.keypad.isThereKeypad":trnAfter.astData.meter.keypad.isThereKeypad || "",
+		"astData.meter.keypad.keypadAccess":trnAfter.astData.meter.keypad.keypadAccess || "",
+		"astData.meter.keypad.serialNo":trnAfter.astData.meter.keypad.serialNo || "",
+		"astData.meter.keypad.comment": trnAfter.astData.meter.keypad.comment || "",
+		"astData.meter.cb.isThereCb": trnAfter.astData.meter.cb.isThereCb || "",
+		"astData.meter.cb.size": trnAfter.astData.meter.cb.size || "",
+		"astData.meter.cb.comment": trnAfter.astData.meter.cb.comment || "",
+		"astData.meter.seal.meterSealed": trnAfter.astData.meter.seal.meterSealed || "",
+		"astData.meter.seal.sealNo": trnAfter.astData.meter.seal.sealNo || "",
+		"astData.meter.seal.comment": trnAfter.astData.meter.seal.comment || "",
+		location: trnAfter.location,
+		anomalies: trnAfter.anomalies,
+	});
+};
 
 const updateAstTrns = async (trnAfter) => {
 	// console.log(`trnAfter------------------------------`, trnAfter);
@@ -674,7 +724,13 @@ exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 			if (trnType === "audit" || trnType === "installation") {
 				await createNewAst(data);
 			}
-			if (trnType === "inspection" || trnType === "tid") {
+			if (trnType === "inspection") {
+				// console.log(`updateAstTrns with data: --------------------`, data	);
+				// console.log(`updating 'trns' array on ast with data: --------------------`, data	);
+				await updateAstTrns(data);
+				await updateAst(data);
+			}
+			if (trnType === "tid") {
 				// console.log(`updateAstTrns with data: --------------------`, data	);
 				// console.log(`updating 'trns' array on ast with data: --------------------`, data	);
 				await updateAstTrns(data);

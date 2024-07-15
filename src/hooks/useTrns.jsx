@@ -105,7 +105,7 @@ export const useTrns = (trnType, astCat) => {
 					astId: uuidv4(),
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
-					astState: "", // ['stores', 'field', 'service', 'etc']
+					astState: "", // ['stores', 'field', 'service', 'temper', 'etc']
 					astManufacturer: "",
 					astName: "",
 					meter: {
@@ -277,8 +277,6 @@ export const useTrns = (trnType, astCat) => {
 					trnState: "draft",
 				},
 				inspectionData: {
-					isMeterStillThere: "",
-					tempered: "",
 					newMeter: "",
 				},
 				astData: {
@@ -1254,37 +1252,6 @@ export const useTrns = (trnType, astCat) => {
 
 				inspectionData: lazy((v, { context }) => {
 					return object().shape({
-						isMeterStillThere: string().when(
-							"meterAccess",
-							(meterAccess_, schema) => {
-								const { meterAccess } = context.access;
-								// console.log(`merterAccess`, meterAccess);
-								if (meterAccess === "no") {
-									return schema
-										.notRequired()
-										.oneOf(["", "choose"], "Must Be 'choose' ");
-								}
-								if (meterAccess === "yes") {
-									return schema
-										?.required("required")
-										?.notOneOf(["choose", ""], "Required");
-								} else return schema;
-							}
-						),
-
-						tempered: string().when("meterAccess", (meterAcces_s, schema) => {
-							const { meterAccess } = context.access;
-							if (meterAccess === "no") {
-								return schema
-									.notRequired()
-									.oneOf(["", "choose"], "Must Be 'choose' ");
-							}
-							if (meterAccess === "yes") {
-								return schema
-									?.required("required")
-									?.notOneOf(["choose", ""], "Required");
-							} else return schema;
-						}),
 
 						newMeter: string().when("meterAccess", (meterAccess_, schema) => {
 							const { meterAccess } = context.access;
@@ -2947,6 +2914,8 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+
+
 			],
 		},
 		all: {
