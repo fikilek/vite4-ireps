@@ -524,17 +524,17 @@ const createNewAst = async (trnAfter) => {
 };
 // This updates the ast after a successful inspection
 const updateAst = async (trnAfter) => {
-	console.log(`trnAfter------------------------------`, trnAfter);
+	// console.log(`trnAfter------------------------------`, trnAfter);
 
 	// update astState
 	// retrieve anomaly data
 	const { anomaly } = trnAfter.anomalies;
-	console.log(`anomaly------------------------------`, anomaly);
+	// console.log(`anomaly------------------------------`, anomaly);
 
 	// retrieve seal data
 	const { meterSealed, sealComment } = trnAfter.astData.meter.seal;
-	console.log(`meterSealed------------------------------`, meterSealed);
-	console.log(`sealComment------------------------------`, sealComment);
+	// console.log(`meterSealed------------------------------`, meterSealed);
+	// console.log(`sealComment------------------------------`, sealComment);
 
 	let astState = "";
 	if (anomaly === "meterMissing") {
@@ -544,15 +544,15 @@ const updateAst = async (trnAfter) => {
 	} else {
 		astState = "service";
 	}
-	console.log(`astState------------------------------`, astState);
+	// console.log(`astState------------------------------`, astState);
 
 	// retrieve the astId from trn metatada
 	const { astId } = trnAfter.astData;
-	console.log(`astId------------------------------`, astId);
+	// console.log(`astId------------------------------`, astId);
 
 	// get reference to the ast at astId
 	const astRef = db.collection("asts").doc(astId);
-	console.log(`astRef------------------------------`, astRef);
+	// console.log(`astRef------------------------------`, astRef);
 
 	// step X: update the 'ast' document with the trn details
 	await astRef.update({

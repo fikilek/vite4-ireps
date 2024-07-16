@@ -100,7 +100,8 @@ const FormErf = (props) => {
 							<Form>
 								<div className="erf-form">
 									<HeaderGeneric
-										hl1={
+										hl1="Erf Form"
+										hl2={
 											<div className="hl2">
 												<span className="erf-no">
 													ErfNo:{" "}
@@ -110,7 +111,7 @@ const FormErf = (props) => {
 												</span>
 											</div>
 										}
-										hr1={
+										hr2={
 											<>
 												<span>
 													Ward :{" "}
@@ -122,21 +123,21 @@ const FormErf = (props) => {
 												</span>
 											</>
 										}
-										hr2={
-											<div className="hl2">
-												<span className="gps">
-													{"("}
-													<span className="text-emphasis2">
-														{Number(formData.address.gps.latitude)?.toFixed(3)}
-													</span>
-													<span className="gps-seperator">{"|"}</span>
-													<span className="text-emphasis2">
-														{Number(formData.address.gps.longitude)?.toFixed(3)}
-													</span>
-													{") "}
-												</span>
-											</div>
-										}
+										// hr2={
+										// 	<div className="hl2">
+										// 		<span className="gps">
+										// 			{"("}
+										// 			<span className="text-emphasis2">
+										// 				{Number(formData.address.gps.latitude)?.toFixed(3)}
+										// 			</span>
+										// 			<span className="gps-seperator">{"|"}</span>
+										// 			<span className="text-emphasis2">
+										// 				{Number(formData.address.gps.longitude)?.toFixed(3)}
+										// 			</span>
+										// 			{") "}
+										// 		</span>
+										// 	</div>
+										// }
 									>
 										<FormCloseBtn />
 									</HeaderGeneric>
@@ -192,6 +193,8 @@ const FormErf = (props) => {
 									</FormSection>
 
 									{/* customer-adr */}
+									{/* TODO: find a way to display gps coordinates for the erf adr. Investigate using a scroll bar
+									 so that when adding gps fields on the form, all field remain reachable by the user */}
 									<FormSection
 										sectionData={{
 											sectionName: "customer-adr",

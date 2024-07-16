@@ -73,10 +73,10 @@ export const useErfs = () => {
 		}
 	}, [user?.uid]);
 
-	// diplicate erf. When dupilcating an erf, strip the erf object of the following
-	// 1. property type unti no
+	// duplicate erf. When duplicating an erf, strip the erf object of the following
+	// 1. property type unit no
 	// 2. all attached asts
-	// TODO: check what else to strip when  duplicting an erf
+	// TODO: check what else to strip when  duplicating an erf
 
 	const duplicateErf = (erfData) => {
 		// console.log(`duplicating erfData`, formData);
@@ -527,7 +527,9 @@ export const useErfs = () => {
 		},
 	];
 
-	// const getErfs = queryParam => {};
+
+
+	
 
 	return { duplicateErf };
 };

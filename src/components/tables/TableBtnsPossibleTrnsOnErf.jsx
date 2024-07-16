@@ -7,14 +7,15 @@ import { useTrns } from "@/hooks/useTrns";
 
 // components
 import TableModalBtn from "@/components/tables/TableModalBtn";
+import { memo } from "react";
 
 const TableBtnsPossibleTrnsOnErf = props => {
 	// console.log(`props`, props);
-	const { erfNo, id: erfId, address } = props.data;
+	const { erfNo, id: erfId, address, propertyType } = props.data;
 
 	const { trnsNewFormData, trnsValidationSchema } = useTrns(null);
 	// console.log(`trnsNewFormData`, trnsNewFormData);
-	// console.log(`auditTrnValidationSchem`, trnsValidationSchema);
+	// console.log(`auditTrnValidationSchema`, trnsValidationSchema);
 
 	return (
 		// possible-trns-on-ast -ptoe
@@ -29,6 +30,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 							erfNo,
 							erfId,
 							address,
+							propertyType
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["audit"],
@@ -40,7 +42,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 			>
 				Audit{" "}
 			</TableModalBtn>
-			{/* Meter Installtion */}
+			{/* Meter Installation */}
 			<TableModalBtn
 				data={{
 					modalName: "meter-installation",
@@ -86,4 +88,4 @@ const TableBtnsPossibleTrnsOnErf = props => {
 	);
 };
 
-export default TableBtnsPossibleTrnsOnErf;
+export default memo(TableBtnsPossibleTrnsOnErf) ;
