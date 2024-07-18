@@ -95,6 +95,11 @@ export const formSelectOptions = {
 		{ key: "Estate", value: "Estate" },
 		{ key: "Complex", value: "Complex" },
 		{ key: "Townhouses", value: "Townhouses" },
+		{ key: "Non Residential", value: "Non Residential" },
+		{ key: "School", value: "School" },
+		{ key: "Hospital", value: "Hospital" },
+		{ key: "Shopping Center/Mall", value: "Shopping Center/Mall" },
+		{ key: "Garage", value: "Garage" },
 		{
 			key: "Stand Alone (with outside rooms)",
 			value: "Stand Alone (with outside rooms)",
@@ -220,7 +225,7 @@ export const formSelectOptions = {
 		{ key: "average", value: "average" },
 	],
 
-	cbPoleOptions: [
+	cbPoleOpprotions: [
 		{ key: "choose", value: "choose" },
 		{ key: "single pole", value: "single pole" },
 		{ key: "double pole", value: "double pole" },

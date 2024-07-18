@@ -1,6 +1,18 @@
-import { useMap, AdvancedMarker } from "@vis.gl/react-google-maps";
+import {
+	useMap,
+	AdvancedMarker,
+	InfoWindow,
+	Marker,
+} from "@vis.gl/react-google-maps";
 import { MarkerClusterer } from "@googlemaps/markerclusterer";
-import { useEffect, useState, useRef, useContext, useMemo } from "react";
+import {
+	useEffect,
+	useState,
+	useRef,
+	useContext,
+	useMemo,
+	useCallback,
+} from "react";
 
 // css
 import "@/components/maps/MapMarkers.css";
@@ -17,10 +29,23 @@ export const MapMarkers = () => {
 	// console.log(`erfsContext`, erfsContext)
 
 	const erfs = useMemo(() => erfsContext?.erfs, [erfsContext?.erfs]);
-	console.log(`erfs`, erfs);
+	// console.log(`erfs`, erfs);
+	
+	// ----------------------
+	
+	// const [selectedErfKey, setSelectedErfKey] = useState(null);
+	// console.log(`selectedErfKey`, selectedErfKey);
+	
+	// const selectedErf = useMemo(
+	// 	() =>
+	// 		erfs && selectedErfKey
+	// 	? (erfs.find((erf) => erf.id === selectedErfKey))
+	// 	: null,
+	// 	[erfs, selectedErfKey]
+	// );
+	// console.log(`selectedErf`, selectedErf);
 
-	// const erfs = erfsContext?.erfs
-	// console.log(`erfs`, erfs)
+	// --------------------------
 
 	const map = useMap();
 	const [markers, setMarkers] = useState({});
@@ -54,10 +79,21 @@ export const MapMarkers = () => {
 		});
 	};
 
+	// const handleInfoWindowClose = useCallback(() => {
+	// 	setSelectedErfKey(null);
+	// }, []);
+
+	// const handleMarkerClick = useCallback((id) => {
+	// 	console.log(`id`, id)
+  //   setSelectedErfKey(id);
+  // }, []);
+
 	return (
 		<>
 			{erfs &&
 				erfs.map((erf) => {
+					const { asts } = erf;
+					const astTotal = asts?.length || "";
 					return (
 						<AdvancedMarker
 							position={{
@@ -69,11 +105,21 @@ export const MapMarkers = () => {
 								// console.log(`marker`, marker)
 								setMarkerRef(marker, erf.id);
 							}}
+							// onClick={()=> handleMarkerClick(erf.id) }
 						>
-							{/* <span style={{ fontSize: "2rem" }}>🌳</span> */}
+							{astTotal && <button className="erf-asts">{astTotal}</button>}
 							<button className="erf-no-btn">
 								<span className="erf-no">{erf.erfNo}</span>
 							</button>
+
+							{/* {selectedErfKey && (
+								<InfoWindow
+									anchor={markers[erf.id]}
+									onCloseClick={handleInfoWindowClose}
+								>
+									{selectedErf?.erfNo}
+								</InfoWindow>
+							)} */}
 						</AdvancedMarker>
 					);
 				})}

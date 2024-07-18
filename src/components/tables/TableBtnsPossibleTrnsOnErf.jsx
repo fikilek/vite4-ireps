@@ -52,6 +52,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 							erfNo,
 							erfId,
 							address,
+							propertyType
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["installation"],

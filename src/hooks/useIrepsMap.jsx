@@ -107,7 +107,7 @@ import za_kzn_umgungundlovu_mpofana_w3_cadastral from "@/maps/za/za_kzn_umgungun
 import za_kzn_umgungundlovu_mpofana_w4_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w4_cadastral.geojson";
 import za_kzn_umgungundlovu_mpofana_w5_cadastral from "@/maps/za/za_kzn_umgungundlovu_mpofana_w5_cadastral.geojson";
 
-const useIrepsMap = (workbase) => {
+const useIrepsMap = (workbase, ward) => {
 	// console.log(`data.features[0]`, data?.features[0]?.geometry?.coordinates);
 
 	const [wardBoundaries, setWardBoundaries] = useState([]);
@@ -184,51 +184,66 @@ const useIrepsMap = (workbase) => {
 			// case "Nkandla LM cadastral w1" : lmBoundaryFile = za_kzn_king_cetshwayo_nkandla_cadastral_w1
 
 			case "Mpofana LM":
+				// ward 1
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana_w1,
 					boundaryType: "ward",
 				});
-				lmWardsBoundaries.push({
-					lmBoundary: za_kzn_umgungundlovu_mpofana_w1_cadastral,
-					boundaryType: "erf",
-				});
-
+				if (!ward || ward === "1") {
+					lmWardsBoundaries.push({
+						lmBoundary: za_kzn_umgungundlovu_mpofana_w1_cadastral,
+						boundaryType: "erf",
+					});
+				}
+				// ward 2
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana_w2,
 					boundaryType: "ward",
 				});
-				lmWardsBoundaries.push({
-					lmBoundary: za_kzn_umgungundlovu_mpofana_w2_cadastral,
-					boundaryType: "erf",
-				});
+				if (!ward || ward === "2") {
+					lmWardsBoundaries.push({
+						lmBoundary: za_kzn_umgungundlovu_mpofana_w2_cadastral,
+						boundaryType: "erf",
+					});
+				}
 
+				// ward 3
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana_w3,
 					boundaryType: "ward",
 				});
-				lmWardsBoundaries.push({
-					lmBoundary: za_kzn_umgungundlovu_mpofana_w3_cadastral,
-					boundaryType: "erf",
-				});
+				if (!ward || ward === "3") {
+					lmWardsBoundaries.push({
+						lmBoundary: za_kzn_umgungundlovu_mpofana_w3_cadastral,
+						boundaryType: "erf",
+					});
+				}
 
+				// ward 4
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana_w4,
 					boundaryType: "ward",
 				});
-				lmWardsBoundaries.push({
-					lmBoundary: za_kzn_umgungundlovu_mpofana_w4_cadastral,
-					boundaryType: "erf",
-				});
+				if (!ward || ward === "4") {
+					lmWardsBoundaries.push({
+						lmBoundary: za_kzn_umgungundlovu_mpofana_w4_cadastral,
+						boundaryType: "erf",
+					});
+				}
 
+				// ward 5
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana_w5,
 					boundaryType: "ward",
 				});
-				lmWardsBoundaries.push({
-					lmBoundary: za_kzn_umgungundlovu_mpofana_w5_cadastral,
-					boundaryType: "erf",
-				});
+				if (!ward || ward === "5") {
+					lmWardsBoundaries.push({
+						lmBoundary: za_kzn_umgungundlovu_mpofana_w5_cadastral,
+						boundaryType: "erf",
+					});
+				}
 
+				// mpofana lm boundary
 				lmWardsBoundaries.push({
 					lmBoundary: za_kzn_umgungundlovu_mpofana,
 					boundaryType: "lm",
@@ -631,6 +646,23 @@ const useIrepsMap = (workbase) => {
 		}
 	};
 
+	// This method displays lm boundary. Pass it the bondary polygon geojson file
+	const displayWardErfsBondary = async (map, boundary) => {
+		// console.log(`map`, map);
+		// console.log(`boundary`, boundary);
+
+		const { lmBoundary, boundaryType } = boundary;
+
+		map?.data?.loadGeoJson(lmBoundary);
+		
+		await map.data.setStyle({
+			fillOpacity: 0,
+			strokeWeight: 1,
+			strokeColor: "blue",
+			// title: "qqqqqq",
+		});
+	};
+
 	// This method dipalys all ward bondaries.
 	// Both map to draw on and aray of ward boundaries are passed as method erguments.
 	const displayLmWardBondaries = (map) => {
@@ -642,10 +674,21 @@ const useIrepsMap = (workbase) => {
 			});
 	};
 
+	// This method dipalys all ward bondaries but not use fitBounds
+	const displayWardErfsBondaries = (map) => {
+		// console.log(`wardBoundaries`, wardBoundaries);
+		wardBoundaries &&
+			wardBoundaries.map((wardBoundary) => {
+				// console.log(`wardBoundary`, wardBoundary)
+				displayWardErfsBondary(map, wardBoundary);
+			});
+	};
+
 	return {
 		showBoundaries,
 		displayLmBondary,
 		displayLmWardBondaries,
+		displayWardErfsBondaries,
 		wardBoundaries,
 	};
 };

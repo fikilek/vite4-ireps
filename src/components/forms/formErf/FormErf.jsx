@@ -39,7 +39,7 @@ const FormErf = (props) => {
 
 	const onSubmit = useCallback(
 		(values) => {
-			console.log(`values`, values);
+			// console.log(`values`, values);
 
 			if (values.id) {
 				updateDocument(values, values.id);

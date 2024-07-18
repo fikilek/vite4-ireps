@@ -70,7 +70,7 @@ const TableModalBtn = (props) => {
 				setErfError((prev) => {
 					return {
 						...prev,
-						erfError: `Erf No: ${data?.erf?.erfNo} error. Please complete Property Type.`,
+						erfError: `Erf No: ${data?.erf?.erfNo} Error. Please complete Property Type.`,
 					};
 				});
 				// console.log(`Erf No: ${data?.erf?.erfNo} error`, erfError);

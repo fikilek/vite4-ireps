@@ -12,7 +12,7 @@ import { useContext } from "react";
 
 // ErfsMap go to firebase erfs collection and fetch erfs on the workbase. These are then displayed using clustering
 const ErfsMap = () => {
-	console.log(`ErfsMap`);
+	// console.log(`ErfsMap`);
 
 	// const { erfsContext } = useContext(ErfsContext);
 	// console.log(`erfsContext`, erfsContext)

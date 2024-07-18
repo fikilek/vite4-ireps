@@ -736,7 +736,7 @@ export const useAsts = () => {
 				{
 					field: "astData.meter.cb.size",
 					columnGroupShow: "open",
-					headerName: "CB size",
+					headerName: "CB (Amps)",
 					width: 150,
 				},
 				{
@@ -755,7 +755,7 @@ export const useAsts = () => {
 				{
 					field: "astData.meter.seal.meterSealed",
 					columnGroupShow: "open",
-					headerName: "Meter SEaled?",
+					headerName: "Meter Sealed?",
 					width: 150,
 				},
 				{
