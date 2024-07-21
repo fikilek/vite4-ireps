@@ -14,6 +14,8 @@ import TableModalBtn from "@/components/tables/TableModalBtn";
 import { AstsContext } from "@/contexts/AstsContext";
 import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrnsOnAst";
 import TableBtn from "@/components/tables/TableBtn";
+import { IconContext } from "react-icons";
+import { FaMapMarkedAlt } from "react-icons/fa";
 
 export const useAsts = () => {
 	const { astsContext, setAstsContext } = useContext(AstsContext);
@@ -666,15 +668,21 @@ export const useAsts = () => {
 				{
 					field: "location.gps",
 					columnGroupShow: "closed",
-					headerName: "Ast Gps",
+					headerName: "Ast on Map",
 
 					cellRenderer: (params) => {
 						// console.log(`params`, params)
-						return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+						return (
+							<TableModalBtn data={params}>
+								<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+									<FaMapMarkedAlt />
+								</IconContext.Provider>
+							</TableModalBtn>
+						);
 					},
 					cellRendererParams: {
 						modalName: "showAstOnMap",
-						width: "7rem",
+						width: "3rem",
 					},
 					valueGetter: (params) => {
 						const lat = Number(params.data.location.gps.lat);

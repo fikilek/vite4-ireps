@@ -210,8 +210,8 @@ export const useErfs = () => {
 		},
 		{
 			field: "",
-			headerName: "Map",
-			width: 80,
+			headerName: "Erf on Map",
+			width: 120,
 			cellRenderer: (params) => {
 				// console.log(`params`, params)
 				return (
@@ -224,7 +224,7 @@ export const useErfs = () => {
 			},
 			cellRendererParams: {
 				modalName: "erfOnMap",
-				width: "2rem",
+				width: "3rem",
 			},
 			valueGetter: (params) => {
 				const lat = params.data?.address?.gps?.latitude;

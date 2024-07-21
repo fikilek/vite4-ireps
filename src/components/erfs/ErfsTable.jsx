@@ -14,7 +14,7 @@ const ErfsTable = () => {
 	// console.log(`erfsContext`, erfsContext);
 	return (
 		<div className="erfs-table">
-			<TableErfs rowData={erfsContext.erfs} colDefs={erfsContext.erfsTableFields} />
+			<TableErfs rowData={erfsContext.selectedErf || erfsContext.erfs} colDefs={erfsContext.erfsTableFields} />
 		</div>
 	);
 };

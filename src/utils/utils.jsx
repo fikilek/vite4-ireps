@@ -90,6 +90,7 @@ export const userRoles = [
 export const formSelectOptions = {
 	propertyTypeOptions: [
 		{ key: "choose", value: "choose" },
+		{ key: "Business Site", value: "Business Site" },
 		{ key: "Stand Alone", value: "Stand Alone" },
 		{ key: "Flats", value: "Flats" },
 		{ key: "Estate", value: "Estate" },

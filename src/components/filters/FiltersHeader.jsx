@@ -8,7 +8,6 @@ const FiltersHeader = props => {
 	const { active, setActive } = props;
 	return (
 		<div className="filters-header">
-			{/* <FilterHeaderBtn label="activeArea" active={active} setActive={setActive} /> */}
 			<FilterHeaderBtn label="dataFilter" active={active} setActive={setActive} />
 			<FilterHeaderBtn label="reports" active={active} setActive={setActive} />
 		</div>
