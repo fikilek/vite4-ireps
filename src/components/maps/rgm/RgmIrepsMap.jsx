@@ -5,6 +5,7 @@ Base map for maps in ireps
 // npm libraries
 import {
 	GoogleMap,
+	InfoWindow,
 	MarkerClustererF,
 	MarkerF,
 	useJsApiLoader,
@@ -20,7 +21,8 @@ import RgmErfMarkers from "./RgmErfMarkers";
 // contexts
 
 // components
-import erf_icon3 from '@/images/erf_icon3.jpg'
+import erf_icon3 from "@/images/erf_icon3.jpg";
+import FormErf from "@/components/forms/formErf/FormErf";
 
 const containerStyle = {
 	width: "100%",
@@ -30,10 +32,13 @@ const containerStyle = {
 const RgmIrepsMap = (props) => {
 	console.log(`props`, props);
 
-	const erfs = useMemo(() => props?.erfs?.slice(0, 5000), [props?.erfs]);
+	const erfs = useMemo(() => props?.erfs, [props?.erfs]);
 
 	const mapRef = useRef(null);
 	// const markerRef = useRef(null);
+
+	const [selectedErf, setSelectedErf] = useState(null);
+	console.log(`selectedErf`, selectedErf);
 
 	const mpofanaCityCenter = useMemo(() => {
 		return {
@@ -89,7 +94,9 @@ const RgmIrepsMap = (props) => {
 											lat: erf?.address?.gps?.latitude,
 											lng: erf?.address?.gps?.longitude,
 										}}
-										label={`${erf.erfNo} [${(erf?.asts?.length) ? [(erf?.asts?.length)] : 0}]`}
+										label={`${erf.erfNo} [${
+											erf?.asts?.length ? [erf?.asts?.length] : 0
+										}]`}
 										clusterer={clusterer}
 										// icon={{
 										// 	path:
@@ -100,11 +107,15 @@ const RgmIrepsMap = (props) => {
 										// 	strokeColor: "gold",
 										// 	strokeWeight: 2,
 										// }}
-										icon={erf_icon3}
+										icon={{
+											url: erf_icon3,
+											scaleSize: new window.google.maps.Size(50.3),
+											fillColor: "blue",
+										}}
 										// icon={"https://web.archive.org/web/20230701011019/https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"}
-										// onClick={() => {
-										// 	fetchDirections(house);
-										// }}
+										onClick={() => {
+											setSelectedErf(erf);
+										}}
 									>
 										<button>{erf.erfNo}</button>
 									</MarkerF>
@@ -113,6 +124,21 @@ const RgmIrepsMap = (props) => {
 						</div>
 					)}
 				</MarkerClustererF>
+			)}
+			{selectedErf && (
+				<InfoWindow
+					position={{
+						lat: selectedErf.address.gps.latitude,
+						lng: selectedErf.address.gps.longitude,
+					}}
+					onCloseClick={() => setSelectedErf(null)}
+				>
+					<div>
+						<FormErf data={{
+							data: selectedErf					
+						}} />
+					</div>
+				</InfoWindow>
 			)}
 		</GoogleMap>
 	);

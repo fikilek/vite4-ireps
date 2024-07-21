@@ -21,7 +21,7 @@ import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
 const FormErf = (props) => {
-	// console.log(`props`, props);
+	console.log(`props`, props);
 
 	const { data: formData } = props.data;
 	// console.log(`formData`, formData);

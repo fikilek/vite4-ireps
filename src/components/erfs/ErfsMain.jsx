@@ -12,7 +12,7 @@ import RgmErfsMap from "@/components/maps/rgm/RgmErfsMap";
 
 const ErfsMain = () => {
 	const { erfsContext } = useContext(ErfsContext);
-	// console.log(`erfsContext`, erfsContext)
+	console.log(`erfsContext`, erfsContext)
 
 	// const isThereErfs = erfsContext.erfs.length
 	// console.log(`isThereErfs`, isThereErfs)
@@ -20,7 +20,7 @@ const ErfsMain = () => {
 	return (
 		<div className="erfs-main">
 			{erfsContext.activeTab === "table" && <ErfsTable />}
-			{erfsContext.activeTab === "map" && <RgmErfsMap erfs={erfsContext.erfs} />}
+			{erfsContext.activeTab === "map" && <RgmErfsMap erfs={ erfsContext.selectedErf || erfsContext.erfs} />}
 		</div>
 	);
 };
