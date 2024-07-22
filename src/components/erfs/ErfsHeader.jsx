@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 
 // css
 import "@/components/erfs/ErfsHeader.css";
@@ -11,7 +11,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 import { ErfsContext } from "@/contexts/ErfsContext";
 import PageTitle from "@/pages/PageTitle";
 import FilterBtn from "@/components/filters/FilterBtn";
-import BtnPageHeaderBtn from "../buttons/BtnPageHeaderBtn";
+import BtnPageHeaderBtn from "@/components/buttons/BtnPageHeaderBtn";
 
 const ErfsHeader = (props) => {
 	// props
@@ -27,15 +27,15 @@ const ErfsHeader = (props) => {
 	const { setErfsContext } = useContext(ErfsContext);
 
 	// handle event - active tab
-	const handleActiveTab = (e) => {
+	const handleActiveTab = useCallback( (e) => {
 		// console.log(`e.target.id`, e.target.id);
 		setErfsContext((prev) => {
 			return {
 				...prev,
 				activeTab: e.target.id,
 			};
-		});
-	};
+		})
+	},[setErfsContext])
 
 	return (
 		<div className="erfs-header">

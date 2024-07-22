@@ -122,12 +122,12 @@ const FilterDataFilter = props => {
 
 	return (
 		<div className="filter-data-filter">
-			<FilterDataFilterHeader
+			{/* <FilterDataFilterHeader
 				handleGetData={handleGetData}
 				erfsFilters={erfsFilters}
 				setErfsFilters={setErfsFilters}
 				initErfsFilter={initErfsFilter}
-			/>
+			/> */}
 
 			<div className="filters">
 				{erfsFiltersArray.map(filter => {

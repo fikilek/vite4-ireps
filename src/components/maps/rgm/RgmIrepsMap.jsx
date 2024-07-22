@@ -13,12 +13,19 @@ import {
 
 // css
 import "@/components/maps/rgm/RgmIrepsMap.css";
-import { Children, memo, useCallback, useMemo, useRef, useState } from "react";
-import RgmErfMarkers from "./RgmErfMarkers";
+import {
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 
 // hooks
 
-// contexts
+// contexts// context
+import { ErfsContext } from "@/contexts/ErfsContext";
 
 // components
 import erf_icon3 from "@/images/erf_icon3.jpg";
@@ -29,16 +36,24 @@ const containerStyle = {
 	height: "100%",
 };
 
-const RgmIrepsMap = (props) => {
-	console.log(`props`, props);
+const RgmIrepsMap = () => {
+	// console.log(`props`, props);
 
-	const erfs = useMemo(() => props?.erfs, [props?.erfs]);
+	const { erfsContext } = useContext(ErfsContext);
+
+
+	const erfs = useMemo(() => {
+		return erfsContext?.selectedErf
+			? erfsContext?.selectedErf
+			: erfsContext?.erfs;
+	}, [erfsContext]);
+	// console.log(`erfs`, erfs);
 
 	const mapRef = useRef(null);
 	// const markerRef = useRef(null);
 
 	const [selectedErf, setSelectedErf] = useState(null);
-	console.log(`selectedErf`, selectedErf);
+	// console.log(`selectedErf`, selectedErf);
 
 	const mpofanaCityCenter = useMemo(() => {
 		return {
@@ -64,6 +79,18 @@ const RgmIrepsMap = (props) => {
 	// 	setMap(null);
 	// }, []);
 
+	useEffect(() => {
+		// console.log(`mapRef.current`, mapRef.current);
+		// console.log(`props?.erfsContext?.selectedErf`, props?.erfsContext?.selectedErf);
+		if (erfsContext?.selectedErf) {
+			mapRef.current.panTo({
+				lat: erfsContext?.selectedErf[0]?.address?.gps?.latitude,
+				lng: erfsContext?.selectedErf[0]?.address?.gps?.longitude,
+			});
+			mapRef.current.setZoom(18)
+		}
+	}, [erfsContext?.selectedErf]);
+
 	const onLoad = useCallback((map) => {
 		mapRef.current = map;
 	}, []);
@@ -80,11 +107,14 @@ const RgmIrepsMap = (props) => {
 			// onUnmount={onUnmount}
 		>
 			{/* <RgmErfMarkers erfs={props.erfs} /> */}
-			{erfs && (
+			{/* {erfs && (
 				<MarkerClustererF>
 					{(clusterer) => (
-						<div>
-							{erfs.map((erf) => {
+						<div> */}
+							{
+							
+							
+							erfs.map((erf) => {
 								// console.log(`clusterer`, clusterer);
 								return (
 									<MarkerF
@@ -97,7 +127,7 @@ const RgmIrepsMap = (props) => {
 										label={`${erf.erfNo} [${
 											erf?.asts?.length ? [erf?.asts?.length] : 0
 										}]`}
-										clusterer={clusterer}
+										// clusterer={clusterer}
 										// icon={{
 										// 	path:
 										// 		"M8 12l-4.7023 2.4721.898-5.236L.3916 5.5279l5.2574-.764L8 0l2.3511 4.764 5.2574.7639-3.8043 3.7082.898 5.236z",
@@ -107,11 +137,10 @@ const RgmIrepsMap = (props) => {
 										// 	strokeColor: "gold",
 										// 	strokeWeight: 2,
 										// }}
-										icon={{
-											url: erf_icon3,
-											scaleSize: new window.google.maps.Size(50.3),
-											fillColor: "blue",
-										}}
+										// icon={{
+										// 	url: erf_icon3,
+										// 	// scaleSize: new window.google.maps.Size(50.3),
+										// }}
 										// icon={"https://web.archive.org/web/20230701011019/https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"}
 										onClick={() => {
 											setSelectedErf(erf);
@@ -120,11 +149,17 @@ const RgmIrepsMap = (props) => {
 										<button>{erf.erfNo}</button>
 									</MarkerF>
 								);
-							})}
-						</div>
+							})
+							
+							
+							}
+
+
+							
+						{/* </div>
 					)}
 				</MarkerClustererF>
-			)}
+			)} */}
 			{selectedErf && (
 				<InfoWindow
 					position={{
@@ -134,9 +169,11 @@ const RgmIrepsMap = (props) => {
 					onCloseClick={() => setSelectedErf(null)}
 				>
 					<div>
-						<FormErf data={{
-							data: selectedErf					
-						}} />
+						<FormErf
+							data={{
+								data: selectedErf,
+							}}
+						/>
 					</div>
 				</InfoWindow>
 			)}
@@ -144,4 +181,4 @@ const RgmIrepsMap = (props) => {
 	);
 };
 
-export default memo(RgmIrepsMap);
+export default RgmIrepsMap
