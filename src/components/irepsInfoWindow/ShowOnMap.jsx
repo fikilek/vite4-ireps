@@ -6,10 +6,12 @@ import IwShowOnMap from "@/components/irepsInfoWindow/IwShowOnMap";
 import { useDocument } from "@/hooks/useDocument";
 
 const ShowOnMap = props => {
-	// console.log(`props`, props);
+	console.log(`props`, props);
 
-	const { erfId } = props.data.data.erf;
+	const { erfId, address } = props.data.data.erf;
 	// console.log(`erfId`, erfId);
+
+	const {lmMetro, ward} = address
 
 	const [gpsPoint, setGpsPoint] = useState({});
 	// console.log(`gpsPoint`, gpsPoint);
@@ -36,6 +38,8 @@ const ShowOnMap = props => {
 					lat={gpsPoint?.point?.lat}
 					lng={gpsPoint?.point?.lng}
 					label={gpsPoint?.label}
+					ward={ward}
+					lmMetro={lmMetro}
 				/>
 			)}
 		</div>

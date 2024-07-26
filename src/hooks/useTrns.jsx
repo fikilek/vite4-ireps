@@ -1252,7 +1252,6 @@ export const useTrns = (trnType, astCat) => {
 
 				inspectionData: lazy((v, { context }) => {
 					return object().shape({
-
 						newMeter: string().when("meterAccess", (meterAccess_, schema) => {
 							const { meterAccess } = context.access;
 							if (meterAccess === "no") {
@@ -1476,7 +1475,8 @@ export const useTrns = (trnType, astCat) => {
 										// console.log(`meterSealed`, meterSealed);
 										// console.log(`context`, context);
 										// console.log(`comment`, comment);
-										const { meterSealed, sealNo } = context?.astData?.meter?.seal;
+										const { meterSealed, sealNo } =
+											context?.astData?.meter?.seal;
 										const { meterAccess } = context?.access;
 										if (meterAccess === "no") {
 											return schema.notRequired();
@@ -1760,6 +1760,29 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+				// edit
+				{
+					field: "",
+					headerName: "Edit",
+					cellRenderer: (params) => {
+						// console.log(`props.data`, params.data);
+						return (
+							<TableModalBtn data={params}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
+									<LuFileEdit />
+								</IconContext.Provider>
+							</TableModalBtn>
+						);
+					},
+					cellRendererParams: {
+						modalName: "meter-audit",
+						validationSchema: trnsValidationSchema["meter"]["audit"],
+						width: "3rem",
+					},
+					width: 80,
+				},
 
 				// erf - data comes from the erf that created the trn
 				{
@@ -1821,30 +1844,6 @@ export const useTrns = (trnType, astCat) => {
 				// 	headerName: "Trn No",
 				// 	width: 100,
 				// },
-
-				// edit
-				{
-					field: "",
-					headerName: "Edit",
-					cellRenderer: (params) => {
-						// console.log(`props.data`, params.data);
-						return (
-							<TableModalBtn data={params}>
-								<IconContext.Provider
-									value={{ color: "blue", fontSize: "1rem" }}
-								>
-									<LuFileEdit />
-								</IconContext.Provider>
-							</TableModalBtn>
-						);
-					},
-					cellRendererParams: {
-						modalName: "meter-audit",
-						validationSchema: trnsValidationSchema["meter"]["audit"],
-						width: "3rem",
-					},
-					width: 80,
-				},
 
 				// trn state - shows the form state and opens it on a click for editing
 				{
@@ -2380,46 +2379,6 @@ export const useTrns = (trnType, astCat) => {
 				// 	// },
 				// 	hide: false,
 				// },
-				// erf - data comes from the erf that created the trn
-				{
-					headerName: "Erf (where ast belongs)",
-					children: [
-						{
-							field: "erf.erfNo",
-							headerName: "Erf No",
-							width: 110,
-							cellRenderer: (params) => {
-								// console.log(`props`, props);
-								return (
-									<TableModalBtn data={params}>{params.value}</TableModalBtn>
-								);
-							},
-							cellRendererParams: {
-								modalName: "iwShowOnMap",
-							},
-							hide: false,
-						},
-						{
-							field: "erf.address.systemAdr",
-							headerName: "Erf Address (Google)",
-							width: 400,
-							hide: false,
-						},
-					],
-				},
-				// trn history
-				// {
-				// 	field: "metadata.trnHistory",
-				// 	headerName: "History",
-				// 	width: 100,
-				// },
-				// trn number
-				// {
-				// 	field: "metadata.trnNo",
-				// 	headerName: "Trn No",
-				// 	width: 100,
-				// },
-
 				// tid form edit
 				{
 					field: "",
@@ -2443,6 +2402,41 @@ export const useTrns = (trnType, astCat) => {
 					},
 					width: 80,
 				},
+				// erf - data comes from the erf that created the trn
+				{
+					field: "erf.erfNo",
+					headerName: "Erf No",
+					width: 110,
+					cellRenderer: (params) => {
+						// console.log(`props`, props);
+						return (
+							<TableModalBtn data={params}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
+									<FaMapMarkedAlt /> {params.value}
+								</IconContext.Provider>
+							</TableModalBtn>
+						);
+					},
+					cellRendererParams: {
+						modalName: "iwShowOnMap",
+						tableBtnClass: "table-btn-icon",
+					},
+					hide: false,
+				},
+				// trn history
+				// {
+				// 	field: "metadata.trnHistory",
+				// 	headerName: "History",
+				// 	width: 100,
+				// },
+				// trn number
+				// {
+				// 	field: "metadata.trnNo",
+				// 	headerName: "Trn No",
+				// 	width: 100,
+				// },
 
 				// trn state - shows the form state and opens it on a click for editing
 				{
@@ -2637,7 +2631,6 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
-
 				// Ast Data
 				{
 					headerName: "Ast Data",
@@ -2673,6 +2666,31 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+				
+				// edit
+				{
+					field: "",
+					headerName: "Edit",
+					cellRenderer: (params) => {
+						// console.log(`props.data`, params.data);
+						return (
+							<TableModalBtn data={params}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
+									<LuFileEdit />
+								</IconContext.Provider>
+							</TableModalBtn>
+						);
+					},
+					cellRendererParams: {
+						modalName: "meter-inspection",
+						validationSchema: trnsValidationSchema["meter"]["inspection"],
+						width: "3rem",
+					},
+					width: 80,
+				},
+
 
 				// erf - data comes from the erf that created the trn
 				{
@@ -2734,30 +2752,6 @@ export const useTrns = (trnType, astCat) => {
 				// 	headerName: "Trn No",
 				// 	width: 100,
 				// },
-
-				// edit
-				{
-					field: "",
-					headerName: "Edit",
-					cellRenderer: (params) => {
-						// console.log(`props.data`, params.data);
-						return (
-							<TableModalBtn data={params}>
-								<IconContext.Provider
-									value={{ color: "blue", fontSize: "1rem" }}
-								>
-									<LuFileEdit />
-								</IconContext.Provider>
-							</TableModalBtn>
-						);
-					},
-					cellRendererParams: {
-						modalName: "meter-inspection",
-						validationSchema: trnsValidationSchema["meter"]["inspection"],
-						width: "3rem",
-					},
-					width: 80,
-				},
 
 				// trn state - shows the form state and opens it on a click for editing
 				{
@@ -2914,8 +2908,6 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
-
-
 			],
 		},
 		all: {
@@ -3221,8 +3213,6 @@ export const useTrns = (trnType, astCat) => {
 			],
 		},
 	};
-
-
 
 	return {
 		trnsNewFormData,

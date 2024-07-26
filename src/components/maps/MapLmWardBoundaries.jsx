@@ -1,46 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // hooks
-import { useFirestore } from "@/hooks/useFirestore.jsx";
 import useIrepsMap from "@/hooks/useIrepsMap";
-import useAuthContext from "@/hooks/useAuthContext";
 import { useMap } from "@vis.gl/react-google-maps";
 
 const MapLmWardBoundaries = () => {
+	// console.log(`MapLmWardBoundaries`)
+
 	const map = useMap();
 	// console.log(`map`, map);
 
-	const { user } = useAuthContext();
-	// console.log(`user`, user);
+	const { displayLMWardBoundaries, state } = useIrepsMap();
+	// console.log(`displayLMWardBoundaries`, displayLMWardBoundaries)
 
-	// get user details from firestore on snapshot
-	const { getDocument, response } = useFirestore("users");
-	// console.log(`response`, response);
-
-	const [workbase, setWorkbase] = useState(null);
-	// console.log(`workbase`, workbase);
-
-	const { displayLmWardBondaries, wardBoundaries } = useIrepsMap(workbase);
-	// console.log(`displayLmWardBondaries`, displayLmWardBondaries)
+	const { lmWardBoundaries } = state;
 
 	useEffect(() => {
-		if (user?.uid) {
-			getDocument(user?.uid);
-		}
-	}, [user?.uid]);
 
-	useEffect(() => {
-		if (response.success) {
-			// console.log(`response`, response);
-			const { workbase } = response?.document;
-			// console.log(`workbase`, workbase)
-			setWorkbase(workbase);
-		}
-	}, [response.success]);
+		if (!map) return;
 
-	useEffect(() => {
-		displayLmWardBondaries(map);
-	}, [wardBoundaries]);
+		displayLMWardBoundaries(map);
+
+	}, [map, lmWardBoundaries]);
+
 
 	return <div className="map-boundaries"></div>;
 };

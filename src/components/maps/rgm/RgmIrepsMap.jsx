@@ -107,10 +107,10 @@ const RgmIrepsMap = () => {
 			// onUnmount={onUnmount}
 		>
 			{/* <RgmErfMarkers erfs={props.erfs} /> */}
-			{/* {erfs && (
+			{erfs && (
 				<MarkerClustererF>
 					{(clusterer) => (
-						<div> */}
+						<div>
 							{
 							
 							
@@ -127,7 +127,7 @@ const RgmIrepsMap = () => {
 										label={`${erf.erfNo} [${
 											erf?.asts?.length ? [erf?.asts?.length] : 0
 										}]`}
-										// clusterer={clusterer}
+										clusterer={clusterer}
 										// icon={{
 										// 	path:
 										// 		"M8 12l-4.7023 2.4721.898-5.236L.3916 5.5279l5.2574-.764L8 0l2.3511 4.764 5.2574.7639-3.8043 3.7082.898 5.236z",
@@ -137,10 +137,10 @@ const RgmIrepsMap = () => {
 										// 	strokeColor: "gold",
 										// 	strokeWeight: 2,
 										// }}
-										// icon={{
-										// 	url: erf_icon3,
-										// 	// scaleSize: new window.google.maps.Size(50.3),
-										// }}
+										icon={{
+											url: erf_icon3,
+											// scaleSize: new window.google.maps.Size(50.3),
+										}}
 										// icon={"https://web.archive.org/web/20230701011019/https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"}
 										onClick={() => {
 											setSelectedErf(erf);
@@ -156,10 +156,10 @@ const RgmIrepsMap = () => {
 
 
 							
-						{/* </div>
+						</div>
 					)}
 				</MarkerClustererF>
-			)} */}
+			)}
 			{selectedErf && (
 				<InfoWindow
 					position={{

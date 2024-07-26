@@ -483,6 +483,13 @@ export const useAsts = () => {
 				},
 			],
 		},
+		// Erf ast belongs to
+		{
+			field: "erf.erfNo",
+			headerName: "Erf No",
+			width: 100,
+			tooltipField: "Erf the ast belong to",
+		},
 		// Ast description
 		{
 			headerName: "Ast Description",
@@ -564,13 +571,6 @@ export const useAsts = () => {
 				return media;
 			},
 		},
-		// Erf ast belongs to
-		{
-			field: "erf.erfNo",
-			headerName: "Erf No",
-			width: 100,
-			tooltipField: "Erf the ast belong to",
-		},
 
 		// // trns - all trns on the ast
 		// {
@@ -613,6 +613,33 @@ export const useAsts = () => {
 				// console.log(`params.data`, params.data);
 				return params.data;
 			},
+		},
+		
+		{
+			field: "location.gps",
+			columnGroupShow: "closed",
+			headerName: "Ast on Map",
+
+			cellRenderer: (params) => {
+				// console.log(`params`, params)
+				return (
+					<TableModalBtn data={params}>
+						<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
+							<FaMapMarkedAlt />
+						</IconContext.Provider>
+					</TableModalBtn>
+				);
+			},
+			cellRendererParams: {
+				modalName: "showAstOnMap",
+				width: "3rem",
+			},
+			valueGetter: (params) => {
+				const lat = Number(params.data.location.gps.lat);
+				const lng = Number(params.data.location.gps.lng);
+				return `${lat.toFixed(3)} / ${lng.toFixed(3)}`;
+			},
+			width: 140,
 		},
 
 		// Ast Specific data
@@ -664,32 +691,6 @@ export const useAsts = () => {
 					columnGroupShow: "closed",
 					headerName: "Ast Address",
 					width: 450,
-				},
-				{
-					field: "location.gps",
-					columnGroupShow: "closed",
-					headerName: "Ast on Map",
-
-					cellRenderer: (params) => {
-						// console.log(`params`, params)
-						return (
-							<TableModalBtn data={params}>
-								<IconContext.Provider value={{ color: "blue", fontSize: "1rem" }}>
-									<FaMapMarkedAlt />
-								</IconContext.Provider>
-							</TableModalBtn>
-						);
-					},
-					cellRendererParams: {
-						modalName: "showAstOnMap",
-						width: "3rem",
-					},
-					valueGetter: (params) => {
-						const lat = Number(params.data.location.gps.lat);
-						const lng = Number(params.data.location.gps.lng);
-						return `${lat.toFixed(3)} / ${lng.toFixed(3)}`;
-					},
-					width: 140,
 				},
 				{
 					field: "location.premises",

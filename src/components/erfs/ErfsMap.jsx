@@ -6,17 +6,18 @@ import "@/components/erfs/ErfsMap.css";
 
 // components
 import MapIrepsMap from "@/components/maps/MapIrepsMap";
-import { MapMarkers } from "../maps/MapMarkers";
-import MapLmWardBoundaries from "../maps/MapLmWardBoundaries";
-import { ClusteredErfMarkers } from "../maps/ClusteredTreeMarkers";
-import { useContext } from "react";
+// import { MapMarkers } from "../maps/MapMarkers";
+import MapLmWardBoundaries from "@/components/maps/MapLmWardBoundaries";
+import MapLmBoundary from "@/components/maps/MapLmBoundary";
+import { ClusteredErfMarkers } from "../maps/ClusteredErfMarkers";
+// import { useContext } from "react";
 // import { useContext } from "react";
 
 // ErfsMap go to firebase erfs collection and fetch erfs on the workbase. These are then displayed using clustering
-const ErfsMap = (props) => {
+const ErfsMap = () => {
 	// console.log(`ErfsMap props`, props);
 
-	const {erfs} = props
+	// const {erfs} = props
 
 	// const { erfsContext } = useContext(erfsContext);
 	// console.log(`erfsContext`, erfsContext)
@@ -25,8 +26,9 @@ const ErfsMap = (props) => {
 		<div className="erfs-map">
 			<MapIrepsMap>
 				<MapLmWardBoundaries />
+				<MapLmBoundary center={'center'} />
 				{/* <MapMarkers /> */}
-				<ClusteredErfMarkers erfs={erfs} />
+				<ClusteredErfMarkers />
 			</MapIrepsMap>
 		</div>
 	);

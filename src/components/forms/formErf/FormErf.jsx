@@ -21,7 +21,7 @@ import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 
 const FormErf = (props) => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 
 	const { data: formData } = props.data;
 	// console.log(`formData`, formData);
@@ -111,7 +111,7 @@ const FormErf = (props) => {
 												</span>
 											</div>
 										}
-										hr2={
+										hr1={
 											<>
 												<span>
 													Ward :{" "}
@@ -123,21 +123,14 @@ const FormErf = (props) => {
 												</span>
 											</>
 										}
-										// hr2={
-										// 	<div className="hl2">
-										// 		<span className="gps">
-										// 			{"("}
-										// 			<span className="text-emphasis2">
-										// 				{Number(formData.address.gps.latitude)?.toFixed(3)}
-										// 			</span>
-										// 			<span className="gps-seperator">{"|"}</span>
-										// 			<span className="text-emphasis2">
-										// 				{Number(formData.address.gps.longitude)?.toFixed(3)}
-										// 			</span>
-										// 			{") "}
-										// 		</span>
-										// 	</div>
-										// }
+										hr2={
+											<div className="hl2">
+												<button onClick={(e)=> e.currentTarget.default() }>
+													Meters <span className="text-emphasis2">{formData?.asts?.length ? formData?.asts?.length : 0 }	</span>
+												</button>
+													
+											</div>
+										}
 									>
 										<FormCloseBtn />
 									</HeaderGeneric>

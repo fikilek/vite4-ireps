@@ -30,7 +30,7 @@ const ShowAstOnMap = props => {
 			},
 			label: astNo,
 		});
-	}, []);
+	}, [astNo, gps?.lat, gps?.lng]);
 
 	return (
 		<div className="show-on-map">

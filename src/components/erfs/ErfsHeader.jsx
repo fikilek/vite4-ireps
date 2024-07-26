@@ -10,7 +10,7 @@ import useAuthContext from "@/hooks/useAuthContext";
 // components
 import { ErfsContext } from "@/contexts/ErfsContext";
 import PageTitle from "@/pages/PageTitle";
-import FilterBtn from "@/components/filters/FilterBtn";
+// import FilterBtn from "@/components/filters/FilterBtn";
 import BtnPageHeaderBtn from "@/components/buttons/BtnPageHeaderBtn";
 
 const ErfsHeader = (props) => {
@@ -41,7 +41,7 @@ const ErfsHeader = (props) => {
 		<div className="erfs-header">
 			<div className="ph ph-left">
 				<div className="phLl">
-					<FilterBtn />
+					{/* <FilterBtn /> */}
 					<PageTitle title={phLl} />
 					<PageTitle title={userFromUsers.workbase} />
 				</div>

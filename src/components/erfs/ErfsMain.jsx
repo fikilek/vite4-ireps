@@ -8,7 +8,8 @@ import { ErfsContext } from "@/contexts/ErfsContext";
 
 // components
 import ErfsTable from "@/components/erfs/ErfsTable";
-import RgmErfsMap from "@/components/maps/rgm/RgmErfsMap";
+// import RgmErfsMap from "@/components/maps/rgm/RgmErfsMap";
+import ErfsMap from "./ErfsMap";
 
 const ErfsMain = () => {
 	const { erfsContext } = useContext(ErfsContext);
@@ -20,7 +21,7 @@ const ErfsMain = () => {
 	return (
 		<div className="erfs-main">
 			{erfsContext.activeTab === "table" && <ErfsTable />}
-			{erfsContext.activeTab === "map" && <RgmErfsMap />}
+			{erfsContext.activeTab === "map" && <ErfsMap />}
 		</div>
 	);
 };

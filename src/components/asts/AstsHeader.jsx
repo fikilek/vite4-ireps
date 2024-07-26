@@ -4,8 +4,8 @@ import "@/components/asts/AstsHeader.css";
 
 import { AstsContext } from "@/contexts/AstsContext";
 import PageTitle from "@/pages/PageTitle";
-import FilterBtn from "@/components/filters/FilterBtn";
-import useModal from "@/hooks/useModal.jsx";
+// import FilterBtn from "@/components/filters/FilterBtn";
+// import useModal from "@/hooks/useModal.jsx";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useUser } from "@/hooks/useUser";
 
@@ -34,7 +34,7 @@ const AstsHeader = (props) => {
 		<div className="asts-header">
 			<div className="ph ph-left">
 				<div className="phLl">
-					<FilterBtn />
+					{/* <FilterBtn /> */}
 					<PageTitle title={phLl} />
 					<PageTitle title={userFromUsers.workbase} />
 				</div>

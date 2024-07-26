@@ -1,13 +1,9 @@
-// import {Erf} from './erfs';
-// import type {Marker} from '@googlemaps/markerclusterer';
-import React, { useCallback } from "react";
+// npm libraries
+import { useCallback } from "react";
 import { AdvancedMarker } from "@vis.gl/react-google-maps";
 
-// export type ErfMarkerProps = {
-//   erf: Erf;
-//   onClick: (erf: Erf) => void;
-//   setMarkerRef: (marker: Marker | null, key: string) => void;
-// };
+// css
+import '@/components/maps/ErfMarker.css'
 
 /**
  * Wrapper Component for an AdvancedMarker for a single erf.
