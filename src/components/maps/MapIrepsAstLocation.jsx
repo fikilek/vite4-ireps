@@ -11,7 +11,7 @@ import MapAstLocationAdr from "@/components/maps/MapAstLocationAdr";
 
 const initAdr = "Move The Ast Marker To Meter Location.";
 
-const MapIrepsAstLocation = props => {
+const MapIrepsAstLocation = (props) => {
 	const { center, erfNo } = props;
 	// console.log(`center`, center)
 
@@ -27,7 +27,7 @@ const MapIrepsAstLocation = props => {
 	const { rgcData, setRgcData } = useContext(ReverseGeocodingContext);
 	// console.log(`rgcData`, rgcData);
 
-	const onDragEnd = e => {
+	const onDragEnd = (e) => {
 		rgcData?.data?.form?.setFieldValue(
 			"location.gps.lat",
 			e.latLng.lat().toFixed(6)
@@ -58,7 +58,7 @@ const MapIrepsAstLocation = props => {
 				location_type: "ROOFTOP", // Override location type filter for this request.
 				enable_address_descriptor: true, // Include address descriptor in response.
 			})
-				.then(response => {
+				.then((response) => {
 					// console.log(`response`, response);
 					const address = response.results[0].formatted_address;
 					// console.log(address);
@@ -68,13 +68,13 @@ const MapIrepsAstLocation = props => {
 					rgcData.data.form.setFieldValue("location.address", address);
 					// console.log(`rgcData`, rgcData);
 				})
-				.catch(error => {
+				.catch((error) => {
 					console.error(`Error reverse geocoding: `, error);
-					setAdr(`Google Adr Not Avaiable.`);
+					setAdr(`Google Adr Not Available.`);
 					setGps(gpsLocation);
 					rgcData.data.form.setFieldValue(
 						"location.address",
-						"Google Adr Not Avaiable"
+						"Google Adr Not Available"
 					);
 				});
 		}
@@ -83,7 +83,11 @@ const MapIrepsAstLocation = props => {
 	return (
 		<div className="map-ireps-ast-location">
 			<MapIrepsCenteredMap center={center}>
-				<AdvancedMarker position={center} draggable={true} onDragEnd={onDragEnd}>
+				<AdvancedMarker
+					position={center}
+					draggable={true}
+					onDragEnd={onDragEnd}
+				>
 					<Pin background={"#22ccff"} borderColor={"#1e89a1"} scale={3}>
 						<span className="erf">{erfNo}</span>
 					</Pin>

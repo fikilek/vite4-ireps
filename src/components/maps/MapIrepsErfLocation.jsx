@@ -11,7 +11,7 @@ import MapErfLocationAdr from "@/components/maps/MapErfLocationAdr";
 
 const initAdr = "Move The Ast Marker To Meter Location.";
 
-const MapIrepsErfLocation = props => {
+const MapIrepsErfLocation = (props) => {
 	// console.log(`props`, props)
 	const { center, erfNo } = props;
 	// console.log(`center`, center)
@@ -60,7 +60,7 @@ const MapIrepsErfLocation = props => {
 			location_type: "ROOFTOP", // Override location type filter for this request.
 			enable_address_descriptor: true, // Include address descriptor in response.
 		})
-			.then(response => {
+			.then((response) => {
 				// console.log(`response`, response);
 				const address = response.results[0].formatted_address;
 				// console.log(address);
@@ -70,13 +70,13 @@ const MapIrepsErfLocation = props => {
 				rgcData.data.form.setFieldValue("address.systemAdr", address);
 				// console.log(`rgcData`, rgcData);
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.error(`Error reverse geocoding: `, error);
-				setAdr(`Google Adr Not Avaiable.`);
+				setAdr(`Google Adr Not Available.`);
 				setGps(gpsLocation);
 				rgcData.data.form.setFieldValue(
 					"address.systemAdr",
-					"Google Adr Not Avaiable"
+					"Google Adr Not Available"
 				);
 			});
 		// }

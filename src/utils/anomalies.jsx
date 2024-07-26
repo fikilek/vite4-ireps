@@ -10,7 +10,7 @@ const anomalies = {
 		"Operationally Ok",
 		"Meter Not On Portal",
 		"No TID KC Tokens on Portal",
-		"No SGC Tokens Avaiable",
+		"No SGC Tokens Available",
 		"Not Accepting TID Tokens",
 	],
 	"Meter Damaged": [

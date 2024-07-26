@@ -98,7 +98,7 @@ const TableModalBtn = (props) => {
 			}
 
 			// check 3: if systemAdr is 'google adr not available' and street is null, flag an error, if systemAdr is 'google adr not available', street cannot be null.
-			if (systemAdr === "Google Adr No Avaiable" && !street) {
+			if (((systemAdr === "Google Adr Not Available") && (street === "" || street === null || street === undefined))) {
 				// bot systemAdr and street and empty or null. This is an error.
 
 				// console.log(
