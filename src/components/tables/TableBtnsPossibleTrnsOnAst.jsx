@@ -1,8 +1,12 @@
+
+// css
 import "@/components/tables/TableBtnsPossibleTrnsOnAst.css";
 
+// hooks
 import useModal from "@/hooks/useModal.jsx";
 import { useTrns } from "@/hooks/useTrns.jsx";
 
+// components
 import TableModalBtn from "@/components/tables/TableModalBtn";
 
 const TableBtnsPossibleTrnsOnAst = (props) => {
@@ -119,7 +123,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 					irepsKeyItem: "trns",
 					width: "3rem",
 					displayMode: "modal",
-					title: "Meter decomissioning",
+					title: "Meter Decommissioning",
 				}}
 			>
 				Decom

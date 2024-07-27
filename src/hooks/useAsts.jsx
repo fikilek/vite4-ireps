@@ -791,5 +791,4 @@ export const useAsts = () => {
 		},
 	];
 
-	return { astsTableFields };
 };

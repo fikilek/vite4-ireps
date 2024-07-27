@@ -131,7 +131,8 @@ const TableModalBtn = (props) => {
 	return (
 		<div className="table-modal-btn">
 			<button
-				className={`table-btn ${tableBtnClass}`}
+				// className={`table-btn ${tableBtnClass}`}
+				className={`table-btn`}
 				onClick={handleClick}
 				style={{ width: width }}
 				title={title}

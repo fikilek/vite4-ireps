@@ -35,7 +35,7 @@ const MapIrepsMap = ({children}) => {
 
 	return (
 		<div className="map-ireps-map">
-			<APIProvider apiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
+			<APIProvider version="beta" apiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
 				<Map
 					defaultZoom={15}
 					defaultCenter={defaultCenter}
