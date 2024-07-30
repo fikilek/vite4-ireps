@@ -83,7 +83,7 @@ export const ClusteredAstMarkers = () => {
 					anchor={markers[selectedAstKey]}
 					onCloseClick={() => setSelectedAstKey(null)}
 					onClose={() => setSelectedAstKey(null)}
-					headerContent={<h3>InfoWindow Header Content</h3>}
+					// headerContent={InfoWindow Header Content}
 				>
 					<div> 
 						<AstsActivity 

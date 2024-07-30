@@ -1,5 +1,5 @@
 // library imports
-// import { useCallback } from "react";
+// import { useState, useEffect } from "react";
 
 // hooks
 import useUserCadastral from "@/hooks/useUserCadastral.jsx";
@@ -11,6 +11,15 @@ const useIrepsMap = () => {
 
 	const { lmBoundary, lmWardBoundaries } = state;
 	// console.log(`lmBoundary`, lmBoundary);
+
+	// selected ward boundaries
+	// const [selectedWardBoundaries, setSelectedWardBoundaries] = useState("all");
+	// console.log(`selectedWardBoundaries`, selectedWardBoundaries);
+
+	// useEffect(() => {
+	// 	setSelectedWardBoundaries(lmWardBoundaries);
+	// 	return ()=>setSelectedWardBoundaries(null)
+	// }, [lmWardBoundaries]);
 
 	const showBoundaries = (name, isSelected, map) => {
 		if (!name) return;
@@ -339,6 +348,21 @@ const useIrepsMap = () => {
 		});
 	};
 
+	const fitWardBoundary = async (map, wBoundary) => {
+		
+		const jsonData = await fetch(wBoundary);
+		const data = await jsonData.json();
+
+		let myBounds = new window.google.maps.LatLngBounds();
+		await data.features[0].geometry.coordinates[0][0].forEach((latLng) => {
+			myBounds.extend({ lat: latLng[1], lng: latLng[0] });
+		});
+
+		await map.fitBounds(myBounds);
+
+
+	};
+
 	// This method displays lm boundary. Pass it the bondary polygon geojson file
 
 	// const displayWardBoundary = async (map, boundary) => {
@@ -370,6 +394,7 @@ const useIrepsMap = () => {
 	// This method displays all ward boundaries but not use fitBounds
 	const displayLMWardBoundaries = async (map) => {
 		// console.log(`lmWardBoundaries`, lmWardBoundaries);
+		// map?.data?.remove()
 		await map.data.setStyle({
 			fillOpacity: 0,
 			strokeWeight: 1,
@@ -387,6 +412,9 @@ const useIrepsMap = () => {
 		showBoundaries,
 		displayLmBoundary,
 		displayLMWardBoundaries,
+		// selectedWardBoundaries,
+		// setSelectedWardBoundaries,
+		fitWardBoundary,
 		state,
 	};
 };

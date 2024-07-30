@@ -1,0 +1,12 @@
+.map-lm-ward-boundaries {
+	margin: 0.65rem;
+	height: 2.5rem;
+}
+
+.map-lm-ward-boundaries .map-control-select {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: none;
+  font-size: 1.1rem;
+}
+
