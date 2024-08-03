@@ -55,7 +55,7 @@ const FormErf = (props) => {
 		// TODO: An erf is always updated from the form and NOT created. A new erf creation is through dupliccation ONLY whnen its a sectional title.
 		if (response.success) {
 			closeModal();
-			toast(`Erf ${formData.erfNo} UPDATED succeesfully!`, {
+			toast(`Erf ${formData.erfNo} UPDATED successfully!`, {
 				position: "bottom-left",
 				autoClose: 5000,
 				hideProgressBar: false,

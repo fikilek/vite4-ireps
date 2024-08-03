@@ -208,6 +208,26 @@ export const useErfs = () => {
 			},
 			hide: false,
 		},
+		// Erf History
+		{
+			field: "erf.erfHistory",
+			headerName: "Erf History",
+			width: 120,
+			cellRenderer: (params) => {
+				// console.log(`params`, params);
+				const erfHistory = params.data?.erfHistory?.length
+					? params.data?.erfHistory?.length
+					: 0;
+				return <TableModalBtn data={params}>{erfHistory}</TableModalBtn>;
+			},
+			cellRendererParams: {
+				modalName: "iwHistory",
+				width: "3rem",
+				infoName: {
+					irepsKeyItem: 'erfs',
+				},
+			},
+		},
 		{
 			field: "",
 			headerName: "Erf on Map",
@@ -526,10 +546,6 @@ export const useErfs = () => {
 			],
 		},
 	];
-
-
-
-	
 
 	return { duplicateErf };
 };

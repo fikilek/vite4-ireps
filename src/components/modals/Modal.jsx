@@ -70,6 +70,9 @@ const IwErfOnMap = lazy(() =>
 const IwAstsOnErf = lazy(() =>
 	import("@/components/irepsInfoWindow/IwAstsOnErf")
 );
+const IwHistory = lazy(() =>
+	import("@/components/irepsInfoWindow/IwHistory")
+);
 const Signin = lazy(() => import("@/components/forms/auth/FormSignin"));
 const IwMedia = lazy(() => import("@/components/irepsInfoWindow/IwMedia"));
 
@@ -248,6 +251,13 @@ const Modal = () => {
 							<>
 								<Suspense fallback={loader}>
 									<IwTrnsOnAst data={payload} />
+								</Suspense>
+							</>
+						)}
+						{modalName === "iwHistory" && (
+							<>
+								<Suspense fallback={loader}>
+									<IwHistory data={payload} />
 								</Suspense>
 							</>
 						)}

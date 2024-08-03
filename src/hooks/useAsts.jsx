@@ -490,6 +490,26 @@ export const useAsts = () => {
 			width: 100,
 			tooltipField: "Erf the ast belong to",
 		},
+		// Ast History
+		{
+			field: "ast.astHistory",
+			headerName: "Meter History",
+			width: 150,
+			cellRenderer: (params) => {
+				// console.log(`params`, params);
+				const astHistory = params.data?.astHistory?.length
+					? params.data?.astHistory?.length
+					: 0;
+				return <TableModalBtn data={params}>{astHistory}</TableModalBtn>;
+			},
+			cellRendererParams: {
+				modalName: "iwHistory",
+				width: "3rem",
+				infoName: {
+					irepsKeyItem: 'asts',
+				},
+			},
+		},
 		// Ast description
 		{
 			headerName: "Ast Description",
@@ -596,7 +616,7 @@ export const useAsts = () => {
 		// possible trns
 		{
 			field: "trns",
-			headerName: "Trns On Ast",
+			headerName: "Trns On Meter",
 			width: 320,
 			// valueGetter: params => {
 			// 	return params.data?.trns?.length ? params.data?.trns?.length : 0;
@@ -614,11 +634,11 @@ export const useAsts = () => {
 				return params.data;
 			},
 		},
-		
+
 		{
 			field: "location.gps",
 			columnGroupShow: "closed",
-			headerName: "Ast on Map",
+			headerName: "Meter on Map",
 
 			cellRenderer: (params) => {
 				// console.log(`params`, params)
@@ -720,13 +740,13 @@ export const useAsts = () => {
 				{
 					field: "astData.meter.keypad.serialNo",
 					columnGroupShow: "open",
-					headerName: "Serial No",
-					width: 150,
+					headerName: "Keypad Serial No",
+					width: 160,
 				},
 				{
 					field: "astData.meter.keypad.comment",
 					columnGroupShow: "open",
-					headerName: "Comment",
+					headerName: "Keypad Comment",
 					width: 300,
 				},
 			],
@@ -734,12 +754,12 @@ export const useAsts = () => {
 
 		// Meter CB
 		{
-			headerName: "Circuit Breaker",
+			headerName: "Circuit Breaker (CB)",
 			children: [
 				{
 					field: "astData.meter.cb.isThereCb",
 					columnGroupShow: "open",
-					headerName: "Cb There?",
+					headerName: "CB There?",
 					width: 150,
 				},
 				{
@@ -751,7 +771,7 @@ export const useAsts = () => {
 				{
 					field: "astData.meter.cb.comment",
 					columnGroupShow: "open",
-					headerName: "Comment",
+					headerName: "CB Comment",
 					width: 300,
 				},
 			],
@@ -776,7 +796,7 @@ export const useAsts = () => {
 				{
 					field: "astData.meter.seal.comment",
 					columnGroupShow: "open",
-					headerName: "Comment",
+					headerName: "Seal Comment",
 					width: 300,
 				},
 			],
@@ -790,5 +810,4 @@ export const useAsts = () => {
 			width: 300,
 		},
 	];
-
 };

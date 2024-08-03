@@ -107,6 +107,8 @@ export const useFirestore = fbCollection => {
 					updatedByUser: user.displayName,
 					updatedByUid: user.uid,
 				},
+				updateHistory: true
+
 			});
 			// console.log(`addedDocument`, addedDocument);
 			dispatchIfNotCancelled({ type: "ADD_DOCUMENT", payload: addedDocument });
@@ -140,6 +142,7 @@ export const useFirestore = fbCollection => {
 			"metadata.updatedAtDatetime": Timestamp.now(),
 			"metadata.updatedByUser": user.displayName,
 			"metadata.updatedByUid": user.uid,
+			updateHistory: true
 		};
 
 		dispatch({ type: "IS_PENDING" });
@@ -193,6 +196,7 @@ export const useFirestore = fbCollection => {
 				updatedByUser: user.displayName,
 				updatedByUid: user.uid,
 			},
+			updateHistory: true
 		};
 
 		dispatch({ type: "IS_PENDING" });

@@ -399,6 +399,7 @@ irepsDictionary.set("ast", "Ast");
 irepsDictionary.set("astNoMedia", "No");
 irepsDictionary.set("temperMedia", "Temper");
 irepsDictionary.set("meterReadingMedia", "Reading");
+irepsDictionary.set("erfs", "Erfs");
 
 irepsDictionary.set("sizeMedia", "Size");
 irepsDictionary.set("insideBox", "Inside Box");

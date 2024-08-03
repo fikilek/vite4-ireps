@@ -1760,6 +1760,25 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
+
+				// Ast History
+				{
+					field: "trnHistory",
+					headerName: "Trn History",
+					width: 120,
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						const trnHistory = params.data?.trnHistory?.length
+							? params.data?.trnHistory?.length
+							: 0;
+						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "iwHistory",
+						width: "3rem",
+						infoName: "trn audit",
+					},
+				},
 				// edit
 				{
 					field: "",
@@ -2109,6 +2128,25 @@ export const useTrns = (trnType, astCat) => {
 					],
 				},
 
+				// Ast History
+				{
+					field: "trnHistory",
+					headerName: "Trn History",
+					width: 120,
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						const trnHistory = params.data?.trnHistory?.length
+							? params.data?.trnHistory?.length
+							: 0;
+						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "iwHistory",
+						width: "3rem",
+						infoName: "trn tid",
+					},
+				},
+
 				// tid form edit
 				{
 					field: "",
@@ -2380,6 +2418,25 @@ export const useTrns = (trnType, astCat) => {
 				// 	hide: false,
 				// },
 				// tid form edit
+
+				// Ast History
+				{
+					field: "trnHistory",
+					headerName: "Trn History",
+					width: 120,
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						const trnHistory = params.data?.trnHistory?.length
+							? params.data?.trnHistory?.length
+							: 0;
+						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "iwHistory",
+						width: "3rem",
+						infoName: "trn installation",
+					},
+				},
 				{
 					field: "",
 					headerName: "Edit",
@@ -2666,7 +2723,25 @@ export const useTrns = (trnType, astCat) => {
 						},
 					],
 				},
-				
+
+				// Ast History
+				{
+					field: "trnHistory",
+					headerName: "Trn History",
+					width: 120,
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						const trnHistory = params.data?.trnHistory?.length
+							? params.data?.trnHistory?.length
+							: 0;
+						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "iwHistory",
+						width: "3rem",
+						infoName: "trn inspection",
+					},
+				},
 				// edit
 				{
 					field: "",
@@ -2690,7 +2765,6 @@ export const useTrns = (trnType, astCat) => {
 					},
 					width: 80,
 				},
-
 
 				// erf - data comes from the erf that created the trn
 				{
@@ -3019,6 +3093,26 @@ export const useTrns = (trnType, astCat) => {
 							width: 150,
 							hide: false,
 						},
+						// Ast History
+						// {
+						// 	field: "trnHistory",
+						// 	headerName: "Trn History",
+						// 	width: 120,
+						// 	cellRenderer: (params) => {
+						// 		// console.log(`params`, params);
+						// 		const trnHistory = params.data?.trnHistory?.length
+						// 			? params.data?.trnHistory?.length
+						// 			: 0;
+						// 		return (
+						// 			<TableModalBtn data={params}>{trnHistory}</TableModalBtn>
+						// 		);
+						// 	},
+						// 	cellRendererParams: {
+						// 		modalName: "iwHistory",
+						// 		width: "3rem",
+						// 		infoName: "trn all",
+						// 	},
+						// },
 						// {
 						// 	field: "astData.astManufacturer",
 						// 	// columnGroupShow: "open",
