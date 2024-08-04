@@ -16,7 +16,9 @@ const ShowAstOnMap = props => {
 	const {lmMetro, ward} = props.data.data?.erf?.address
 	// console.log(`lmMetro`, lmMetro)
 	// console.log(`ward`, ward)
-
+	
+	const ast = props?.data?.data
+	console.log(`ast`, ast)
 
 	const [gpsPoint, setGpsPoint] = useState({});
 	// console.log(`gpsPoint`, gpsPoint);
@@ -41,6 +43,7 @@ const ShowAstOnMap = props => {
 					label={gpsPoint?.label}
 					ward={ward}
 					lmMetro={lmMetro}
+					ast={ast}
 				/>
 			)}
 		</div>

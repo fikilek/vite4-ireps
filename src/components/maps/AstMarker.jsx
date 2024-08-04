@@ -14,8 +14,13 @@ export const AstMarker = (props) => {
 	const { lat, lng } = ast?.location?.gps;
 
 	const handleClick = useCallback(() => onClick(ast), [onClick, ast]);
+
 	const ref = useCallback(
-		(marker) => setMarkerRef(marker, ast.id),
+		(marker) => {
+			if (setMarkerRef) {
+				return setMarkerRef(marker, ast.id);
+			}
+		},
 		[setMarkerRef, ast.id]
 	);
 	const { trns } = ast;

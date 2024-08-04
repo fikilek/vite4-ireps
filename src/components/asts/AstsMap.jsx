@@ -8,6 +8,7 @@ import "@/components/asts/AstsMap.css";
 import MapIrepsMap from "@/components/maps/MapIrepsMap";
 // import { MapMarkers } from "../maps/MapMarkers";
 import MapLmWardBoundaries from "@/components/maps/MapLmWardBoundaries";
+import MapAstFilter from "@/components/maps/MapAstFilter";
 import MapLmBoundary from "@/components/maps/MapLmBoundary";
 import { ClusteredAstMarkers } from "@/components/maps/ClusteredAstMarkers";
 import { ClusteredErfMarkers } from "@/components/maps/ClusteredErfMarkers";
@@ -30,6 +31,7 @@ const AstsMap = () => {
 				<MapLmBoundary center={"center"} />
 				<ClusteredErfMarkers />
 				<ClusteredAstMarkers />
+				<MapAstFilter />
 			</MapIrepsMap>
 		</div>
 	);

@@ -1,5 +1,5 @@
 // npm libraries
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 // css
 import "@/components/maps/MapLmWardBoundaries.css";

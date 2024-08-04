@@ -1776,7 +1776,10 @@ export const useTrns = (trnType, astCat) => {
 					cellRendererParams: {
 						modalName: "iwHistory",
 						width: "3rem",
-						infoName: "trn audit",
+						infoName: {
+							irepsKeyItem: "trns",
+							trnType: "audit",
+						},
 					},
 				},
 				// edit
@@ -2143,7 +2146,10 @@ export const useTrns = (trnType, astCat) => {
 					cellRendererParams: {
 						modalName: "iwHistory",
 						width: "3rem",
-						infoName: "trn tid",
+						infoName: {
+							irepsKeyItem: "trns",
+							trnType: "tid",
+						},
 					},
 				},
 
@@ -2434,7 +2440,10 @@ export const useTrns = (trnType, astCat) => {
 					cellRendererParams: {
 						modalName: "iwHistory",
 						width: "3rem",
-						infoName: "trn installation",
+						infoName: {
+							irepsKeyItem: "trns",
+							trnType: "installation",
+						},
 					},
 				},
 				{
@@ -2739,7 +2748,10 @@ export const useTrns = (trnType, astCat) => {
 					cellRendererParams: {
 						modalName: "iwHistory",
 						width: "3rem",
-						infoName: "trn inspection",
+						infoName: {
+							irepsKeyItem: "trns",
+							trnType: "inspection",
+						},
 					},
 				},
 				// edit

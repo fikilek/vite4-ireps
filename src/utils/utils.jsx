@@ -400,6 +400,9 @@ irepsDictionary.set("astNoMedia", "No");
 irepsDictionary.set("temperMedia", "Temper");
 irepsDictionary.set("meterReadingMedia", "Reading");
 irepsDictionary.set("erfs", "Erfs");
+irepsDictionary.set("audit", "Audit");
+irepsDictionary.set("installation", "Installation");
+irepsDictionary.set("inspection", "Inspection");
 
 irepsDictionary.set("sizeMedia", "Size");
 irepsDictionary.set("insideBox", "Inside Box");

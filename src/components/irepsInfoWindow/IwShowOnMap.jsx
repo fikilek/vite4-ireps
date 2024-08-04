@@ -1,18 +1,16 @@
 import "@/components/irepsInfoWindow/IwShowOnMap.css";
 
 import MapIrepsMap from "@/components/maps/MapIrepsMap";
-import MapMarkerOnMap from "@/components/maps/MapMarkerOnMap";
+import MapErfOnMap from "@/components/maps/MapErfOnMap";
 import IrepsInfoWindow from "@/components/irepsInfoWindow/IrepsInfoWindow";
 import { MapWardCadastralMarkers } from "@/components/maps/MapWardCadastralMarkers";
+import MapMeterOnMap from "@/components/maps/MapMeterOnMap";
 import MapWardErfsBoundaries from "@/components/maps/MapWardErfsBoundaries";
 
 const IwShowOnMap = (props) => {
 	// console.log(`props`, props);
-	const { lat, lng, label, lmMetro, ward } = props;
-	const gpsPoint = {
-		lat,
-		lng,
-	};
+	const { label, lmMetro, ward, ast, erf } = props;
+
 	return (
 		<IrepsInfoWindow
 			hl1={
@@ -25,7 +23,8 @@ const IwShowOnMap = (props) => {
 			<MapIrepsMap>
 				<MapWardErfsBoundaries lmMetro={lmMetro} ward={ward} />
 				<MapWardCadastralMarkers lmMetro={lmMetro} ward={ward} />
-				<MapMarkerOnMap gpsPoint={gpsPoint} label={label} />
+				{ast && <MapMeterOnMap ast={ast} />}
+				{erf && <MapErfOnMap erf={erf} />}
 			</MapIrepsMap>
 		</IrepsInfoWindow>
 	);
