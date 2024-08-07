@@ -30,7 +30,6 @@ const FilterSelector = (props) => {
 				isClearable={true}
 				onChange={setSelectedOption}
 				clearValue={clearValue}
-				// value={value}
 			/>
 		</div>
 	);

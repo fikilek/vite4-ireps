@@ -3,39 +3,39 @@ import { useContext, useMemo } from "react";
 import Select from "react-select";
 
 // css
-import "@/components/maps/MapAstFilter.css";
+import "@/components/maps/MapErfFilter.css";
 
 // hooks
 import { useMap, MapControl, ControlPosition } from "@vis.gl/react-google-maps";
 
 // contexts
-import { AstsContext } from "@/contexts/AstsContext";
+import { ErfsContext } from "@/contexts/ErfsContext";
 
 // images
-import meter14 from "@/images/meter14.jpg";
+import house3 from "@/images/house3.jpg";
 
-const MapAstFilter = () => {
-	// console.log(`MapAstFilter`)
+const MapErfFilter = () => {
+	// console.log(`MapErfFilter`)
 
 	const map = useMap();
 	// console.log(`map`, map);
 
-	const { astsContext } = useContext(AstsContext);
-	// console.log(`astsContext`, astsContext);
+	const { erfsContext } = useContext(ErfsContext);
+	// console.log(`erfsContext`, erfsContext);
 
-	// const {asts} = astsContext
-	const asts = useMemo(() => {
-		return astsContext?.asts;
-	}, [astsContext]);
-	// console.log(`asts`, asts);
+	// const {erfs} = erfsContext
+	const erfs = useMemo(() => {
+		return erfsContext?.erfs;
+	}, [erfsContext]);
+	// console.log(`erfs`, erfs);
 
 	const options =
-		asts &&
-		asts.map((ast) => {
+		erfs &&
+		erfs.map((erf) => {
 			return {
-				value: ast.astData.astNo,
-				label: ast.astData.astNo,
-				data: ast,
+				value: erf.erfNo,
+				label: erf.erfNo,
+				data: erf,
 			};
 		});
 	// console.log(`options`, options);
@@ -45,8 +45,8 @@ const MapAstFilter = () => {
 		if (!map) return;
 		if (!selection) return;
 		map.panTo({
-			lat: Number(selection.data?.location?.gps?.lat),
-			lng: Number(selection.data?.location?.gps?.lng),
+			lat: Number(selection.data?.address?.gps?.latitude),
+			lng: Number(selection.data?.address?.gps?.longitude),
 		});
 		map.setZoom(20);
 	};
@@ -60,7 +60,7 @@ const MapAstFilter = () => {
 		control: (provided) => ({
 			...provided,
 			backgroundColor: "lightgray",
-			padding: "0.11rem",
+			padding: "0.15rem",
 			// border: "1px solid black",
 			// boxShadow: "0 2px 4px rgba(0,0,0,.2)",
 		}),
@@ -77,10 +77,10 @@ const MapAstFilter = () => {
 			position={ControlPosition.TOP_LEFT}
 			style={{ margin: "1.6rem" }}
 		>
-			<div className="map-ast-filter">
-				<img src={meter14} alt="electricity meter" />
+			<div className="map-erf-filter">
+				<img src={house3} alt="erf" />
 				<Select
-					defaultValue={"Meter No"}
+					defaultValue={"Erf No"}
 					options={options}
 					isClearable={true}
 					onChange={setSelectedOption}
@@ -92,4 +92,4 @@ const MapAstFilter = () => {
 	);
 };
 
-export default MapAstFilter;
+export default MapErfFilter;

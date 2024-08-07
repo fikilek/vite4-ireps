@@ -1,5 +1,5 @@
 // css
-import "@/components/erfs/ErfsMap.css";
+import "@/components/map/MapMain.css";
 
 // contexts
 // import { ErfsContext } from "@/contexts/ErfsContext";

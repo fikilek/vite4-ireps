@@ -26,6 +26,7 @@ const SignedInLayout = () => {
 					<NavLink to="/erfs">ERFS</NavLink>
 					<NavLink to="/trns/all">TRNS</NavLink>
 					<NavLink to="/asts">ASTS</NavLink>
+					<NavLink to="/map">MAP</NavLink>
 				</nav>
 				<nav className="right-nav">
 					{user && authorised && <NavLink to="/admin">ADMIN</NavLink>}

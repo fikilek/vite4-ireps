@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { lazy, number, object, string } from "yup";
 import { v4 as uuidv4 } from "uuid";
 import { Timestamp, where } from "firebase/firestore";
+import { IconContext } from "react-icons";
+import { FaMapMarkedAlt } from "react-icons/fa";
 
 // hooks
 import useAuthContext from "@/hooks/useAuthContext";
@@ -14,8 +16,6 @@ import TableModalBtn from "@/components/tables/TableModalBtn";
 import { AstsContext } from "@/contexts/AstsContext";
 import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrnsOnAst";
 import TableBtn from "@/components/tables/TableBtn";
-import { IconContext } from "react-icons";
-import { FaMapMarkedAlt } from "react-icons/fa";
 
 export const useAsts = () => {
 	const { astsContext, setAstsContext } = useContext(AstsContext);

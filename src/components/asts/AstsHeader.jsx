@@ -1,32 +1,49 @@
-import { useContext } from "react";
+// npm library
+// import { useContext } from "react";
+import { IconContext } from "react-icons";
+// import { FaMapMarkedAlt } from "react-icons/fa";
+import { MdAddBox  } from "react-icons/md";
 
+// css
 import "@/components/asts/AstsHeader.css";
 
-import { AstsContext } from "@/contexts/AstsContext";
+// hooks
+import { useUser } from "@/hooks/useUser";
+import { useTrns } from "@/hooks/useTrns";
+// import useModal from "@/hooks/useModal.jsx";
+import useModal from "@/hooks/useModal.jsx";
+
+
+// contexts
+// import { AstsContext } from "@/contexts/AstsContext";
+
+// components
 import PageTitle from "@/pages/PageTitle";
 // import FilterBtn from "@/components/filters/FilterBtn";
-// import useModal from "@/hooks/useModal.jsx";
 import useAuthContext from "@/hooks/useAuthContext";
-import { useUser } from "@/hooks/useUser";
 
 const AstsHeader = (props) => {
 	const { phLl } = props;
 
+	const {trnsNewFormData, trnsValidationSchema} = useTrns()
+
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
+
+	const { openModal } = useModal();
 
 	const { userFromUsers } = useUser(user.uid);
 	// console.log(`userFromUsers`, userFromUsers);
 
-	const { astsContext, setAstsContext } = useContext(AstsContext);
-
 	// handle event - active tab
-	const handleActiveTab = (e) => {
-		setAstsContext((prev) => {
-			return {
-				...prev,
-				activeTab: e.target.id,
-			};
+	const handleOpenCheckinForm = (e) => {
+		console.log(`open checkin form`, e);
+		openModal({
+			modalName: 'checkin',
+			payload: {
+				data: trnsNewFormData['meter']['checkin'],
+				validationSchema: trnsValidationSchema['meter']['checkin'],
+			},
 		});
 	};
 
@@ -44,13 +61,13 @@ const AstsHeader = (props) => {
 			<div className="ph ph-right">
 				<div className="phRl"></div>
 				<div className="phRr">
-					<button
+					{/* <button
 						className={astsContext.activeTab === "table" ? "active" : null}
 						id="table"
 						onClick={handleActiveTab}
 					>
 						Table
-					</button>
+					</button> */}
 					{/* <button
 						className={astsContext.activeTab === "split" ? "active" : null}
 						id="split"
@@ -59,11 +76,13 @@ const AstsHeader = (props) => {
 						Split
 					</button> */}
 					<button
-						className={astsContext.activeTab === "map" ? "active" : null}
+						className={"checkin-form-btn"}
 						id="map"
-						onClick={handleActiveTab}
+						onClick={handleOpenCheckinForm}
 					>
-						Map
+						<IconContext.Provider value={{ color: "blue", size: "1.5rem" }}>
+							<MdAddBox  />
+						</IconContext.Provider>
 					</button>
 				</div>
 			</div>

@@ -29,6 +29,9 @@ const ShowOnMap = lazy(() => import("@/components/irepsInfoWindow/ShowOnMap"));
 const FormMeterAudit = lazy(() =>
 	import("@/components/forms/formTrn/audit/FormMeterAudit")
 );
+const FormCheckin = lazy(() =>
+	import("@/components/forms/formTrn/checkin/FormCheckin")
+);
 const IwPossibleAstTrnsOnErf = lazy(() =>
 	import("@/components/irepsInfoWindow/IwPossibleAstTrnsOnErf")
 );
@@ -316,6 +319,14 @@ const Modal = () => {
 							<>
 								<Suspense fallback={loader}>
 									<FormMeterEdit data={payload} />
+								</Suspense>
+							</>
+						)}
+						{/* edits */}
+						{modalName === "checkin" && (
+							<>
+								<Suspense fallback={loader}>
+									<FormCheckin data={payload} />
 								</Suspense>
 							</>
 						)}

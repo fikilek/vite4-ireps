@@ -83,6 +83,39 @@ export const useTrns = (trnType, astCat) => {
 
 	const trnsNewFormData = {
 		meter: {
+			checkin: {
+				metadata: {
+					updatedAtDatetime: Timestamp.now(),
+					updatedByUser: user.displayName,
+					updatedByUid: user.uid,
+					createdAtDatetime: Timestamp.now(),
+					createdByUser: user.displayName,
+					createdByUid: user.uid,
+					trnType: "checkin", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
+					trnNo: "",
+					trnId: uuidv4(),
+					trnState: "draft",
+				},
+				astData: {
+					astId: uuidv4(),
+					astNo: "", // for meters this is a meter no
+					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'circuit breaker', 'seal'],
+					astState: "", // ['stores', 'field', 'service', 'temper', 'etc']
+					astManufacturer: "",
+					astName: "",
+					meter: {
+						phase: "", // ['single', 'three', ]
+						type: "", // ['pre-paid', 'conventional']
+					},
+				},
+				location: {
+					address: "", // ast exact or nearest address. 'gcBt'n used to collect data
+					gps: {
+						lat: "", // long - Required
+						lng: "", // long - Required
+					},
+				},
+			},
 			audit: {
 				access: {
 					meterAccess: "", // ['yes', 'no']
@@ -334,6 +367,44 @@ export const useTrns = (trnType, astCat) => {
 
 	const trnsValidationSchema = {
 		meter: {
+			checkin: object().shape({
+
+				astData: object().shape({
+						astNo: string().required("Required"),
+						astName: string().required("Required"),
+						astManufacturer: string().required("Required"),
+						astState: string().required("Required"),
+						meter: object().shape({
+							phase: string().required("Required"),
+							type: string().required("Required"),
+						}),
+					}),
+			
+
+				location: object().shape({
+						address: string().required("Required"),
+						gps: object().shape({
+							lat: number().required("Required"),
+							lng: number().required("Required"),
+					})
+				}),
+				// metadata: lazy((v, { context }) => {
+				// 	return object().shape({
+				// 		// updatedAtDatetime: date().notRequired(),
+				// 		updatedByUser: string().notRequired(),
+				// 		updatedByUid: string().notRequired(),
+				// 		// createdAtDatetime: date().notRequired(),
+				// 		createdByUser: string().notRequired(),
+				// 		createdByUid: string().notRequired(),
+				// 		trnHistory: number().notRequired(), // how many times transaction has been updated
+				// 		trnType: string().notRequired(), //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
+				// 		trnNo: string().notRequired(),
+				// 		trnId: string().notRequired(),
+				// 		trnState: string().notRequired(),
+				// 	});
+				// }),
+			}),
+
 			audit: object().shape({
 				access: object().shape({
 					meterAccess: string()

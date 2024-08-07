@@ -53,6 +53,7 @@ import { GmrContextProvider } from "./contexts/GmrContext";
 const Erfs = lazy(() => import("@/pages/erfs/Erfs"));
 const Trns = lazy(() => import("@/pages/trns/Trns"));
 const Asts = lazy(() => import("@/pages/asts/Asts"));
+const Map = lazy(() => import("@/pages/map/Map"));
 
 const AdminLayout = lazy(() => import("@/components/layouts/AdminLayout"));
 const SystemTablesLayout = lazy(() =>
@@ -70,7 +71,9 @@ const Users = lazy(() => import("@/pages/users/Users"));
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<RootLayout />}>
+
 			<Route index element={<Home />} />
+
 			<Route
 				path="erfs"
 				element={
@@ -89,6 +92,7 @@ const router = createBrowserRouter(
 					</Suspense>
 				}
 			/>
+
 			<Route
 				path="trns"
 				element={
@@ -263,6 +267,7 @@ const router = createBrowserRouter(
 					}
 				/>
 			</Route>
+
 			<Route
 				path="asts"
 				element={
@@ -281,6 +286,26 @@ const router = createBrowserRouter(
 					</Suspense>
 				}
 			/>
+
+			<Route
+				path="map"
+				element={
+					<Suspense fallback={loader}>
+						<RequireAuth
+							allowedRoles={[
+								"guest",
+								"fieldworker",
+								"supervisor",
+								"manager",
+								"superuser",
+							]}
+						>
+							<Map />
+						</RequireAuth>
+					</Suspense>
+				}
+			/>
+
 			<Route
 				path="admin"
 				element={
@@ -375,6 +400,7 @@ const router = createBrowserRouter(
 					}
 				></Route>
 			</Route>
+
 			<Route
 				path="user"
 				element={
@@ -399,9 +425,11 @@ const router = createBrowserRouter(
 			{/* path to unauthhorised  */}
 
 			<Route path="/unauthorised" element={<NotAuthenticated />} />
+
 			<Route path="/signin" element={<FormSignin />} />
 
 			<Route path="*" element={<NoPageFound />} />
+			
 		</Route>
 	)
 );

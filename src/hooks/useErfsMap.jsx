@@ -1,10 +1,6 @@
-import { Timestamp, limit, serverTimestamp, where } from "firebase/firestore";
-import { v4 as uuidv4 } from "uuid";
-import { lazy, number, object, string } from "yup";
+import { limit,  where } from "firebase/firestore";
+// import { v4 as uuidv4 } from "uuid";
 import { useContext, useEffect, useState } from "react";
-import { IconContext } from "react-icons";
-import { LuFileEdit } from "react-icons/lu";
-import { FaMapMarkedAlt } from "react-icons/fa";
 
 // hooks
 import useAuthContext from "@/hooks/useAuthContext";
