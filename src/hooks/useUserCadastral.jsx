@@ -23,6 +23,17 @@ import za_mp_nkangala_vk_w6 from "@/maps/za/za_mp_nkangala_vk_w6.geojson";
 import za_mp_nkangala_vk_w7 from "@/maps/za/za_mp_nkangala_vk_w7.geojson";
 import za_mp_nkangala_vk_w8 from "@/maps/za/za_mp_nkangala_vk_w8.geojson";
 import za_mp_nkangala_vk_w9 from "@/maps/za/za_mp_nkangala_vk_w9.geojson";
+// za_mp_nlangala_vk ward cadastral
+import za_mp_nkangala_vk_w1_cadastral from "@/maps/za/za_mp_nkangala_vk_w1_cadastral.geojson";
+import za_mp_nkangala_vk_w2_cadastral from "@/maps/za/za_mp_nkangala_vk_w2_cadastral.geojson";
+import za_mp_nkangala_vk_w3_cadastral from "@/maps/za/za_mp_nkangala_vk_w3_cadastral.geojson";
+import za_mp_nkangala_vk_w4_cadastral from "@/maps/za/za_mp_nkangala_vk_w4_cadastral.geojson";
+import za_mp_nkangala_vk_w5_cadastral from "@/maps/za/za_mp_nkangala_vk_w5_cadastral.geojson";
+import za_mp_nkangala_vk_w6_cadastral from "@/maps/za/za_mp_nkangala_vk_w6_cadastral.geojson";
+import za_mp_nkangala_vk_w7_cadastral from "@/maps/za/za_mp_nkangala_vk_w7_cadastral.geojson";
+import za_mp_nkangala_vk_w8_cadastral from "@/maps/za/za_mp_nkangala_vk_w8_cadastral.geojson";
+import za_mp_nkangala_vk_w9_cadastral from "@/maps/za/za_mp_nkangala_vk_w9_cadastral.geojson";
+
 
 /****************************************************************************
 Lesedi LM
@@ -238,33 +249,33 @@ const useUserCadastral = () => {
 					lmWardBoundaries.push({
 						wardBoundary: za_kzn_umgungundlovu_mpofana_w1,
 						erfBoundary: za_kzn_umgungundlovu_mpofana_w1_cadastral,
-						ward: "w1",
+						ward: 1,
 					});
 					// ward 2
 					lmWardBoundaries.push({
 						wardBoundary: za_kzn_umgungundlovu_mpofana_w2,
 						erfBoundary: za_kzn_umgungundlovu_mpofana_w2_cadastral,
-						ward: "w2",
+						ward: 2,
 					});
 					// ward 3
 					lmWardBoundaries.push({
 						wardBoundary: za_kzn_umgungundlovu_mpofana_w3,
 						erfBoundary: za_kzn_umgungundlovu_mpofana_w3_cadastral,
-						ward: "w3",
+						ward: 3,
 					});
 
 					// ward 4
 					lmWardBoundaries.push({
 						wardBoundary: za_kzn_umgungundlovu_mpofana_w4,
 						erfBoundary: za_kzn_umgungundlovu_mpofana_w4_cadastral,
-						ward: "w4",
+						ward: 4,
 					});
 
 					// ward 5
 					lmWardBoundaries.push({
 						wardBoundary: za_kzn_umgungundlovu_mpofana_w5,
 						erfBoundary: za_kzn_umgungundlovu_mpofana_w5_cadastral,
-						ward: "w5",
+						ward: 5,
 					});
 					// console.log(`lmWardBoundaries`, lmWardBoundaries)
 
@@ -291,48 +302,48 @@ const useUserCadastral = () => {
 					// console.log(`workbase`, workbase);
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w1,
-						erfBoundary: '',
-						ward: "w1",
+						erfBoundary: za_mp_nkangala_vk_w1_cadastral,
+						ward: 1,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w2,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w2",
+						erfBoundary: za_mp_nkangala_vk_w2_cadastral,
+						ward: 2,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w3,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w3",
+						erfBoundary: za_mp_nkangala_vk_w3_cadastral,
+						ward: 3,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w4,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w4",
+						erfBoundary: za_mp_nkangala_vk_w4_cadastral,
+						ward: 4,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w5,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w5",
+						erfBoundary: za_mp_nkangala_vk_w5_cadastral,
+						ward: 5,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w6,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w6",
+						erfBoundary: za_mp_nkangala_vk_w6_cadastral,
+						ward: 6,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w7,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w7",
+						erfBoundary: za_mp_nkangala_vk_w7_cadastral,
+						ward: 7,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w8,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w8",
+						erfBoundary: za_mp_nkangala_vk_w8_cadastral,
+						ward: 8,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_mp_nkangala_vk_w9,
-						// erfBoundary: za_mp_nkangala_vk_w1_cadastral,
-						ward: "w9",
+						erfBoundary: za_mp_nkangala_vk_w9_cadastral,
+						ward: 9,
 					});
 
 					dispatch({
@@ -355,67 +366,67 @@ const useUserCadastral = () => {
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w1,
 						erfBoundary: "",
-						ward: "w1",
+						ward: 1,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w2,
 						erfBoundary: "",
-						ward: "w2",
+						ward: 2,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w3,
 						erfBoundary: "",
-						ward: "w3",
+						ward: 3,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w4,
 						erfBoundary: "",
-						ward: "w4",
+						ward: 4,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w5,
 						erfBoundary: "",
-						ward: "w5",
+						ward: 5,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w6,
 						erfBoundary: "",
-						ward: "w6",
+						ward: 6,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w7,
 						erfBoundary: "",
-						ward: "w7",
+						ward: 7,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w8,
 						erfBoundary: "",
-						ward: "w8",
+						ward: 8,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w9,
 						erfBoundary: "",
-						ward: "w9",
+						ward: 9,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w10,
 						erfBoundary: "",
-						ward: "w10",
+						ward: 10,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w11,
 						erfBoundary: "",
-						ward: "w11",
+						ward: 11,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w12,
 						erfBoundary: "",
-						ward: "w12",
+						ward: 12,
 					});
 					lmWardBoundaries.push({
 						wardBoundary: za_gp_sedibeng_lesedi_w13,
 						erfBoundary: "",
-						ward: "w13",
+						ward: 13,
 					});
 
 					dispatch({

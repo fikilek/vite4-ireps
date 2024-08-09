@@ -6,13 +6,21 @@ import "@/components/maps/MapLmWardBoundaries.css";
 
 // hooks
 import useIrepsMap from "@/hooks/useIrepsMap";
-import { useMap, MapControl, ControlPosition } from "@vis.gl/react-google-maps";
+import {
+	useMap,
+	MapControl,
+	ControlPosition,
+	useMapsLibrary,
+} from "@vis.gl/react-google-maps";
 
 const MapLmWardBoundaries = () => {
 	// console.log(`MapLmWardBoundaries`)
 
 	const map = useMap();
 	// console.log(`map`, map);
+
+	// const maps = useMapsLibrary('maps');
+	// console.log(`maps`, maps);
 
 	const {
 		displayLMWardBoundaries,
@@ -22,8 +30,9 @@ const MapLmWardBoundaries = () => {
 	} = useIrepsMap();
 	// console.log(`displayLMWardBoundaries`, displayLMWardBoundaries)
 	// console.log(`state`, state);
-
+	
 	const { lmWardBoundaries, lmBoundary } = state;
+	// console.log(`lmWardBoundaries`, lmWardBoundaries);
 
 	useEffect(() => {
 		if (!map) return;
@@ -31,20 +40,25 @@ const MapLmWardBoundaries = () => {
 		displayLMWardBoundaries(map);
 	}, [map, lmWardBoundaries]);
 
-	const handleChange = (e) => {
+	const handleChange =  (e) => {
 		// console.log(`e.currentTarget.value`, e.currentTarget.value);
 		const selectedWard = e.currentTarget.value;
-		// console.log(`selectedWard`, selectedWard);
+		console.log(`selectedWard`, selectedWard);
 
 		// filter in only the selected ward
-		const selection = lmWardBoundaries.find((ward) => {
-			return ward.ward === selectedWard;
+		const selection = lmWardBoundaries.find( (wardBoundary) => {
+
+			// console.log(`wardBoundary.ward`, wardBoundary.ward)
+			// console.log(`selectedWard`, selectedWard)
+
+			return Number(wardBoundary.ward)  === Number(selectedWard) ;
 		});
-		// console.log(`selection`, selection);
+		console.log(`selection`, selection);
+
 		if (selectedWard === "All Wards") {
 			fitWardBoundary(map, lmBoundary);
 		} else {
-			fitWardBoundary(map, selection.wardBoundary);
+			fitWardBoundary(map, selection.wardBoundary, selection.ward);
 		}
 
 		// setSelectedWardBoundaries(selection);

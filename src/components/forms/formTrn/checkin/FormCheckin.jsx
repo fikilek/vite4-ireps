@@ -63,7 +63,7 @@ const FormCheckin = (props) => {
 		if (response.success) {
 			// deleteItem(key);
 			closeModal();
-			toast(`Transaction UPDATED succeesfully!`, {
+			toast(`Transaction UPDATED successfully!`, {
 				position: "bottom-left",
 				autoClose: 5000,
 				hideProgressBar: false,
