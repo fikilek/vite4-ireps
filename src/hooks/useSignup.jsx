@@ -82,7 +82,7 @@ export const useSignup = () => {
 			nickName,
 			phoneNumber,
 			companyName,
-			spId,
+			// spId,
 			workbase,
 		} = userCredentials;
 		try {
@@ -142,7 +142,7 @@ export const useSignup = () => {
 				surname,
 				nickName,
 				companyName,
-				spId,
+				// spId,
 				workbase,
 				phoneNumber,
 			});
@@ -292,12 +292,43 @@ export const useSignup = () => {
 		}
 	};
 
+	const updateUserObject = async (userData, uid) => {
+		// console.log(`userData`, userData);
+		// console.log(`uid`, uid);
+
+		// const { workbases } = userCredentials;
+
+		try {
+			signupDispatch({ type: "IS_PENDING" });
+			// update dispalyName details at firebase auth user. Use first letter of surname and name as dispalyName
+			// await updateProfile(auth.currentUser, {
+			// 	displayName: `${name} ${surname}`,
+			// });
+
+			// TODO:create user profile in firestore using UID as the unique identifier
+			const docRef = doc(db, "users", uid);
+			const datetime = Timestamp.now();
+			await updateDoc(docRef, {
+				"metadata.updatedByName": `${user.displayName}`,
+				"metadata.updatedByUid": user.uid,
+				"metadata.updatedAtDatetime": datetime,
+				workbases: userData.workbases,
+			});
+
+			signupDispatch({ type: "SUCCESS" });
+		} catch (error) {
+			signupDispatch({ type: "ERROR", payload: error.message });
+			console.log(`updateUser err`, error.message);
+		}
+	};
+
 	return {
 		signup,
 		updateUser,
 		updateUserEmail,
 		updateUserWorkbase,
 		signupState,
+		updateUserObject
 	};
 };
 

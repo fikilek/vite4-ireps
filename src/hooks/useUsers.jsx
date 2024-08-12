@@ -6,8 +6,9 @@ import useCollection from "@/hooks/useCollection";
 import TableSelect from "@/components/tables/TableSelect";
 import useAuthContext from "@/hooks/useAuthContext";
 import TableDate from "@/components/tables/TableDate";
+import TableModalBtn from "@/components/tables/TableModalBtn";
 
-export const useUsers = props => {
+export const useUsers = (props) => {
 	const [users, setUsers] = useState([]);
 	// console.log(`users`, users);
 
@@ -22,12 +23,12 @@ export const useUsers = props => {
 
 	useEffect(() => {
 		if (!user) return;
-		listAllUsers().then(result => {
+		listAllUsers().then((result) => {
 			// console.log(`result`, result);
 			let newUsers = [];
-			result?.data?.forEach(element => {
+			result?.data?.forEach((element) => {
 				// console.log(`element`, element);
-				const fromFbCol = data.find(data => element.uid === data.id);
+				const fromFbCol = data.find((data) => element.uid === data.id);
 				if (fromFbCol) {
 					// console.log(`fromFbCol`, fromFbCol);
 					newUsers.push({
@@ -60,16 +61,16 @@ export const useUsers = props => {
 			cellEditorParams: {
 				options: ["enabled", "disabled"],
 			},
-			valueGetter: params => {
+			valueGetter: (params) => {
 				// console.log(`params.data.disabled`, params.data.disabled);
 				return params.data.disabled ? "disabled" : "enabled";
 			},
-			valueSetter: params => {
+			valueSetter: (params) => {
 				// console.log(`params.newValue`, params.newValue);
 				params.data.disabled = params.newValue === "disabled" ? true : false;
 				return true;
 			},
-			cellStyle: params => {
+			cellStyle: (params) => {
 				// console.log(params);
 				const { uid } = params.data;
 				const selectDisabled = uid === user.uid ? true : false;
@@ -84,11 +85,26 @@ export const useUsers = props => {
 					: "";
 			},
 		},
+				// Workbase
+				{
+					field: "workbase",
+					headerName: "Workbase",
+					width: 180,
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						// const { workbase } = params.data;
+						return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "workbases",
+						width: "8rem",
+					},
+				},
 		{
 			field: "metadata.creationTime",
 			headerName: "Date Created",
 			width: 180,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`params`, params);
 				const newDate = new Date(params.data.metadata?.creationTime);
 				return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
@@ -98,7 +114,7 @@ export const useUsers = props => {
 			field: "metadata.lastSignInTime",
 			headerName: "Last Signin",
 			width: 180,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				const newDate = new Date(params.data.metadata?.lastSignInTime);
 				return <TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />;
 			},
@@ -117,7 +133,7 @@ export const useUsers = props => {
 			field: "emailVerified",
 			headerName: "Email Verified",
 			width: 150,
-			cellRenderer: params => {
+			cellRenderer: (params) => {
 				// console.log(`params.data`, params.data);
 				return <p>{params.data.emailVerified ? "Yes" : "No"}</p>;
 			},
@@ -127,7 +143,7 @@ export const useUsers = props => {
 			headerName: "Roles",
 			width: 220,
 			cellRenderer: TableUsersRoles,
-			valueGetter: params => {
+			valueGetter: (params) => {
 				return params.value;
 			},
 		},
@@ -141,11 +157,8 @@ export const useUsers = props => {
 			headerName: "Company Name",
 			width: 170,
 		},
-		{
-			field: "workbase",
-			headerName: "Workbase",
-			width: 150,
-		},
+		
+
 	];
 
 	return { usersTableFields, users };

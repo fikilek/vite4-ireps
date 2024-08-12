@@ -42,8 +42,8 @@ const Signin = () => {
 	const { user } = useAuthContext();
 
 	const initialValues = {
-		email: "",
-		password: "",
+		email: "fikilekentane@gmail.co",
+		password: "fkpass123",
 	};
 
 	const onSubmit = values => {

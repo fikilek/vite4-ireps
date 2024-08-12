@@ -367,6 +367,7 @@ const useIrepsMap = () => {
 			let wn = null;
 			const wn_WardNo = feature.getProperty("WardNo");
 			if (wn_WardNo) {
+				// console.log(`wn_WardNo`, wn_WardNo);
 				wn = wn_WardNo;
 			}
 
@@ -380,8 +381,8 @@ const useIrepsMap = () => {
 			let color = "blue";
 
 			if (wardNo === wn && wardNo && wn) {
-				console.log(`selected wardNo:`, wardNo);
-				console.log(`selected wn:`, wn);
+				// console.log(`selected wardNo:`, wardNo);
+				// console.log(`selected wn:`, wn);
 				strokeWeight = 3;
 				color = "red";
 			}

@@ -32,7 +32,7 @@ const MapLmWardBoundaries = () => {
 	// console.log(`state`, state);
 	
 	const { lmWardBoundaries, lmBoundary } = state;
-	// console.log(`lmWardBoundaries`, lmWardBoundaries);
+	console.log(`lmWardBoundaries`, lmWardBoundaries);
 
 	useEffect(() => {
 		if (!map) return;
@@ -43,7 +43,7 @@ const MapLmWardBoundaries = () => {
 	const handleChange =  (e) => {
 		// console.log(`e.currentTarget.value`, e.currentTarget.value);
 		const selectedWard = e.currentTarget.value;
-		console.log(`selectedWard`, selectedWard);
+		// console.log(`selectedWard`, selectedWard);
 
 		// filter in only the selected ward
 		const selection = lmWardBoundaries.find( (wardBoundary) => {
@@ -53,7 +53,7 @@ const MapLmWardBoundaries = () => {
 
 			return Number(wardBoundary.ward)  === Number(selectedWard) ;
 		});
-		console.log(`selection`, selection);
+		// console.log(`selection`, selection);
 
 		if (selectedWard === "All Wards") {
 			fitWardBoundary(map, lmBoundary);
@@ -80,6 +80,7 @@ const MapLmWardBoundaries = () => {
 					</option>
 					{lmWardBoundaries &&
 						lmWardBoundaries.map((option) => {
+							console.log(`option`, option)
 							return (
 								<option key={option.ward} value={option.ward}>
 									{option.ward}

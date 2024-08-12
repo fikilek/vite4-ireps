@@ -29,9 +29,10 @@ export const useServiceProviders = () => {
 		data &&
 			data.forEach((sp) => {
 				spOptions.push({
-					key: sp.registeredName,
+					label: sp.registeredName,
 					value: sp.registeredName,
 					spId: sp.id,
+					spData: sp,
 				});
 			});
 
@@ -76,7 +77,8 @@ export const useServiceProviders = () => {
 
 	const getSpClients = (sp) => {
 		const { clients } = sp || {};
-		const clnts = [{ key: "choose", value: "choose" }];
+		// const clnts = [{ key: "choose", value: "choose" }];
+		const clnts = [];
 		clients &&
 			clients?.forEach((client) => {
 				clnts.push({ key: client.name, value: client.name });
@@ -92,7 +94,7 @@ export const useServiceProviders = () => {
 	};
 
 	const getSpClientsFromId = (id) => {
-		console.log(`id`, id);
+		// console.log(`id`, id);
 		if (!id) return null;
 		return serviceProviders.sps.filter((sp) => sp.id.trim() === id.trim())
 			.clients;
@@ -255,7 +257,7 @@ export const useServiceProviders = () => {
 			},
 			cellRendererParams: {
 				modalName: "serviceProvider",
-				width: '8rem'
+				width: "8rem",
 			},
 		},
 
@@ -274,68 +276,71 @@ export const useServiceProviders = () => {
 					field: "mainOffice.address",
 					headerName: "Address",
 					width: 170,
+					columnGroupShow: "closed",
 				},
 				{
 					field: "mainOffice.email",
 					headerName: "Email",
 					width: 170,
+					columnGroupShow: "open",
 				},
 				{
 					field: "mainOffice.phone",
 					headerName: "Phone",
 					width: 170,
+					columnGroupShow: "open",
 				},
 			],
 		},
 
 		// main trading contact person
-		{
-			headerName: "Main Office Contact",
-			children: [
-				{
-					field: "mainOffice.address",
-					headerName: "Address",
-					width: 170,
-				},
-				{
-					field: "mainOffice.email",
-					headerName: "Email",
-					width: 170,
-				},
-				{
-					field: "mainOffice.phone",
-					headerName: "Phone",
-					width: 170,
-				},
-			],
-		},
+		// {
+		// 	headerName: "Main Office",
+		// 	children: [
+		// 		{
+		// 			field: "mainOffice.address",
+		// 			headerName: "Address",
+		// 			width: 170,
+		// 		},
+		// 		{
+		// 			field: "mainOffice.email",
+		// 			headerName: "Email",
+		// 			width: 170,
+		// 		},
+		// 		{
+		// 			field: "mainOffice.phone",
+		// 			headerName: "Phone",
+		// 			width: 170,
+		// 		},
+		// 	],
+		// },
 
 		// field workers - number on a button that when clicked pops up a table of FWs
-		{
-			field: "fieldworkers",
-			headerName: "Fieldworkers",
-			width: 140,
-			cellRenderer: (props) => {
-				// console.log(`props`, props);
-				return (
-					<TableModalBtn data={props}>
-						{props.data?.users?.length}
-					</TableModalBtn>
-				);
-			},
-			cellRendererParams: {
-				modalName: "serviceProviderData",
-				infoName: "users",
-			},
-			valueGetter: (params) => {
-				// console.log(`params.data.disabled`, params.data.disabled);
-				return params;
-			},
-			valueSetter: (params) => {
-				// console.log(`params.newValue`, params.newValue);
-				return params;
-			},
-		},
+		// {
+		// 	field: "fieldworkers",
+		// 	headerName: "Fieldworkers",
+		// 	width: 140,
+		// 	cellRenderer: (props) => {
+		// 		// console.log(`props`, props);
+		// 		return (
+		// 			<TableModalBtn data={props}>
+		// 				{props.data?.users?.length}
+		// 			</TableModalBtn>
+		// 		);
+		// 	},
+		// 	cellRendererParams: {
+		// 		modalName: "serviceProviderData",
+		// 		infoName: "users",
+		// 	},
+		// 	valueGetter: (params) => {
+		// 		// console.log(`params.data.disabled`, params.data.disabled);
+		// 		return params;
+		// 	},
+		// 	valueSetter: (params) => {
+		// 		// console.log(`params.newValue`, params.newValue);
+		// 		return params;
+		// 	},
+		// },
 
 		// clients - number of entities the service peovider offeres services to.
 		// On click, the list pops up in IrepsInfoWindow

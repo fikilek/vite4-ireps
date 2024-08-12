@@ -51,8 +51,8 @@ const Signup = () => {
 		email: "",
 		password: "",
 		confirmPassword: "",
-		phoneNumber: "", //+27817262352
-		workbase: "",
+		phoneNumber: "+27817262352", //
+		workbase: "workbase",
 	};
 
 	const onSubmit = (values) => {
@@ -65,11 +65,11 @@ const Signup = () => {
 	const validationSchema = object({
 		surname: string().required("required."),
 		name: string().required("required."),
-		nickName: string().notRequired(),
-		companyName: string()
-			.ensure()
-			.required("required.")
-			.notOneOf(["choose", ""], "required"),
+		// nickName: string().notRequired(),
+		// companyName: string()
+		// 	.ensure()
+		// 	.required("required.")
+		// 	.notOneOf(["choose", ""], "required"),
 		email: string().email("Email is NOT valid.").required("required."),
 		password: string().min(6, "At least 6 characters").required("required."),
 		confirmPassword: string()
@@ -79,9 +79,9 @@ const Signup = () => {
 			.min(10, "At least 10 characters")
 			// .matches(phoneRegExp, "Phone number is not valid")
 			.required("required."),
-		workbase: string()
-			.required("required")
-			.notOneOf(["choose", ""], "required"),
+		// workbase: string()
+		// 	.required("required")
+		// 	.notOneOf(["choose", ""], "required"),
 		// spId: string().notRequired(),
 	});
 
@@ -160,7 +160,7 @@ const Signup = () => {
 													placeholder=""
 												/>
 											</div>
-											<div className="row-50-50">
+											<div >
 												<FormikControl
 													control="select"
 													type="text"
@@ -169,14 +169,14 @@ const Signup = () => {
 													placeholder=""
 													options={serviceProviders.spOptions}
 												/>
-												<FormikControl
+												{/* <FormikControl
 													control="select"
 													type="text"
 													label="Workbase"
 													name={"workbase"}
 													placeholder=""
 													options={spClients}
-												/>
+												/> */}
 											</div>
 										</div>
 										<div className="form-row">
@@ -210,7 +210,7 @@ const Signup = () => {
 											</div>
 										</div>
 										<div className="form-row">
-											<div className="row-50-50">
+											<div >
 												<FormikControl
 													control="phoneNumberInput"
 													type="text"
@@ -218,23 +218,23 @@ const Signup = () => {
 													name={"phoneNumber"}
 													placeholder=""
 												/>
-												<FormikControl
+												{/* <FormikControl
 													control="input"
 													type="text"
 													label="Aka"
 													name={"nickName"}
 													placeholder=""
-												/>
+												/> */}
 											</div>
 										</div>
 										<div className="form-row"></div>
-										<div className="form-row-hidden">
+										{/* <div className="form-row-hidden">
 											<FormikControl
 												control="input"
 												type="hidden"
 												name={"spId"}
 											/>
-										</div>
+										</div> */}
 									</div>
 									{signupState.error && (
 										<FormError errorMsg={getCustomError(signupState.error)} />

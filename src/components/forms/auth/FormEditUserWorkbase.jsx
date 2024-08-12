@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
 import { object, string } from "yup";
-import { useEffect, useCallback } from "react";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useSignup } from "@/hooks/useSignup";
 
@@ -21,7 +21,7 @@ import FormMsg from "@/components/forms/formMsg/FormMsg";
 import FormError from "@/components/forms/formError/FormError";
 import HeaderGeneric from "@/components/header/HeaderGeneric";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
-import { useServiceProviders } from "@/hooks/useServiceProviders";
+// import { useServiceProviders } from "@/hooks/useServiceProviders";
 import { useState } from "react";
 
 const EditUserWorkbase = (props) => {
@@ -38,48 +38,25 @@ const EditUserWorkbase = (props) => {
 	const { uid } = user;
 	// console.log(`uid`, uid);
 
-	const [companyName, setCompanyName] = useState(null);
-	// console.log(`companyName`, companyName);
+	const [userInfo, setUserInfo] = useState(null);
+	// console.log(`userInfo`, userInfo);
 
-	// get user comppany name from users collection
-	// useCallback(()=>getDocument(uid),[uid])
+	let workbases = [{ key: "choose", value: "choose" }];
+	userInfo?.workbases &&
+		userInfo?.workbases?.map((workbase) => {
+			workbases.push({
+				key: workbase,
+				value: workbase,
+			});
+		});
+
+	// console.log(`workbases`, workbases);
 
 	const { closeModal } = useModal();
 
 	const { formData: workbase } = props;
 
 	const { updateUserWorkbase, signupState } = useSignup();
-
-	const {
-		serviceProviders,
-		getSpClients,
-		getSpDetailsFromSpName,
-		getSpClientsFromName,
-	} = useServiceProviders();
-
-	// This will use regular ecpresion to search for matching companyName form list of all service providers
-	const sp = getSpDetailsFromSpName(companyName);
-	// console.log(`sp`, sp);
-
-	let spClients = getSpClients(sp);
-
-	const result = spClients.find((client) => {
-		const clientStr = client.key.toLowerCase().trim();
-		// console.log(`clientStr`, clientStr);
-
-		// user regular expresions to search for a matching nameStr in spStr
-		const re = new RegExp("rste", "gi");
-		// console.log(`re`, re);
-
-		return re.test(clientStr);
-	});
-	// console.log(`result`, result);
-
-	if (result) {
-		// const sp = getSpDetails("rste");
-		spClients = getSpClientsFromName("rste");
-	}
-	// console.log(`spClients`, spClients);
 
 	const initialValues = {
 		newWorkbase: workbase,
@@ -115,7 +92,8 @@ const EditUserWorkbase = (props) => {
 			// console.log(`response`, response);
 			const { companyName } = response?.document;
 			// console.log(`companyName`, companyName)
-			setCompanyName(companyName);
+			// setCompanyName(companyName);
+			setUserInfo(response?.document);
 		}
 	}, [response.success]);
 
@@ -155,7 +133,7 @@ const EditUserWorkbase = (props) => {
 											label="New Workbase"
 											name={"newWorkbase"}
 											placeholder=""
-											options={spClients}
+											options={workbases}
 										/>
 										<FormikControl
 											control="inputPwd"

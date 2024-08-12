@@ -127,7 +127,7 @@
 .form-container form .form-control label {
 	position: absolute;
 	left: 1rem;
-	top: 0.35rem;
+	top: 0.6rem;
 	cursor: text;
 	transition: 250ms;
 	background-color: white;
@@ -168,9 +168,9 @@
 
 .form-container form .password .icon-password {
 	position: absolute;
-	top: 0.7rem;
-	right: 1rem;
-	font-size: 1.5rem;
+	top: 0.6rem;
+	right: 0.4rem;
+	/* font-size: 1.5rem; */
 }
 
 .form-container form .form-msg {

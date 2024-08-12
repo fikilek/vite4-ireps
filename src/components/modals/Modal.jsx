@@ -78,6 +78,8 @@ const IwHistory = lazy(() =>
 );
 const Signin = lazy(() => import("@/components/forms/auth/FormSignin"));
 const IwMedia = lazy(() => import("@/components/irepsInfoWindow/IwMedia"));
+const FormWorkbases = lazy(() => import("@/components/forms/auth/FormWorkbases"));
+
 
 const Modal = () => {
 	const { toOpen, modalOpened } = useContext(ModalContext);
@@ -327,6 +329,14 @@ const Modal = () => {
 							<>
 								<Suspense fallback={loader}>
 									<FormCheckin data={payload} />
+								</Suspense>
+							</>
+						)}
+						{/* workbases */}
+						{modalName === "workbases" && (
+							<>
+								<Suspense fallback={loader}>
+									<FormWorkbases data={payload} />
 								</Suspense>
 							</>
 						)}
