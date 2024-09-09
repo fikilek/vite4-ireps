@@ -151,7 +151,7 @@ const FormWorkbases = (props) => {
 													<Select
 														defaultValue={"workbase"}
 														options={options}
-														isClearable={true}
+														// isClearable={true}
 														onChange={(selection) => {
 															console.log(`selection`, selection);
 															arrayHelpers.push(selection.value);

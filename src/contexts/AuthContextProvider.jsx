@@ -35,18 +35,18 @@ const AuthContextProvider = ({ children }) => {
 	});
 	// console.log(`state`, state);
 
-	const st = useMemo(()=>{
-		return state
-	},[])
+	// const st = useMemo(()=>{
+	// 	return state
+	// },[])
 
 	useEffect(() => {
-		onAuthStateChanged(auth, user => {
+		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			// console.log(`user`, user);
 
 			if (auth.currentUser) {
 				// get user workbase
 
-				auth.currentUser?.getIdTokenResult(true).then(userIdToken => {
+				auth.currentUser?.getIdTokenResult(true).then((userIdToken) => {
 					// console.log(`userIdToken`, userIdToken);
 					dispatch({
 						type: "AUTH_IS_READY",
@@ -56,7 +56,6 @@ const AuthContextProvider = ({ children }) => {
 						},
 					});
 				});
-
 			} else {
 				dispatch({
 					type: "AUTH_IS_READY",
@@ -64,7 +63,8 @@ const AuthContextProvider = ({ children }) => {
 				});
 			}
 		});
-	},[]);
+		return () => unsubscribe();
+	}, []);
 
 	return (
 		<AuthContext.Provider value={{ ...state, dispatch }}>

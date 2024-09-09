@@ -20,7 +20,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 		astManufacturer,
 		astName,
 		meter,
-	} = props.data.astData;
+	} = props?.data?.astData;
 	const { phase, type } = meter;
 	const { trnsNewFormData, trnsValidationSchema } = useTrns(null);
 	// console.log(`trnsNewFormData`, trnsNewFormData);
@@ -31,7 +31,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 	const handleTrnsOnAst = (e) => {
 		openModal({
 			modalName: "iwTrnsOnAst",
-			payload: { data: props.data, width: "4rem" },
+			payload: { data: props?.data, width: "4rem" },
 		});
 	};
 
@@ -44,7 +44,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 					className="trns-on-ast-btn table-btn"
 					onClick={handleTrnsOnAst}
 				>
-					{trns.length}
+					{trns?.length}
 				</button>
 			</div>
 
@@ -58,6 +58,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 							astNo,
 							astId,
 							astCatergory,
+							astState
 						},
 						erf,
 					},
@@ -116,6 +117,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 							astNo,
 							astId,
 							astCatergory,
+							astState: 'stores'
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["decommission"],
@@ -139,6 +141,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 							astNo,
 							astId,
 							astCatergory,
+							astState: 'stores'
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["disconnection"],
@@ -162,6 +165,7 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 							astNo,
 							astId,
 							astCatergory,
+							astState: 'stores'
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["reconnection"],

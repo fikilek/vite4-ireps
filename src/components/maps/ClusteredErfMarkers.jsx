@@ -50,33 +50,39 @@ export const ClusteredErfMarkers = () => {
 		clusterer.addMarkers(Object.values(markers));
 	}, [clusterer, markers]);
 
-	// this callback will effectively get passsed as ref to the markers to keep
+	// this callback will effectively get passed as ref to the markers to keep
 	// tracks of markers currently on the map
-	const setMarkerRef = useCallback((marker, key) => {
-		setMarkers((markers) => {
-			if ((marker && markers[key]) || (!marker && !markers[key]))
-				return markers;
+	const setMarkerRef = useCallback(
+		(marker, key) => {
+			setMarkers((markers) => {
+				if ((marker && markers[key]) || (!marker && !markers[key]))
+					return markers;
 
-			if (marker) {
-				return { ...markers, [key]: marker };
-			} else {
-				const { [key]: _, ...newMarkers } = markers;
-				// console.log(`newMarkers`, newMarkers);
-				return newMarkers;
-			}
-		});
-	}, []);
+				if (marker) {
+					return { ...markers, [key]: marker };
+				} else {
+					const { [key]: _, ...newMarkers } = markers;
+					// console.log(`newMarkers`, newMarkers);
+					return newMarkers;
+				}
+			});
+		},
+		[map]
+	);
 
 	return (
 		<>
-			{erfs.map((erf) => (
-				<ErfMarker
-					key={erf.id}
-					erf={erf}
-					onClick={(erf) => setSelectedErfKey(erf.id)}
-					setMarkerRef={setMarkerRef}
-				/>
-			))}
+			{erfs.map((erf, index) => {
+				// console.log(`index `,index)
+				return (
+					<ErfMarker
+						key={erf.id}
+						erf={erf}
+						onClick={(erf) => setSelectedErfKey(erf.id)}
+						setMarkerRef={setMarkerRef}
+					/>
+				);
+			})}
 
 			{selectedErfKey && (
 				<InfoWindow

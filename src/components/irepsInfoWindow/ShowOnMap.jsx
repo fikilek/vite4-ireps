@@ -6,10 +6,11 @@ import IwShowOnMap from "@/components/irepsInfoWindow/IwShowOnMap";
 import { useDocument } from "@/hooks/useDocument";
 
 const ShowOnMap = props => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 
 	const { erfId, address } = props.data.data.erf;
 	// console.log(`erfId`, erfId);
+	const { erf } = props.data.data;
 
 	const {lmMetro, ward} = address
 
@@ -40,6 +41,7 @@ const ShowOnMap = props => {
 					label={gpsPoint?.label}
 					ward={ward}
 					lmMetro={lmMetro}
+					erf={erf}
 				/>
 			)}
 		</div>

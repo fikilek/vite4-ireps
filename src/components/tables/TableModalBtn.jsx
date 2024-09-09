@@ -25,6 +25,15 @@ const TableModalBtn = (props) => {
 	// console.log(`modalName`, modalName);
 	// console.log(`validationSchema`, validationSchema);
 
+	const astCatergory = data?.astData?.astCatergory;
+	// console.log(`astCatergory`, astCatergory);
+
+	const state = data?.astData?.astState?.state;
+	// console.log(`state`, state);
+
+	const disableBtn = (astCatergory === 'meter' && state === 'stores') ? true : false
+	// console.log(`disableBtn`, disableBtn)
+
 	useEffect(() => {
 		if (erfError) {
 			// console.log(`erfError`, erfError.erfError);
@@ -98,7 +107,10 @@ const TableModalBtn = (props) => {
 			}
 
 			// check 3: if systemAdr is 'google adr not available' and street is null, flag an error, if systemAdr is 'google adr not available', street cannot be null.
-			if (((systemAdr === "Google Adr Not Available") && (street === "" || street === null || street === undefined))) {
+			if (
+				systemAdr === "Google Adr Not Available" &&
+				(street === "" || street === null || street === undefined)
+			) {
 				// bot systemAdr and street and empty or null. This is an error.
 
 				// console.log(
@@ -132,10 +144,11 @@ const TableModalBtn = (props) => {
 		<div className="table-modal-btn">
 			<button
 				// className={`table-btn ${tableBtnClass}`}
-				className={`table-btn`}
+				className={`table-btn ${disableBtn ? 'disable-btn' : ''}`}
 				onClick={handleClick}
 				style={{ width: width }}
 				title={title}
+				disabled={disableBtn}
 			>
 				{props.children}
 			</button>

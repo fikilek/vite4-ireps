@@ -13,7 +13,6 @@ import ErfsHeader from "@/components/erfs/ErfsHeader";
 const Erfs = () => {
 	useErfs()
 	useAsts()
-
 	return (
 		<div className="erfs">
 			<ErfsHeader phLl="Erfs" />

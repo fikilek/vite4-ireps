@@ -40,20 +40,22 @@ const FormMeterAudit = (props) => {
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
 
-	const [trnState, setTrnState] = useState(data?.metadata?.trnState)
+	const [trnState, setTrnState] = useState(data?.metadata?.trnState);
 	// console.log(`trnState`, trnState)
 
 	const onSubmit = useCallback(
 		(values) => {
 			console.log(`values`, values);
-			setDocument({
-			...values,
-				metadata: {
-					...values.metadata,
-					trnState
-				}
-			}
-			, values.metadata.trnId);
+			setDocument(
+				{
+					...values,
+					metadata: {
+						...values.metadata,
+						trnState,
+					},
+				},
+				values.metadata.trnId
+			);
 		},
 		[setDocument, trnState]
 	);
@@ -98,9 +100,15 @@ const FormMeterAudit = (props) => {
 						// console.log(`formik.errors`, formik.errors);
 						// console.log(`formik.isValid`, formik.isValid);
 						// console.log(`disabled`, disabled);
-						// console.log(`formik.values`, formik.values);
+						// console.log(`formik.values.access.meterAccess`, formik.values.access.meterAccess);
 
-						updateFormState(formik, setTrnState)
+						const { meterAccess } = formik.values?.access;
+						// console.log(`meterAccess`, meterAccess);
+
+						const showHide = meterAccess === "yes" ? "hide" : "";
+						// console.log(`showHide`, showHide);
+
+						updateFormState(formik, setTrnState);
 
 						return (
 							<Form>
@@ -111,11 +119,7 @@ const FormMeterAudit = (props) => {
 												Meter <span className="text-emphasis2">Audit</span> Form
 											</span>
 										}
-										hl2={
-											<span className="text-emphasis2">
-												{trnState}
-											</span>
-										}
+										hl2={<span className="text-emphasis2">{trnState}</span>}
 										hr1={
 											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
@@ -152,10 +156,10 @@ const FormMeterAudit = (props) => {
 													options={formSelectOptions.yesNoOptions}
 												/>
 												<FormikControl
-													control="select"
+													control="selectNoAccessReason"
 													type="text"
-													label="meter no accss reasons"
-													name={`access.noAccessReason`}
+													label="meter no access reasons"
+													name={`access.noAccessReason ${showHide}`}
 													options={formSelectOptions.keyPadNoAccessOptions}
 												/>
 											</div>
@@ -166,7 +170,7 @@ const FormMeterAudit = (props) => {
 													label="no access media"
 													name={`astData.media.noAccess`}
 													ml1="asts"
-													mediaCat="noAcces"
+													mediaCat="noAccess"
 												/>
 											</div>
 										</div>

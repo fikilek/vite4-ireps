@@ -32,7 +32,7 @@ const MapLmWardBoundaries = () => {
 	// console.log(`state`, state);
 	
 	const { lmWardBoundaries, lmBoundary } = state;
-	console.log(`lmWardBoundaries`, lmWardBoundaries);
+	// console.log(`lmWardBoundaries`, lmWardBoundaries);
 
 	useEffect(() => {
 		if (!map) return;
@@ -80,7 +80,7 @@ const MapLmWardBoundaries = () => {
 					</option>
 					{lmWardBoundaries &&
 						lmWardBoundaries.map((option) => {
-							console.log(`option`, option)
+							// console.log(`option`, option)
 							return (
 								<option key={option.ward} value={option.ward}>
 									{option.ward}

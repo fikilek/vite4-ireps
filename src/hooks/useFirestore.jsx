@@ -185,7 +185,7 @@ export const useFirestore = fbCollection => {
 	};
 
 	const setDocument = async (document, id) => {
-		// console.log(`updateDocument`, document);
+		console.log(`setDocument`, document);
 		// console.log(`id`, id);
 		
 		document = {
@@ -214,6 +214,8 @@ export const useFirestore = fbCollection => {
 				payload: err.message,
 			});
 		}
+
+
 	};
 
 	const removeMedia = async imageRef => {

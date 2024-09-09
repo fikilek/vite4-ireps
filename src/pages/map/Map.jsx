@@ -2,7 +2,7 @@
 import "@/pages/map/Map.css";
 
 // hooks
-import { useAsts } from "@/hooks/useAsts.jsx";
+import { useAstsMap } from "@/hooks/useAstsMap.jsx";
 import { useErfs } from "@/hooks/useErfs.jsx";
 
 // components
@@ -10,13 +10,18 @@ import MapMain from "@/components/map/MapMain";
 import MapHeader from "@/components/map/MapHeader";
 
 const Map = () => {
+	// console.log(`Map is running`)
 	useErfs();
-	useAsts();
+	const { asts, astsTableFields, error } = useAstsMap();
+	console.log(`asts`, asts);
+	console.log(`astsTableFields`, astsTableFields);
+	console.log(`error`, error);
+
 	return (
 		<div className="map">
 			<MapHeader phLl="Map" />
 			<div className="map-body">
-				<MapMain />
+				<MapMain asts={asts} astsTableFields={astsTableFields} />
 			</div>
 		</div>
 	);

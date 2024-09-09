@@ -112,6 +112,7 @@ export const formSelectOptions = {
 		{ key: "seal has no seal no", value: "seal has no seal no" },
 		{ key: "seal hard to read", value: "seal no hard to read" },
 		{ key: "seal missing", value: "seal missing" },
+		{ key: "other", value: "other" },
 	],
 	anomaliesOptions: [
 		{ key: "choose", value: "choose" },
@@ -147,6 +148,7 @@ export const formSelectOptions = {
 		{ key: "occupant refused access", value: "occupant refused access" },
 		{ key: "dogs danger", value: "dogs danger" },
 		{ key: "resident not available", value: "resident not available" },
+		{ key: "other", value: "other" },
 	],
 
 	erfStatusOptions: [
@@ -351,6 +353,7 @@ export const formSelectOptions = {
 		{ key: "choose", value: "choose" },
 		{ key: "cb missing", value: "cb missing" },
 		{ key: "cb removed", value: "cb removed" },
+		{ key: "other", value: "other" },
 	],
 	tidCommentsOptions: [
 		{ key: "choose", value: "choose" },

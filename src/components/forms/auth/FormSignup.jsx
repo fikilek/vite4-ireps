@@ -51,7 +51,7 @@ const Signup = () => {
 		email: "",
 		password: "",
 		confirmPassword: "",
-		phoneNumber: "+27817262352", //
+		phoneNumber: "+27", //
 		workbase: "workbase",
 	};
 
@@ -160,15 +160,15 @@ const Signup = () => {
 													placeholder=""
 												/>
 											</div>
-											<div >
-												<FormikControl
+											{/* <div> */}
+												{/* <FormikControl
 													control="select"
 													type="text"
 													label="Company Name"
 													name={"companyName"}
 													placeholder=""
 													options={serviceProviders.spOptions}
-												/>
+												/> */}
 												{/* <FormikControl
 													control="select"
 													type="text"
@@ -177,9 +177,9 @@ const Signup = () => {
 													placeholder=""
 													options={spClients}
 												/> */}
-											</div>
-										</div>
-										<div className="form-row">
+											{/* </div> */}
+										{/* </div>
+										<div className="form-row"> */}
 											<div className="row-50-50">
 												<FormikControl
 													control="inputPwd"
@@ -199,7 +199,8 @@ const Signup = () => {
 													autoComplete="Confirm password"
 												/>
 											</div>
-											<div>
+											{/* <div> */}
+											
 												<FormikControl
 													control="input"
 													type="email"
@@ -207,10 +208,10 @@ const Signup = () => {
 													name={"email"}
 													placeholder=""
 												/>
-											</div>
-										</div>
-										<div className="form-row">
-											<div >
+											{/* </div> */}
+										{/* </div>
+										<div className="form-row"> */}
+											<div>
 												<FormikControl
 													control="phoneNumberInput"
 													type="text"

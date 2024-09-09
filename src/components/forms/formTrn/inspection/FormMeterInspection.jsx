@@ -104,6 +104,12 @@ const FormMeterInspection = (props) => {
 						// console.log(`disabled`, disabled);
 						// console.log(`formik.values`, formik.values);
 
+						const { meterAccess } = formik.values?.access;
+						// console.log(`meterAccess`, meterAccess);
+
+						const showHide = meterAccess === "yes" ? "hide" : "";
+						// console.log(`showHide`, showHide);
+
 						updateFormState(formik, setTrnState);
 
 						return (
@@ -198,10 +204,10 @@ const FormMeterInspection = (props) => {
 														options={formSelectOptions.yesNoOptions}
 													/>
 													<FormikControl
-														control="select"
+														control="selectNoAccessReason"
 														type="text"
 														label="no access reasons"
-														name={`access.noAccessReason`}
+														name={`access.noAccessReason ${showHide}`}
 														options={formSelectOptions.keyPadNoAccessOptions}
 													/>
 												</div>
@@ -212,7 +218,7 @@ const FormMeterInspection = (props) => {
 														label="no access media"
 														name={`astData.media.noAccess`}
 														ml1="asts"
-														mediaCat="noAcces"
+														mediaCat="noAccess"
 													/>
 												</div>
 											</div>

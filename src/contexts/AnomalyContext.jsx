@@ -25,7 +25,7 @@ const initSettings = {
 			{ key: "Operationally Ok", value: "Operationally Ok" },
 			{ key: "Meter Not On Portal", value: "Meter Not On Portal" },
 			{ key: "No TID KC Tokens on Portal", value: "No TID KC Tokens on Portal" },
-			{ key: "No SGC Tokens Avaiabl", value: "No SGC Tokens Avaiabl" },
+			{ key: "No SGC Tokens Available", value: "No SGC Tokens Available" },
 		],
 		meterDamaged: [
 			{ key: "choose", value: "choose" },
@@ -34,19 +34,19 @@ const initSettings = {
 			{ key: "Buttons Not Working", value: "Buttons Not Working" },
 			{ key: "Meter Broken", value: "Meter Broken" },
 		],
-		meterIllegalyConnected: [
+		meterIllegallyConnected: [
 			{ key: "choose", value: "choose" },
 			{
-				key: "Staight Connection (Meter Bypassed)",
-				value: "Staight Connection (Meter Bypassed)",
+				key: "Straight Connection (Meter Bypassed)",
+				value: "Straight Connection (Meter Bypassed)",
 			},
 			{ key: "Bridge Wire on Meter", value: "Bridge Wire on Meter" },
 		],
 		meterMissing: [
 			{ key: "choose", value: "choose" },
 			{
-				key: "Property Has Power (Illegal Conection)",
-				value: "Property Has Power (Illegal Conection)",
+				key: "Property Has Power (Illegal Connection)",
+				value: "Property Has Power (Illegal Connection)",
 			},
 			{ key: "No Power Supply To Property", value: "No Power Supply To Property" },
 		],

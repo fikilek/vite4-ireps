@@ -71,7 +71,6 @@ const Users = lazy(() => import("@/pages/users/Users"));
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<RootLayout />}>
-
 			<Route index element={<Home />} />
 
 			<Route
@@ -429,7 +428,6 @@ const router = createBrowserRouter(
 			<Route path="/signin" element={<FormSignin />} />
 
 			<Route path="*" element={<NoPageFound />} />
-			
 		</Route>
 	)
 );

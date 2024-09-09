@@ -14,11 +14,14 @@ import AstsActivity from "@/components/asts/astsActivity/AstsActivity";
  * The ClusteredAstMarkers component is responsible for integrating the
  * markers with the markerclusterer.
  */
-export const ClusteredAstMarkers = () => {
-	const { astsContext } = useContext(AstsContext);
+export const ClusteredAstMarkers = (props) => {
+	const { asts } = props;
+	console.log(`asts`, asts);
+
+	// const { astsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext)
 
-	const asts = useMemo(() => astsContext?.asts, [astsContext?.asts]);
+	// const asts = useMemo(() => astsContext?.asts, [astsContext?.asts]);
 	// console.log(`asts`, asts);
 
 	const [markers, setMarkers] = useState({});
@@ -69,14 +72,17 @@ export const ClusteredAstMarkers = () => {
 
 	return (
 		<>
-			{asts.map((ast) => (
-				<AstMarker
-					key={ast.id}
-					ast={ast}
-					onClick={(ast) => setSelectedAstKey(ast.id)}
-					setMarkerRef={setMarkerRef}
-				/>
-			))}
+			{asts?.map((ast, index) => {
+				// console.log('index' , index)
+				return (
+					<AstMarker
+						key={ast.id}
+						ast={ast}
+						onClick={(ast) => setSelectedAstKey(ast?.id)}
+						setMarkerRef={setMarkerRef}
+					/>
+				);
+			})}
 
 			{selectedAstKey && (
 				<InfoWindow
@@ -85,8 +91,8 @@ export const ClusteredAstMarkers = () => {
 					onClose={() => setSelectedAstKey(null)}
 					headerContent={`Meter No: ${selectedAst?.astData?.astNo}`}
 				>
-					<div> 
-						<AstsActivity 
+					<div>
+						<AstsActivity
 							data={{
 								data: selectedAst,
 							}}

@@ -14,4 +14,14 @@ export default defineConfig({
 		},
 	},
 	assetsInclude: ['**/*.geojson'],
+	esbuild: {
+    loader: 'jsx',
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      loader: {
+        '.js': 'jsx',
+      },
+    },
+  },
 });

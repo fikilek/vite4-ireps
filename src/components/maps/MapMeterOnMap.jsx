@@ -14,7 +14,7 @@ import "@/components/maps/MapMeterOnMap.css";
 import AstsActivity from "@/components/asts/astsActivity/AstsActivity";
 
 const MapMeterOnMap = (props) => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 
 	const { ast } = props;
 

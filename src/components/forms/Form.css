@@ -137,6 +137,7 @@
 	font-size: 0.7rem;
 }
 
+.form-container form .form-control .asts-from-stores-label,
 .form-container form .form-control button:focus ~ label,
 .form-container form .form-control button:not(:placeholder-shown) ~ label,
 .form-container form .form-control input:focus ~ label,

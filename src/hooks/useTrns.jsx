@@ -100,7 +100,7 @@ export const useTrns = (trnType, astCat) => {
 					astId: uuidv4(),
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'circuit breaker', 'seal'],
-					astState: "", // ['stores', 'field', 'service', 'temper', 'etc']
+					astState: "stores", // ['stores', 'field', 'service', 'temper', 'etc']
 					astManufacturer: "",
 					astName: "",
 					meter: {
@@ -138,7 +138,7 @@ export const useTrns = (trnType, astCat) => {
 					astId: uuidv4(),
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
-					astState: "", // ['stores', 'field', 'service', 'temper', 'etc']
+					astState: "service", // ['stores', 'field', 'service', 'temper', 'etc']
 					astManufacturer: "",
 					astName: "",
 					meter: {
@@ -238,15 +238,17 @@ export const useTrns = (trnType, astCat) => {
 					createdByUid: user.uid,
 					trnHistory: 0, // how many times transaction has been updated
 					trnType: "installation", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-					trnNo: "",
 					trnId: uuidv4(),
 					trnState: "draft",
 				},
 				astData: {
-					astId: uuidv4(),
+					astId: '',
 					astNo: "", // for meters this is a meter no
 					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
-					astState: "", // ['stores', 'field', 'service', 'etc']
+					astState: {
+						state: "service",
+						location: "",
+					}, // ['stores', 'field', 'service', 'etc']
 					astManufacturer: "",
 					astName: "",
 					meter: {
@@ -286,6 +288,7 @@ export const useTrns = (trnType, astCat) => {
 					erfNo: "",
 					erfId: "",
 					erfAdr: "",
+					propertyType: "",
 				},
 				serviceConnection: {
 					configuration: "",
@@ -368,25 +371,23 @@ export const useTrns = (trnType, astCat) => {
 	const trnsValidationSchema = {
 		meter: {
 			checkin: object().shape({
-
 				astData: object().shape({
-						astNo: string().required("Required"),
-						astName: string().required("Required"),
-						astManufacturer: string().required("Required"),
-						astState: string().required("Required"),
-						meter: object().shape({
-							phase: string().required("Required"),
-							type: string().required("Required"),
-						}),
+					astNo: string().required("Required"),
+					astName: string().required("Required"),
+					astManufacturer: string().required("Required"),
+					astState: string().required("Required"),
+					meter: object().shape({
+						phase: string().required("Required"),
+						type: string().required("Required"),
 					}),
-			
+				}),
 
 				location: object().shape({
-						address: string().required("Required"),
-						gps: object().shape({
-							lat: number().required("Required"),
-							lng: number().required("Required"),
-					})
+					address: string().required("Required"),
+					gps: object().shape({
+						lat: number().required("Required"),
+						lng: number().required("Required"),
+					}),
 				}),
 				// metadata: lazy((v, { context }) => {
 				// 	return object().shape({
@@ -2876,6 +2877,33 @@ export const useTrns = (trnType, astCat) => {
 							hide: false,
 						},
 						{
+							field: "location.gps",
+							columnGroupShow: "closed",
+							headerName: "Gps",
+							cellRenderer: (params) => {
+								// console.log(`params`, params)
+								return (
+									<TableModalBtn data={params}>{params.value}</TableModalBtn>
+								);
+							},
+							cellRendererParams: {
+								modalName: "showAstOnMap",
+								width: "4rem",
+							},
+							valueGetter: (params) => {
+								// const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
+								// const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
+								return (
+									<IconContext.Provider
+										value={{ color: "blue", fontSize: "1rem" }}
+									>
+										<LuFileEdit />
+									</IconContext.Provider>
+								);
+							},
+							width: 90,
+						},
+						{
 							field: "erf.address.systemAdr",
 							headerName: "Erf Address (Google)",
 							width: 300,
@@ -3029,27 +3057,6 @@ export const useTrns = (trnType, astCat) => {
 							columnGroupShow: "closed",
 							headerName: "Ast Address",
 							width: 450,
-						},
-						{
-							field: "location.gps",
-							columnGroupShow: "closed",
-							headerName: "Ast Gps",
-							cellRenderer: (params) => {
-								// console.log(`params`, params)
-								return (
-									<TableModalBtn data={params}>{params.value}</TableModalBtn>
-								);
-							},
-							cellRendererParams: {
-								modalName: "showAstOnMap",
-								width: "7rem",
-							},
-							valueGetter: (params) => {
-								const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
-								const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
-								return `${lat}/${lng}`;
-							},
-							width: 140,
 						},
 						{
 							field: "location.premises",

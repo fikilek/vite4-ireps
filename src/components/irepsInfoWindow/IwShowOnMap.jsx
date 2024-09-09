@@ -8,7 +8,7 @@ import MapMeterOnMap from "@/components/maps/MapMeterOnMap";
 import MapWardErfsBoundaries from "@/components/maps/MapWardErfsBoundaries";
 
 const IwShowOnMap = (props) => {
-	// console.log(`props`, props);
+	console.log(`props`, props);
 	const { label, lmMetro, ward, ast, erf } = props;
 
 	return (
@@ -22,9 +22,10 @@ const IwShowOnMap = (props) => {
 		>
 			<MapIrepsMap>
 				<MapWardErfsBoundaries lmMetro={lmMetro} ward={ward} />
-				<MapWardCadastralMarkers lmMetro={lmMetro} ward={ward} />
+				{/* <MapWardCadastralMarkers lmMetro={lmMetro} ward={ward} /> */}
 				{ast && <MapMeterOnMap ast={ast} />}
 				{erf && <MapErfOnMap erf={erf} />}
+				
 			</MapIrepsMap>
 		</IrepsInfoWindow>
 	);

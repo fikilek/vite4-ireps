@@ -14,7 +14,6 @@ const {
 	getFirestore,
 	FieldValue,
 	Timestamp,
-	setDoc,
 } = require("firebase-admin/firestore");
 const { getAuth } = require("firebase-admin/auth");
 // const { doc, getDoc } = require("firebase/firestore");
@@ -235,18 +234,18 @@ exports.updateUserWorkbase = onCall(async (request) => {
 	// console.log(`request--------------------------------`, request);
 
 	const { data, auth } = request;
-	// console.log(`auth--------------------------------`, auth);
-	// console.log(`data--------------------`, data);
+	console.log(`auth--------------------------------`, auth);
+	console.log(`data--------------------`, data);
 
 	const { workbase } = data.roles;
 	// console.log(`workbase------------------`, workbase);
 
 	const userRecord = await getAuth().getUser(auth.uid);
-	// console.log(`userRecord------------------`, userRecord);
+	console.log(`userRecord------------------`, userRecord);
 
-	// desructure roles from userRecord
+	// destructure roles from userRecord
 	const { roles } = userRecord.customClaims;
-	// console.log(`roles------------------`, roles);
+	console.log(`roles------------------`, roles);
 
 	// create a new customeclaaims object and update it with workbase
 	const customClaims = {
@@ -255,13 +254,13 @@ exports.updateUserWorkbase = onCall(async (request) => {
 			workbase: workbase,
 		},
 	};
-	// console.log(`customClaims--------------------`, customClaims);
+	console.log(`customClaims--------------------`, customClaims);
 
 	return admin
 		.auth()
 		.setCustomUserClaims(auth.uid, customClaims)
 		.then((result) => {
-			// console.log(`claim update result -----------------------------`, result);
+			console.log(`claim update result -----------------------------`, result);
 			return admin.auth().getUser(auth.uid);
 		})
 		.then((userRecord) => {
@@ -464,43 +463,43 @@ const createNewAst = async (trnAfter) => {
 			updatedByUser: trnAfter.metadata.updatedByUser,
 			updatedByUid: trnAfter.metadata.updatedByUid,
 			createdThrough: {
-				creatorTrnName: trnAfter.metadata.trnType,
-				creatorTrnNo: trnAfter.metadata.trnNo,
-				creatorTrnId: trnAfter.metadata.trnId,
+				creatorTrnName: trnAfter.metadata?.trnType,
+				creatorTrnNo: trnAfter.metadata?.trnNo,
+				creatorTrnId: trnAfter.metadata?.trnId,
 			},
 			// trnCount: admin.firestore.FieldValue.arrayUnion(astUpdatedObj),
 		},
 		astData: {
-			astId: trnAfter.astData.astId,
-			astNo: trnAfter.astData.astNo,
-			astCatergory: trnAfter.astData.astCatergory,
-			astState: trnAfter.astData.astState,
-			astManufacturer: trnAfter.astData.astManufacturer,
-			astName: trnAfter.astData.astName,
+			astId: trnAfter.astData?.astId,
+			astNo: trnAfter.astData?.astNo,
+			astCatergory: trnAfter.astData?.astCatergory,
+			astState: trnAfter.astData?.astState,
+			astManufacturer: trnAfter.astData?.astManufacturer,
+			astName: trnAfter.astData?.astName,
 			meter: {
-				phase: trnAfter.astData.meter.phase,
-				type: trnAfter.astData.meter.type,
+				phase: trnAfter.astData?.meter?.phase,
+				type: trnAfter.astData?.meter?.type,
 				keypad: {
-					serialNo: trnAfter.astData.meter.keypad.serialNo,
-					comment: trnAfter.astData.meter.keypad.comment,
+					serialNo: trnAfter.astData?.meter?.keypad?.serialNo,
+					comment: trnAfter.astData?.meter?.keypad?.comment,
 				},
 				cb: {
-					size: trnAfter.astData.meter.cb.size,
-					comment: trnAfter.astData.meter.cb.comment,
+					size: trnAfter.astData?.meter?.cb?.size,
+					comment: trnAfter.astData?.meter?.cb?.comment,
 				},
 				seal: {
-					sealNo: trnAfter.astData.meter.seal.sealNo,
-					comment: trnAfter.astData.meter.seal.comment,
+					sealNo: trnAfter.astData?.meter?.seal?.sealNo,
+					comment: trnAfter.astData?.meter?.seal?.comment,
 				},
 			},
 		},
 		erf: trnAfter.erf,
-		location: trnAfter.location,
-		anomalies: trnAfter.anomalies,
+		location: trnAfter?.location,
+		anomalies: trnAfter?.anomalies,
 		trns: [
 			{
-				trnId: trnAfter.metadata.trnId,
-				trnType: trnAfter.metadata.trnType,
+				trnId: trnAfter.metadata?.trnId,
+				trnType: trnAfter.metadata?.trnType,
 				updatedAtDatetime: Timestamp.now(),
 				updatedByUser: trnAfter.metadata.updatedByUser,
 			},
@@ -525,6 +524,111 @@ const createNewAst = async (trnAfter) => {
 			return "Error adding document: ", error.msg;
 		});
 };
+
+// create new ast
+const updateAstOnInstallation = async (trnAfter) => {
+	console.log(
+		`updateAstOnInstallation trnAfter: -------------------`,
+		trnAfter
+	);
+	// console.log(`ast - line 439`, ast);
+	// console.log(`ast.astId - line 440`, ast.astId);
+	// console.log(`ast.trnObject.id - line 441`, ast.trnObject.id);
+
+	// extract ast id
+	const { astId } = trnAfter.astData;
+	console.log(`astId------------------------------`, astId);
+
+	const astRef = db.collection("asts").doc(astId);
+	console.log(`astRef------------------------------`, astRef);
+
+	// create a new ast object
+	const newAst = {
+		"metadata.updatedAtDatetime": Timestamp.now(),
+		"metadata.updatedByUser": trnAfter.metadata.updatedByUser,
+		"metadata.updatedByUid": trnAfter.metadata.updatedByUid,
+
+		"metadata.createdThrough.creatorTrnName": trnAfter.metadata?.trnType,
+		"metadata.createdThrough.creatorTrnId": trnAfter.metadata?.trnId,
+
+		// metadata: {
+		// 	updatedAtDatetime: Timestamp.now(),
+		// 	updatedByUser: trnAfter.metadata.updatedByUser,
+		// 	updatedByUid: trnAfter.metadata.updatedByUid,
+		// 	createdThrough: {
+		// 		creatorTrnName: trnAfter.metadata?.trnType,
+		// 		creatorTrnId: trnAfter.metadata?.trnId,
+		// 	},
+		// 	// trnCount: admin.firestore.FieldValue.arrayUnion(astUpdatedObj),
+		// },
+		"astData.astState.state": trnAfter.astData?.astState?.state,
+		"astData.astState.location": trnAfter.astData?.astState?.location,
+		"astData.astName": trnAfter.astData?.astName,
+		"astData.meter.keypad.serialNo": trnAfter.astData?.meter?.keypad?.serialNo,
+		"astData.meter.keypad.comment": trnAfter.astData?.meter?.keypad?.comment,
+		"astData.meter.cb.size": trnAfter.astData?.meter?.cb?.size,
+		"astData.meter.cb.comment": trnAfter.astData?.meter?.cb?.comment,
+		"astData.meter.seal.sealNo": trnAfter.astData?.meter?.seal?.sealNo,
+		"astData.meter.seal.comment": trnAfter.astData?.meter?.seal?.comment,
+
+		// astData: {
+		// 	// astId: trnAfter.astData?.astId,
+		// 	// astNo: trnAfter.astData?.astNo,
+		// 	// astCatergory: trnAfter.astData?.astCatergory,
+		// 	astState: trnAfter.astData?.astState,
+		// 	// astManufacturer: trnAfter.astData?.astManufacturer,
+		// 	astName: trnAfter.astData?.astName,
+		// 	meter: {
+		// 		// phase: trnAfter.astData?.meter?.phase,
+		// 		// type: trnAfter.astData?.meter?.type,
+		// 		keypad: {
+		// 			serialNo: trnAfter.astData?.meter?.keypad?.serialNo,
+		// 			comment: trnAfter.astData?.meter?.keypad?.comment,
+		// 		},
+		// 		cb: {
+		// 			size: trnAfter.astData?.meter?.cb?.size,
+		// 			comment: trnAfter.astData?.meter?.cb?.comment,
+		// 		},
+		// 		seal: {
+		// 			sealNo: trnAfter.astData?.meter?.seal?.sealNo,
+		// 			comment: trnAfter.astData?.meter?.seal?.comment,
+		// 		},
+		// 	},
+		// },
+
+		erf: trnAfter.erf,
+		location: trnAfter?.location,
+		anomalies: trnAfter?.anomalies,
+		updateHistory: true,
+		trns: FieldValue.arrayUnion({
+			trnId: trnAfter.metadata?.trnId,
+			trnType: trnAfter.metadata?.trnType,
+			updatedAtDatetime: Timestamp.now(),
+			updatedByUser: trnAfter.metadata?.updatedByUser,
+		}),
+		serviceConnection: trnAfter.serviceConnection,
+	};
+	console.log(`newAst------------------------------`, newAst);
+
+	// step X: update the 'ast' document with the trn details
+	await astRef.update(newAst, { merge: true });
+	// add the new ast to the asts collection
+	// db.collection("asts")
+	// 	.doc(astId)
+	// 	.update(newAst)
+	// 	.then((docRef) => {
+	// 		console.log("Updated doc: ----------------------------- ", docRef);
+	// 		return `Updated doc: ${docRef}`;
+	// 	})
+	// 	.catch((error) => {
+	// 		console.error(
+	// 			"Error updating ast document ): --------------------- ",
+	// 			error.msg
+	// 		);
+	// 		return "Error updating document: ", error.msg;
+	// 	});
+};
+
 // This updates the ast after a successful inspection
 const updateAst = async (trnAfter) => {
 	// console.log(`trnAfter------------------------------`, trnAfter);
@@ -621,36 +725,96 @@ const updateAstTrns = async (trnAfter) => {
 };
 
 // update Erf through a cloud function onCreate every time an ast is created
-exports.updateErfOnAstCreation = onDocumentCreated(
-	"asts/{astId}",
-	async (event) => {
+// exports.updateErfOnAstCreation = onDocumentCreated(
+// 	"asts/{astId}",
+// 	async (event) => {
+// 		// console.log(`event -------------------------`, event);
+
+// 		// step X: Get an object representing the ast document created
+// 		const snapshot = event.data;
+// 		if (!snapshot) {
+// 			console.log("No data associated with the event");
+// 			return;
+// 		}
+
+// 		// step X: retrieve data for ast just created
+// 		const data = snapshot.data();
+// 		// console.log(`data 370------------------------------`, data);
+// 		// console.log(`data.metadata 371------------------------------`, data.metadata);
+
+// 		// step X: retrieve erf info where the newly created ast is located
+// 		const { erfId } = data.erf;
+// 		// console.log(`erfId------------------------------`, erfId);
+
+// 		if (!erfId) return;
+
+// 		// step X: get reference to the erf
+// 		const erfRef = db.collection("erfs").doc(erfId);
+// 		// console.log(`erfRef------------------------------`, erfRef);
+
+// 		// retrive trn displayName and user uid from trn metadata
+// 		const userDisplayname = data.metadata.updatedByUser;
+// 		// console.log(`userDisplayname------------------------------`, userDisplayname);
+// 		const userUid = data.metadata.updatedByUid;
+// 		// console.log(`userUid------------------------------`, userUid);
+// 		const astCreatorTrnName = data.metadata.createdThrough.creatorTrnName;
+// 		// console.log(`astCreator------------------------------`, astCreatorTrnName);
+
+// 		// step X: update the 'erf' document with the user details
+// 		await erfRef.update(
+// 			{
+// 				"metadata.updatedAtDatetime": Timestamp.now(),
+// 				"metadata.updatedByUser": userDisplayname,
+// 				"metadata.updatedByUid": userUid,
+// 				asts: FieldValue.arrayUnion({
+// 					astId: snapshot.id,
+// 					astNo: data.astData.astNo,
+// 					astCat: data.astData.astCatergory,
+// 					createdAtDatetime: Timestamp.now(),
+// 					createdByUser: userDisplayname,
+// 					astCreatorTrnName: astCreatorTrnName,
+// 				}),
+// 				updateHistory: true,
+// 			},
+// 			{ merge: true }
+// 		);
+// 		// console.log(`unionRes`, unionRes);
+// 	}
+// );
+
+// update Erf through a cloud function every time an ast is created through audit and updated through installation
+exports.updateErfOnAstCreationAndInstallation =
+	onDocumentWrittenWithAuthContext("asts/{astId}", async (event) => {
 		// console.log(`event -------------------------`, event);
 
-		// step X: Get an object representing the ast document created
-		const snapshot = event.data;
-		if (!snapshot) {
-			console.log("No data associated with the event");
-			return;
-		}
+		const snapshot = event.data.after;
+    if (!snapshot) {
+        console.log("No data associated with the event");
+        return;
+    }
+		// step X: retrieve data for ast just created or updated
+    const data = snapshot.data();
 
-		// step X: retrieve data for ast just created
-		const data = snapshot.data();
-		// console.log(`data 370------------------------------`, data);
-		// console.log(`data.metadata 371------------------------------`, data.metadata);
+		console.log(`data 799------------------------------`, data);
+		// console.log(`data.metadata 800------------------------------`, data.metadata);
 
-		// step X: retrieve erf info where the newly created ast is located
+		// step X: retrieve erf info where the ast belongs
 		const { erfId } = data.erf;
 		// console.log(`erfId------------------------------`, erfId);
+
+		if (!erfId) return;
 
 		// step X: get reference to the erf
 		const erfRef = db.collection("erfs").doc(erfId);
 		// console.log(`erfRef------------------------------`, erfRef);
 
-		// retrive trn displayName and user uid from trn metadata
+		// retrieve trn displayName and user uid from trn metadata
 		const userDisplayname = data.metadata.updatedByUser;
 		// console.log(`userDisplayname------------------------------`, userDisplayname);
+
 		const userUid = data.metadata.updatedByUid;
 		// console.log(`userUid------------------------------`, userUid);
+
 		const astCreatorTrnName = data.metadata.createdThrough.creatorTrnName;
 		// console.log(`astCreator------------------------------`, astCreatorTrnName);
 
@@ -673,8 +837,8 @@ exports.updateErfOnAstCreation = onDocumentCreated(
 			{ merge: true }
 		);
 		// console.log(`unionRes`, unionRes);
-	}
-);
+	});
+
 
 // update trn state
 const setTrnState = (trnSnapshot, newState) => {
@@ -683,7 +847,7 @@ const setTrnState = (trnSnapshot, newState) => {
 	// retrieve trn ref
 	const { ref } = trnSnapshot;
 
-	// retrive trn displayName and user uid from trn metadata
+	// retrieve trn displayName and user uid from trn metadata
 	const userDisplayname = trnSnapshot.data().metadata.updatedByUser;
 	const userUid = trnSnapshot.data().metadata.updatedByUid;
 
@@ -700,9 +864,11 @@ const setTrnState = (trnSnapshot, newState) => {
 		});
 };
 
-exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
+
+
+	exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 	const snapshot = event.data.after;
-	console.log(`trnAction event-------------------------`, event);
+	// console.log(`trnAction event-------------------------`, event);
 	if (!snapshot) {
 		// console.log("No data associated with the event");
 		return;
@@ -719,6 +885,7 @@ exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 	// console.log(`trnState -------------`, trnState);
 
 	// response to each state using switch statement
+	console.log(`trnType is : ------------------------------`, trnType);
 	switch (trnState) {
 		default:
 			return;
@@ -729,20 +896,49 @@ exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 			break;
 		case "valid":
 			// 1. create a new ast (this is only for 'audit' and 'installation')
-			// console.log(`trnType is : ------------------------------`, trnType);
-			if (trnType === "audit" || trnType === "installation") {
+			if (trnType === "audit") {
 				await createNewAst(data);
+				console.log(
+					`Done creating ast on audit : ------------------------------`,
+					data
+				);
+			}
+			// 1. create a new ast (this is only for 'audit' and 'installation')
+			if (trnType === "installation") {
+				await updateAstOnInstallation(data);
+				// await updateAst(data);
+				console.log(
+					`Done updating ast on installation : ------------------------------`,
+					data
+				);
+			}
+			if (trnType === "checkin") {
+				console.log(`trnType is :: --------------------`, data);
+				await createNewAst(data);
+				await updateAstTrns(data);
+				console.log(
+					`Done creating ast on checkin  : ------------------------------`,
+					data
+				);
 			}
 			if (trnType === "inspection") {
-				// console.log(`updateAstTrns with data: --------------------`, data	);
+				console.log(`trnType is :: --------------------`, data);
 				// console.log(`updating 'trns' array on ast with data: --------------------`, data	);
 				await updateAstTrns(data);
 				await updateAst(data);
+				console.log(
+					`Done updating  ast on inspection  : ------------------------------`,
+					data
+				);
 			}
 			if (trnType === "tid") {
-				// console.log(`updateAstTrns with data: --------------------`, data	);
+				console.log(`trnType is : --------------------`, data);
 				// console.log(`updating 'trns' array on ast with data: --------------------`, data	);
 				await updateAstTrns(data);
+				console.log(
+					`Done updating  ast on tid  : ------------------------------`,
+					data
+				);
 			}
 
 			// 2. update erf that created the trn
@@ -759,146 +955,144 @@ exports.trnAction = onDocumentWritten("trns/{trnId}", async (event) => {
 	// After incrementing metadata.trnHistory, go to trnsHistory collection for the trn with the same trnId
 	// and cross check how many trns has that trn had on tensHistory. If they
 
-
-
 	return null;
 });
 
 // This function is triggered every time an ast in ast collection is created, updated or deleted.
-exports.updateAstHistory = onDocumentWrittenWithAuthContext(
-	"asts/{astId}",
-	async (event) => {
-		// console.log(`updateAstHistory event -------------------------`, event);
+// exports.updateAstHistory = onDocumentWrittenWithAuthContext(
+// 	"asts/{astId}",
+// 	async (event) => {
+// 		// console.log(`updateAstHistory event -------------------------`, event);
 
-		// step X: Get an object representing the ast document created
-		const snapshot = event.data;
-		if (!snapshot) {
-			console.log("No data associated with the event");
-			return;
-		}
-		// console.log(`snapshot -------------------------`, snapshot);
+// 		// step X: Get an object representing the ast document created
+// 		const snapshot = event.data;
+// 		if (!snapshot) {
+// 			console.log("No data associated with the event");
+// 			return;
+// 		}
+// 		// console.log(`snapshot -------------------------`, snapshot);
 
-		// step X: retrieve data for erf after
-		const dataAfter = event.data.after.data();
-		// console.log(`dataAfter ------------------------------`, dataAfter);
+// 		// step X: retrieve data for erf after
+// 		const dataAfter = event.data.after.data();
+// 		// console.log(`dataAfter ------------------------------`, dataAfter);
 
-		const updateHistory = dataAfter?.updateHistory;
-		// console.log(`updateHistory ------------------------------`, updateHistory);
+// 		const updateHistory = dataAfter?.updateHistory;
+// 		// console.log(`updateHistory ------------------------------`, updateHistory);
 
-		if (!updateHistory) return null;
+// 		if (!updateHistory) return null;
 
-		// step X: retrieve data for erf id
-		const id = dataAfter?.astData?.astId;
-		// console.log(`id------------------------------`, id);
+// 		// step X: retrieve data for erf id
+// 		const id = dataAfter?.astData?.astId;
+// 		// console.log(`id------------------------------`, id);
 
-		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
-		const astRef = db.collection("asts").doc(id);
-		// console.log(`astRef------------------------------`, astRef);
+// 		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
+// 		const astRef = db.collection("asts").doc(id);
+// 		// console.log(`astRef------------------------------`, astRef);
 
-		delete dataAfter.astHistory;
-		delete dataAfter.updateHistory;
-		// console.log(
-		// 	`dataAfter (after astHistory delete)------------------------------`,
-		// 	dataAfter
-		// );
-		// const { astHistory: _, ...newAst } = dataAfter;
-		// console.log(`newAst------------------------------`, newAst);
+// 		delete dataAfter.astHistory;
+// 		delete dataAfter.updateHistory;
+// 		// console.log(
+// 		// 	`dataAfter (after astHistory delete)------------------------------`,
+// 		// 	dataAfter
+// 		// );
+// 		// const { astHistory: _, ...newAst } = dataAfter;
+// 		// console.log(`newAst------------------------------`, newAst);
 
-		// step X: create a new 'astHistory' document with the user details and updated trn
-		await astRef.update({
-			astHistory: FieldValue.arrayUnion(dataAfter),
-			updateHistory: false,
-		});
-	}
-);
+// 		// step X: create a new 'astHistory' document with the user details and updated trn
+// 		await astRef.update({
+// 			astHistory: FieldValue.arrayUnion(dataAfter),
+// 			updateHistory: false,
+// 		});
+// 	}
+// );
 
 // This function is triggered every time an trn in trns collection is created, updated or deleted
-exports.updateTrnHistory = onDocumentWrittenWithAuthContext(
-	"trns/{trnId}",
-	async (event) => {
-		console.log(`updateTrnHistory event -------------------------`, event);
+// exports.updateTrnHistory = onDocumentWrittenWithAuthContext(
+// 	"trns/{trnId}",
+// 	async (event) => {
+// 		console.log(`updateTrnHistory event -------------------------`, event);
 
-		// step X: Get an object representing the ast document created
-		const snapshot = event.data;
-		if (!snapshot) {
-			console.log("No data associated with the event");
-			return;
-		}
-		// console.log(`snapshot -------------------------`, snapshot);
+// 		// step X: Get an object representing the ast document created
+// 		const snapshot = event.data;
+// 		if (!snapshot) {
+// 			console.log("No data associated with the event");
+// 			return;
+// 		}
+// 		// console.log(`snapshot -------------------------`, snapshot);
 
-		// step X: retrieve data for erf after
-		const dataAfter = event.data.after.data();
-		// console.log(`dataAfter ------------------------------`, dataAfter);
+// 		// step X: retrieve data for erf after
+// 		const dataAfter = event.data.after.data();
+// 		// console.log(`dataAfter ------------------------------`, dataAfter);
 
-		const updateHistory = dataAfter?.updateHistory;
-		// console.log(`updateHistory ------------------------------`, updateHistory);
+// 		const updateHistory = dataAfter?.updateHistory;
+// 		// console.log(`updateHistory ------------------------------`, updateHistory);
 
-		if (!updateHistory) return null;
+// 		if (!updateHistory) return null;
 
-		// step X: retrieve data for erf id
-		const id = dataAfter?.metadata?.trnId;
-		// console.log(`id------------------------------`, id);
+// 		// step X: retrieve data for erf id
+// 		const id = dataAfter?.metadata?.trnId;
+// 		// console.log(`id------------------------------`, id);
 
-		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
-		const trnRef = db.collection("trns").doc(id);
-		// console.log(`erfsRef------------------------------`, erfsRef);
+// 		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
+// 		const trnRef = db.collection("trns").doc(id);
+// 		// console.log(`erfsRef------------------------------`, erfsRef);
 
-		delete dataAfter.trnHistory;
-		delete dataAfter.updateHistory;
-		// console.log(`dataAfter ------------------------------`, dataAfter);
-		// const { erfHistory: _, ...newErf } = dataAfter;
-		// console.log(`newErf------------------------------`, newErf);
+// 		delete dataAfter.trnHistory;
+// 		delete dataAfter.updateHistory;
+// 		// console.log(`dataAfter ------------------------------`, dataAfter);
+// 		// const { erfHistory: _, ...newErf } = dataAfter;
+// 		// console.log(`newErf------------------------------`, newErf);
 
-		// step X: create a new 'trnsHistory' document with the user details and updated trn
-		await trnRef.update({
-			trnHistory: FieldValue.arrayUnion(dataAfter),
-			updateHistory: false,
-		});
-	}
-);
+// 		// step X: create a new 'trnsHistory' document with the user details and updated trn
+// 		await trnRef.update({
+// 			trnHistory: FieldValue.arrayUnion(dataAfter),
+// 			updateHistory: false,
+// 		});
+// 	}
+// );
 
 // This function is triggered every time an erf in erfs collection is created, updated or deleted
-exports.updateErfHistory = onDocumentWrittenWithAuthContext(
-	"erfs/{erfId}",
-	async (event) => {
-		// step X: Get an object representing the ast document created
-		const snapshot = event.data;
-		if (!snapshot) {
-			console.log("No data associated with the event");
-			return;
-		}
-		// console.log(`snapshot -------------------------`, snapshot);
+// exports.updateErfHistory = onDocumentWrittenWithAuthContext(
+// 	"erfs/{erfId}",
+// 	async (event) => {
+// 		// step X: Get an object representing the ast document created
+// 		const snapshot = event.data;
+// 		if (!snapshot) {
+// 			console.log("No data associated with the event");
+// 			return;
+// 		}
+// 		// console.log(`snapshot -------------------------`, snapshot);
 
-		// step X: retrieve data for erf after
-		const dataAfter = event.data.after.data();
-		// console.log(`dataAfter ------------------------------`, dataAfter);
+// 		// step X: retrieve data for erf after
+// 		const dataAfter = event.data.after.data();
+// 		// console.log(`dataAfter ------------------------------`, dataAfter);
 
-		const updateHistory = dataAfter?.updateHistory;
-		// console.log(`updateHistory ------------------------------`, updateHistory);
+// 		const updateHistory = dataAfter?.updateHistory;
+// 		// console.log(`updateHistory ------------------------------`, updateHistory);
 
-		if (!updateHistory) return null;
+// 		if (!updateHistory) return null;
 
-		// step X: retrieve data for erf id
-		const erfId = dataAfter?.id;
-		// console.log(`erfId------------------------------`, erfId);
+// 		// step X: retrieve data for erf id
+// 		const erfId = dataAfter?.id;
+// 		// console.log(`erfId------------------------------`, erfId);
 
-		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
-		const erfRef = db.collection("erfs").doc(erfId);
-		// console.log(`erfsRef------------------------------`, erfsRef);
+// 		// step X: get reference to the trnsHistory collection. If it does not exist it will be created.
+// 		const erfRef = db.collection("erfs").doc(erfId);
+// 		// console.log(`erfsRef------------------------------`, erfsRef);
 
-		delete dataAfter.erfHistory;
-		delete dataAfter.updateHistory;
-		// console.log(`dataAfter ------------------------------`, dataAfter);
-		// const { erfHistory: _, ...newErf } = dataAfter;
-		// console.log(`newErf------------------------------`, newErf);
+// 		delete dataAfter.erfHistory;
+// 		delete dataAfter.updateHistory;
+// 		// console.log(`dataAfter ------------------------------`, dataAfter);
+// 		// const { erfHistory: _, ...newErf } = dataAfter;
+// 		// console.log(`newErf------------------------------`, newErf);
 
-		// step X: create a new 'trnsHistory' document with the user details and updated trn
-		await erfRef.update({
-			erfHistory: FieldValue.arrayUnion(dataAfter),
-			updateHistory: false,
-		});
-	}
-);
+// 		// step X: create a new 'trnsHistory' document with the user details and updated trn
+// 		await erfRef.update({
+// 			erfHistory: FieldValue.arrayUnion(dataAfter),
+// 			updateHistory: false,
+// 		});
+// 	}
+// );
 
 // exports.getUserWorkbase = onCall(async request => {
 // 	// console.log(`request ---------------------`, request);

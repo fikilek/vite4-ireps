@@ -14,27 +14,29 @@ import { AstsContext } from "@/contexts/AstsContext";
 // images
 import meter14 from "@/images/meter14.jpg";
 
-const MapAstFilter = () => {
+const MapAstFilter = (props) => {
 	// console.log(`MapAstFilter`)
+	const { asts } = props;
+	console.log(`asts`, asts)
 
 	const map = useMap();
 	// console.log(`map`, map);
 
-	const { astsContext } = useContext(AstsContext);
+	// const { astsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext);
 
 	// const {asts} = astsContext
-	const asts = useMemo(() => {
-		return astsContext?.asts;
-	}, [astsContext]);
+	// const asts = useMemo(() => {
+	// 	return astsContext?.asts;
+	// }, [assests]);
 	// console.log(`asts`, asts);
 
 	const options =
 		asts &&
-		asts.map((ast) => {
+		asts?.map((ast) => {
 			return {
-				value: ast.astData.astNo,
-				label: ast.astData.astNo,
+				value: ast?.astData?.astNo,
+				label: ast?.astData?.astNo,
 				data: ast,
 			};
 		});

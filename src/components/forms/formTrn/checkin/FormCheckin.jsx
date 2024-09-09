@@ -136,13 +136,15 @@ const FormCheckin = (props) => {
 									>
 										<div className="form-row-wrapper">
 											<div className="row-1 form-row">
-												<div className="row-50-50">
+												<div className="">
 													<FormikControl
-														control="input"
+														control="inputBarcodeScan"
 														type="text"
 														label="Meter No"
 														name={`astData.astNo`}
 													/>
+												</div>
+												<div className="">
 													<FormikControl
 														control="mediaButton"
 														type="button"
@@ -167,14 +169,15 @@ const FormCheckin = (props) => {
 														options={formSelectOptions.meterTypeOptions}
 													/>
 												</div>
-											</div>
-											<div className="row-5 form-row">
 												<FormikControl
 													control="input"
 													type="text"
 													label="manufacturer"
 													name={`astData.astManufacturer`}
 												/>
+											</div>
+											<div className="row-5 form-row">
+											
 												<FormikControl
 													control="input"
 													type="text"

@@ -1,4 +1,3 @@
-
 // css
 import "@/components/tables/TableBtnsPossibleTrnsOnErf.css";
 
@@ -9,7 +8,7 @@ import { useTrns } from "@/hooks/useTrns";
 import TableModalBtn from "@/components/tables/TableModalBtn";
 import { memo } from "react";
 
-const TableBtnsPossibleTrnsOnErf = props => {
+const TableBtnsPossibleTrnsOnErf = (props) => {
 	// console.log(`props`, props);
 	const { erfNo, id: erfId, address, propertyType } = props.data;
 
@@ -30,7 +29,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 							erfNo,
 							erfId,
 							address,
-							propertyType
+							propertyType,
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["audit"],
@@ -52,7 +51,7 @@ const TableBtnsPossibleTrnsOnErf = props => {
 							erfNo,
 							erfId,
 							address,
-							propertyType
+							propertyType,
 						},
 					},
 					validationSchema: trnsValidationSchema["meter"]["installation"],
@@ -89,4 +88,4 @@ const TableBtnsPossibleTrnsOnErf = props => {
 	);
 };
 
-export default memo(TableBtnsPossibleTrnsOnErf) ;
+export default TableBtnsPossibleTrnsOnErf;

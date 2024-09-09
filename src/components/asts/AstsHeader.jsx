@@ -35,18 +35,6 @@ const AstsHeader = (props) => {
 	const { userFromUsers } = useUser(user.uid);
 	// console.log(`userFromUsers`, userFromUsers);
 
-	// handle event - active tab
-	const handleOpenCheckinForm = (e) => {
-		console.log(`open checkin form`, e);
-		openModal({
-			modalName: 'checkin',
-			payload: {
-				data: trnsNewFormData['meter']['checkin'],
-				validationSchema: trnsValidationSchema['meter']['checkin'],
-			},
-		});
-	};
-
 	return (
 		<div className="asts-header">
 			<div className="ph ph-left">
@@ -61,29 +49,7 @@ const AstsHeader = (props) => {
 			<div className="ph ph-right">
 				<div className="phRl"></div>
 				<div className="phRr">
-					{/* <button
-						className={astsContext.activeTab === "table" ? "active" : null}
-						id="table"
-						onClick={handleActiveTab}
-					>
-						Table
-					</button> */}
-					{/* <button
-						className={astsContext.activeTab === "split" ? "active" : null}
-						id="split"
-						onClick={handleActiveTab}
-					>
-						Split
-					</button> */}
-					<button
-						className={"checkin-form-btn"}
-						id="map"
-						onClick={handleOpenCheckinForm}
-					>
-						<IconContext.Provider value={{ color: "blue", size: "1.5rem" }}>
-							<MdAddBox  />
-						</IconContext.Provider>
-					</button>
+
 				</div>
 			</div>
 		</div>

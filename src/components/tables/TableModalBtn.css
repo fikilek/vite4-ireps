@@ -3,6 +3,15 @@
   margin: 0.1rem;
 }
 
+.table-modal-btn button.disable-btn {
+  background-color: rgb(213, 213, 213);
+}
+
+.table-modal-btn button.disable-btn:hover {
+  background-color: rgb(132, 107, 107);
+  cursor:not-allowed;
+}
+
 @media (max-width: 1024px) {}
 
 @media (max-width: 768px) {}

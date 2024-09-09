@@ -1,3 +1,5 @@
+// npm libraries
+
 // css
 import "@/components/map/MapMain.css";
 
@@ -12,21 +14,22 @@ import { ClusteredAstMarkers } from "@/components/maps/ClusteredAstMarkers";
 import MapAstFilter from "@/components/maps/MapAstFilter";
 import MapErfFilter from "@/components/maps/MapErfFilter";
 
-const ErfsMap = () => {
+const MapMain = (props) => {
 	// console.log(`ErfsMap props`, props);
+	const {asts, astsTableFields} = props
 
 	return (
-		<div className="erfs-map">
+		<div className="map-main">
 			<MapIrepsMap>
 				<MapLmWardBoundaries />
-				<MapLmBoundary center={'center'} />
-				<ClusteredAstMarkers />
+				<MapLmBoundary center={"center"} />
+				<ClusteredAstMarkers asts={asts} astsTableFields={astsTableFields} />
 				<ClusteredErfMarkers />
-				<MapAstFilter />
+				<MapAstFilter asts={asts} astsTableFields={astsTableFields} />
 				<MapErfFilter />
 			</MapIrepsMap>
 		</div>
 	);
 };
 
-export default ErfsMap;
+export default MapMain;

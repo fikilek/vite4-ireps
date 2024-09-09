@@ -209,25 +209,25 @@ export const useErfs = () => {
 			hide: false,
 		},
 		// Erf History
-		{
-			field: "erf.erfHistory",
-			headerName: "Erf History",
-			width: 120,
-			cellRenderer: (params) => {
-				// console.log(`params`, params);
-				const erfHistory = params.data?.erfHistory?.length
-					? params.data?.erfHistory?.length
-					: 0;
-				return <TableModalBtn data={params}>{erfHistory}</TableModalBtn>;
-			},
-			cellRendererParams: {
-				modalName: "iwHistory",
-				width: "3rem",
-				infoName: {
-					irepsKeyItem: 'erfs',
-				},
-			},
-		},
+		// {
+		// 	field: "erf.erfHistory",
+		// 	headerName: "Erf History",
+		// 	width: 120,
+		// 	cellRenderer: (params) => {
+		// 		// console.log(`params`, params);
+		// 		const erfHistory = params.data?.erfHistory?.length
+		// 			? params.data?.erfHistory?.length
+		// 			: 0;
+		// 		return <TableModalBtn data={params}>{erfHistory}</TableModalBtn>;
+		// 	},
+		// 	cellRendererParams: {
+		// 		modalName: "iwHistory",
+		// 		width: "3rem",
+		// 		infoName: {
+		// 			irepsKeyItem: 'erfs',
+		// 		},
+		// 	},
+		// },
 		{
 			field: "",
 			headerName: "Erf on Map",
@@ -257,7 +257,7 @@ export const useErfs = () => {
 		// asts on erf
 		{
 			field: "asts.length",
-			headerName: "Asts",
+			headerName: "Meters",
 			width: 100,
 			valueGetter: (params) => {
 				return params.data?.asts?.length ? params.data?.asts?.length : 0;
@@ -278,8 +278,8 @@ export const useErfs = () => {
 		// media on erf
 		{
 			field: "",
-			headerName: "Erf Media",
-			width: 120,
+			headerName: "Meter Media",
+			width: 130,
 			cellRenderer: (params) => {
 				// console.log(`params`, params);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;

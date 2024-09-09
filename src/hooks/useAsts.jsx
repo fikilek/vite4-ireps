@@ -1,399 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { lazy, number, object, string } from "yup";
-import { v4 as uuidv4 } from "uuid";
-import { Timestamp, where } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import { IconContext } from "react-icons";
 import { FaMapMarkedAlt } from "react-icons/fa";
 
 // hooks
-import useAuthContext from "@/hooks/useAuthContext";
-import { useFirestore } from "./useFirestore";
-import useGetCollection from "./useGetCollection";
+import useGetAstsCollection from "./useGetAstsCollection";
 
 // components
 import TableDate from "@/components/tables/TableDate";
 import TableModalBtn from "@/components/tables/TableModalBtn";
-import { AstsContext } from "@/contexts/AstsContext";
 import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrnsOnAst";
-import TableBtn from "@/components/tables/TableBtn";
 
 export const useAsts = () => {
-	const { astsContext, setAstsContext } = useContext(AstsContext);
-	// console.log(`astsContext`, astsContext);
-
-	// get user details from firestore on snapshot
-	const { getDocument, response } = useFirestore("users");
-	// console.log(`response`, response);
-
-	const [workbase, setWorkbase] = useState(null);
-	// console.log(`workbase`, workbase);
-
-	const [constraints, setConstraints] = useState([]);
-	// console.log(`constraints`, constraints);
-
-	const { user } = useAuthContext();
-	// console.log(`user`, user);
-
-	const { state, getCollection } = useGetCollection("asts");
-	// console.log(`state`, state);
-
-	getCollection(constraints);
-
-	useEffect(() => {
-		setAstsContext({
-			...astsContext,
-			asts: state.data,
-			astsTableFields,
-		});
-	}, [state]);
-
-	useEffect(() => {
-		// console.log(`workbase changed:`, workbase)
-		// if(workbase) {
-		// 	setConstraints(where("erf.address.lmMetro", "==", workbase?.trim()))
-		// }
-		if (workbase) {
-			setConstraints((prev) => {
-				return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
-			});
-		}
-	}, [workbase]);
-
-	useEffect(() => {
-		if (response.success) {
-			// console.log(`response`, response);
-			const { workbase } = response?.document;
-			// console.log(`workbase`, workbase)
-			setWorkbase(workbase);
-		}
-	}, [response.success]);
-
-	useEffect(() => {
-		if (user?.uid) {
-			getDocument(user?.uid);
-		}
-	}, [user?.uid]);
-
-	// const auditAstValidationSchema = {
-	// 	meter: {
-	// 		audit: object().shape({
-	// 			access: object().shape({
-	// 				meterAccess: string().required("Required"),
-	// 				noAccessReason: string().when("meterAccess", (meterAccess, schema) => {
-	// 					if (meterAccess[0] === "no") {
-	// 						return schema
-	// 							?.required("no access reason required")
-	// 							?.notOneOf(["choose", ""], "Required");
-	// 					} else {
-	// 						return schema;
-	// 					}
-	// 				}),
-	// 			}),
-	// 			astData: lazy((v, { context }) => {
-	// 				return object().shape({
-	// 					astNo: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						} else {
-	// 							return schema.required("Required");
-	// 						}
-	// 					}),
-	// 					astManufacturer: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						} else {
-	// 							return schema.required("Required");
-	// 						}
-	// 					}),
-	// 					astName: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						} else {
-	// 							return schema.required("Required");
-	// 						}
-	// 					}),
-	// 					meter: object().shape({
-	// 						phase: string().when("astNo", (astNo_, schema) => {
-	// 							const { astNo } = context.astData;
-	// 							const { meterAccess } = context.access;
-	// 							if (meterAccess === "no") {
-	// 								return schema.notRequired();
-	// 							}
-	// 							if (astNo === "" || astNo === null || astNo === undefined) {
-	// 								return schema?.notRequired();
-	// 							} else {
-	// 								return schema
-	// 									?.defined("Required")
-	// 									?.oneOf(["single", "three"], "Required");
-	// 							}
-	// 						}),
-	// 						type: string().when("astNo", (astno, schema) => {
-	// 							const { astNo } = context.astData;
-	// 							const { meterAccess } = context.access;
-	// 							if (meterAccess === "no") {
-	// 								return schema.notRequired();
-	// 							}
-	// 							if (astNo === "" || astNo === null || astNo === undefined) {
-	// 								return schema?.notRequired();
-	// 							} else {
-	// 								return schema
-	// 									?.defined("Required")
-	// 									?.oneOf(["pre-paid", "conventional"], "Required");
-	// 							}
-	// 						}),
-	// 						keypad: object().shape({
-	// 							keypadAccess: string().when("access", (meterAccess_, schema) => {
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (meterAccess === "yes") {
-	// 									return schema.oneOf(["yes", "no"], "yes or no?").required("Required");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 							serialNo: string().when("keypadAccess", (keypadAccess_, schema) => {
-	// 								const { keypadAccess } = context.astData.meter.keypad;
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (keypadAccess === "yes") {
-	// 									return schema.required("Required");
-	// 								}
-	// 								if (keypadAccess === "no") {
-	// 									return schema.oneOf([""], "Must Be Blank");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 							comment: string().when("keypadAccess", (keypadAccess_, schema) => {
-	// 								const { keypadAccess } = context?.astData?.meter?.keypad;
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (keypadAccess === "no") {
-	// 									return schema.required("Required").notOneOf(["choose"], "Required");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 						}),
-	// 						cb: object().shape({
-	// 							isThereCb: string().when("meterAccess", (isThereCb_, schema) => {
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								} else {
-	// 									schema.oneOf(["yes", "no"], "yes or no").required("Required");
-	// 								}
-	// 							}),
-	// 							size: number().when("isThereCb", (isThereCb_, schema) => {
-	// 								const { isThereCb } = context.astData.meter.cb;
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (isThereCb === "yes") {
-	// 									return schema.required("Required");
-	// 								}
-	// 								if (isThereCb === "no") {
-	// 									return schema.oneOf([""], "Must Be Blank");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 							comment: string().when("isThereCb", (isThereCb_, schema) => {
-	// 								const { isThereCb } = context.astData.meter.cb;
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (isThereCb === "no") {
-	// 									return schema
-	// 										.required("Value Required")
-	// 										.notOneOf(["choose"], "Required")
-	// 										.defined("Required");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 						}),
-	// 						seal: object().shape({
-	// 							meterSealed: string().when("meterAccess", (meterAccess_, schema) => {
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								} else {
-	// 									return schema.oneOf(["yes", "no"], "yes or no").required("Required");
-	// 								}
-	// 							}),
-	// 							sealNo: string().when(
-	// 								["meterSealed", "comment"],
-	// 								([meterSealed, comment], schema) => {
-	// 									// console.log(`meterSealed`, meterSealed);
-	// 									// console.log(`comment`, comment);
-	// 									const { meterAccess } = context.access;
-	// 									if (meterAccess === "no") {
-	// 										return schema.notRequired();
-	// 									}
-	// 									if (
-	// 										comment === "seal no hard to read" ||
-	// 										comment === "seal has no seal no" ||
-	// 										meterSealed === "no"
-	// 									) {
-	// 										return schema.oneOf([""], "Must Be Blank");
-	// 									}
-	// 									if (meterSealed === "yes") {
-	// 										return schema.required("Required");
-	// 									} else {
-	// 										return schema;
-	// 									}
-	// 								}
-	// 							),
-	// 							comment: string().when("meterSealed", (meterSealed_, schema) => {
-	// 								const { meterSealed, sealNo } = context.astData.meter.seal;
-	// 								const { meterAccess } = context.access;
-	// 								if (meterAccess === "no") {
-	// 									return schema.notRequired();
-	// 								}
-	// 								if (meterSealed === "yes" && sealNo === "") {
-	// 									return schema
-	// 										.required("Required")
-	// 										.defined("Required")
-	// 										.notOneOf(["choose"], "Required");
-	// 								} else {
-	// 									return schema;
-	// 								}
-	// 							}),
-	// 						}),
-	// 					}),
-	// 				});
-	// 			}),
-	// 			location: lazy((v, { context }) => {
-	// 				return object().shape({
-	// 					// address: string().when("meterAccess", (meterAccess_, schema) => {
-	// 					// 	const { meterAccess } = context.access;
-
-	// 					// 	if (meterAccess === "yes") {
-	// 					// 		return schema.required("Required");
-	// 					// 	} else {
-	// 					// 		return schema.notRequired();
-	// 					// 	}
-	// 					// }),
-	// 					// gps: object().shape({
-	// 					// 	lat: number().when("meterAccess", (meterAccess_, schema) => {
-	// 					// 		const { meterAccess } = context.access;
-	// 					// 		if (meterAccess === "yes") {
-	// 					// 			return schema.required("Required");
-	// 					// 		} else {
-	// 					// 			return schema.notRequired();
-	// 					// 		}
-	// 					// 	}),
-	// 					// 	lng: number().when("meterAccess", (meterAccess_, schema) => {
-	// 					// 		const { meterAccess } = context.access;
-	// 					// 		if (meterAccess === "yes") {
-	// 					// 			return schema.required("Required");
-	// 					// 		} else {
-	// 					// 			return schema.notRequired();
-	// 					// 		}
-	// 					// 	}),
-	// 					// }),
-	// 					premises: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						}
-	// 						if (meterAccess === "yes") {
-	// 							return schema
-	// 								.required("Required")
-	// 								.oneOf(["inside", "outside"], "Required");
-	// 						} else {
-	// 							return schema.notRequired();
-	// 						}
-	// 					}),
-	// 					insideBox: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						}
-	// 						if (meterAccess === "yes") {
-	// 							return schema.required("Required").oneOf(["yes", "no"], "Required");
-	// 						} else {
-	// 							return schema.notRequired();
-	// 						}
-	// 					}),
-	// 				});
-	// 			}),
-	// 			anomalies: lazy((v, { context }) => {
-	// 				return object().shape({
-	// 					anomaly: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						}
-	// 						if (meterAccess === "yes") {
-	// 							return schema.required("Required").notOneOf(["choose"], "Required");
-	// 						} else {
-	// 							return schema;
-	// 						}
-	// 					}),
-	// 					anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
-	// 						const { anomaly } = context.anomalies;
-	// 						// console.log(`anomaly`, anomaly)
-	// 						// console.log(`meterAccess_`, meterAccess_);
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						}
-	// 						if (
-	// 							anomaly === "" ||
-	// 							anomaly === "choose" ||
-	// 							anomaly === null ||
-	// 							anomaly === undefined
-	// 						) {
-	// 							return schema.notRequired();
-	// 						} else {
-	// 							return schema.required("Required").notOneOf(["choose"], "Required");
-	// 						}
-	// 					}),
-	// 				});
-	// 			}),
-	// 			serviceConnection: lazy((v, { context }) => {
-	// 				return object().shape({
-	// 					configuration: string().when("meterAccess", (meterAccess_, schema) => {
-	// 						const { meterAccess } = context.access;
-	// 						if (meterAccess === "no") {
-	// 							return schema.notRequired();
-	// 						} else {
-	// 							return schema.required("Required");
-	// 						}
-	// 					}),
-	// 				});
-	// 			}),
-	// 			// metadata: lazy((v, { context }) => {
-	// 			// 	return object().shape({
-	// 			// 		// updatedAtDatetime: date().notRequired(),
-	// 			// 		updatedByUser: string().notRequired(),
-	// 			// 		updatedByUid: string().notRequired(),
-	// 			// 		// createdAtDatetime: date().notRequired(),
-	// 			// 		createdByUser: string().notRequired(),
-	// 			// 		createdByUid: string().notRequired(),
-	// 			// 		trnHistory: number().notRequired(), // how many times transaction has been updated
-	// 			// 		trnType: string().notRequired(), //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-	// 			// 		trnNo: string().notRequired(),
-	// 			// 		trnId: string().notRequired(),
-	// 			// 		aststate: string().notRequired(),
-	// 			// 	});
-	// 			// }),
-	// 		}),
-	// 	},
-	// };
+	const { asts, error } = useGetAstsCollection("asts");
+	// console.log(`asts`, asts);
+	// console.log(`error`, error);
 
 	const astsTableFields = [
 		// ast id
@@ -491,33 +111,33 @@ export const useAsts = () => {
 			tooltipField: "Erf the ast belong to",
 		},
 		// Ast History
-		{
-			field: "ast.astHistory",
-			headerName: "Meter History",
-			width: 150,
-			cellRenderer: (params) => {
-				// console.log(`params`, params);
-				const astHistory = params.data?.astHistory?.length
-					? params.data?.astHistory?.length
-					: 0;
-				return <TableModalBtn data={params}>{astHistory}</TableModalBtn>;
-			},
-			cellRendererParams: {
-				modalName: "iwHistory",
-				width: "3rem",
-				infoName: {
-					irepsKeyItem: 'asts',
-				},
-			},
-		},
+		// {
+		// 	field: "ast.astHistory",
+		// 	headerName: "Meter History",
+		// 	width: 150,
+		// 	cellRenderer: (params) => {
+		// 		// console.log(`params`, params);
+		// 		const astHistory = params.data?.astHistory?.length
+		// 			? params.data?.astHistory?.length
+		// 			: 0;
+		// 		return <TableModalBtn data={params}>{astHistory}</TableModalBtn>;
+		// 	},
+		// 	cellRendererParams: {
+		// 		modalName: "iwHistory",
+		// 		width: "3rem",
+		// 		infoName: {
+		// 			irepsKeyItem: "asts",
+		// 		},
+		// 	},
+		// },
 		// Ast description
 		{
-			headerName: "Ast Description",
+			headerName: "Meter Description",
 			children: [
 				{
 					field: "astData.astNo",
 					headerName: "Meter No",
-					width: 150,
+					width: 170,
 					columnGroupShow: "closed",
 					// cellRenderer: params => {
 					// console.log(`params`, params);
@@ -571,12 +191,13 @@ export const useAsts = () => {
 		// ast media - all phots, voice clips and videos of the ast.
 		{
 			field: "",
-			headerName: "Ast Media",
+			headerName: "Meter Media",
 			width: 150,
 			cellRenderer: (params) => {
 				// console.log(`props`, props);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
+
 			cellRendererParams: {
 				modalName: "mediaMobileAsts",
 				width: "4rem",
@@ -589,6 +210,40 @@ export const useAsts = () => {
 					? params?.data?.media?.length
 					: 0;
 				return media;
+			},
+		},
+
+		// trn history
+		{
+			field: "astData.astState.state",
+			headerName: "Meter State",
+			width: 250,
+			valueGetter: (params) => {
+				let astState = "";
+				if (params.data?.astData.astState.state === "stores") {
+					astState = `${params.data?.astData.astState.state} : ${params.data?.astData.astState.locationName}`;
+				}
+
+				if (params.data?.astData.astState.state === "service") {
+					astState = `service : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
+				}
+
+				if (params.data?.astData.astState.state === "temper") {
+					astState = `temper : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
+				}
+
+				if (
+					params.data?.astData.astState.state == "" ||
+					params.data?.astData.astState.state == null ||
+					params.data?.astData.astState.state == undefined
+				) {
+					astState = `service : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
+				}
+
+				// else {
+				// 	astState = `service - ${params.data?.erf?.erfNo}`
+				// }
+				return astState;
 			},
 		},
 
@@ -655,8 +310,8 @@ export const useAsts = () => {
 				width: "3rem",
 			},
 			valueGetter: (params) => {
-				const lat = Number(params.data.location.gps.lat);
-				const lng = Number(params.data.location.gps.lng);
+				const lat = Number(params.data?.location?.gps?.lat);
+				const lng = Number(params.data?.location?.gps?.lng);
 				return `${lat.toFixed(3)} / ${lng.toFixed(3)}`;
 			},
 			width: 140,
@@ -664,7 +319,7 @@ export const useAsts = () => {
 
 		// Ast Specific data
 		{
-			headerName: "Ast Specific",
+			headerName: "Meter Specific Data",
 			children: [
 				// astCat
 				{
@@ -704,7 +359,7 @@ export const useAsts = () => {
 
 		// Ast Location
 		{
-			headerName: "Ast Location",
+			headerName: "Meter Location",
 			children: [
 				{
 					field: "location.address",
@@ -810,4 +465,6 @@ export const useAsts = () => {
 			width: 300,
 		},
 	];
+
+	return { asts, astsTableFields, error };
 };

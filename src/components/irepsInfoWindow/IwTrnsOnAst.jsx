@@ -13,14 +13,14 @@ import { irepsConstants } from "@/utils/utils";
 const IwTrnsOnAst = props => {
 	// console.log(`IwTrnsOnAst props`, props);
 
-	const { trns, erf, id, astData } = props.data.data;
+	const { trns, erf, id, astData } = props.data?.data;
 	// console.log(`trns`, trns);
 
 	// retrieve astNo from astData
 	const { astNo } = astData;
 
 	// retrieve erfNo from erf
-	const { erfNo } = erf;
+	const  erfNo = erf?.erfNo;
 
 	const { openModal } = useModal();
 

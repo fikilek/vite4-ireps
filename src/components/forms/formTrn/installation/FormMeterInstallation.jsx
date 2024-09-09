@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import { useCallback } from "react";
@@ -20,9 +20,27 @@ import MapReverseGeocodingApp from "@/components/maps/MapReverseGeocodingApp";
 import MediaMobileWrapper from "@/components/media/MediaMobileWrapper";
 import FormCloseBtn from "@/components/forms/formBtns/FormCloseBtn";
 import { updateFormState } from "@/utils/utils";
+import useGetStoresAstsCollection from "@/hooks/useGetStoresAstsCollection";
 
 const FormMeterInstallation = (props) => {
 	// console.log(`props`, props);
+
+	const { asts, error } = useGetStoresAstsCollection("asts");
+	// console.log(`asts`, asts)
+
+	const storesAstsOptions = useMemo(() => {
+		let options = [];
+		asts &&
+			asts.forEach((ast) => {
+				options?.push({
+					label: ast?.astData?.astNo,
+					value: ast?.astData?.astNo,
+					data: ast,
+				});
+			});
+		return options;
+	}, [asts]);
+	// console.log(`storesAstsOptions`, storesAstsOptions);
 
 	const { data, validationSchema } = props?.data;
 	// console.log(`data`, data);
@@ -41,19 +59,22 @@ const FormMeterInstallation = (props) => {
 	const { response, setDocument } = useFirestore("trns");
 	// console.log(`response`, response)
 
-		const [trnState, setTrnState] = useState(data?.metadata?.trnState)
+	const [trnState, setTrnState] = useState(data?.metadata?.trnState);
 	// console.log(`trnState`, trnState)
 
 	const onSubmit = useCallback(
 		(values) => {
 			// console.log(`values`, values);
-			setDocument({
-			...values,
-				metadata: {
-					...values.metadata,
-					trnState
-				}
-			}, values.metadata.trnId);
+			setDocument(
+				{
+					...values,
+					metadata: {
+						...values.metadata,
+						trnState,
+					},
+				},
+				values.metadata.trnId
+			);
 		},
 		[setDocument, trnState]
 	);
@@ -75,6 +96,7 @@ const FormMeterInstallation = (props) => {
 		}
 	}, [response]);
 
+	// TODO: Revisit initialValues, There seems to be repetition on erf data
 	return data ? (
 		<div className="form-wrapper">
 			<div className="form-container trn form-meter-audit">
@@ -99,7 +121,13 @@ const FormMeterInstallation = (props) => {
 						// console.log(`disabled`, disabled);
 						// console.log(`formik.values`, formik.values);
 
-						updateFormState(formik, setTrnState)
+						const { meterAccess } = formik.values?.access;
+						// console.log(`meterAccess`, meterAccess);
+
+						const showHide = meterAccess === "yes" ? "hide" : "";
+						// console.log(`showHide`, showHide);
+
+						updateFormState(formik, setTrnState);
 
 						return (
 							<Form>
@@ -112,11 +140,7 @@ const FormMeterInstallation = (props) => {
 												Form
 											</span>
 										}
-										hl2={
-											<span className="text-emphasis2">
-												{trnState}
-											</span>
-										}
+										hl2={<span className="text-emphasis2">{trnState}</span>}
 										hr1={
 											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
@@ -126,7 +150,7 @@ const FormMeterInstallation = (props) => {
 											<span>
 												Meter:
 												<span className="text-emphasis2">
-													{formik.values.astData.astNo}
+													{formik.values?.astData?.astNo}
 												</span>
 											</span>
 										}
@@ -153,10 +177,10 @@ const FormMeterInstallation = (props) => {
 													options={formSelectOptions.yesNoOptions}
 												/>
 												<FormikControl
-													control="select"
+													control="selectNoAccessReason"
 													type="text"
 													label="meter no access reasons"
-													name={`access.noAccessReason`}
+													name={`access.noAccessReason ${showHide}`}
 													options={formSelectOptions.keyPadNoAccessOptions}
 												/>
 											</div>
@@ -214,10 +238,11 @@ const FormMeterInstallation = (props) => {
 											<div className="row-1 form-row">
 												<div className="row-50-50">
 													<FormikControl
-														control="input"
+														control="selectAstsFromStores"
 														type="text"
 														label="Meter No"
 														name={`astData.astNo`}
+														options={storesAstsOptions}
 													/>
 													<FormikControl
 														control="mediaButton"
