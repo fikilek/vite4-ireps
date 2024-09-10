@@ -278,10 +278,11 @@ export const useAsts = () => {
 			// },
 			// tooltipField: "asts",
 			cellRenderer: TableBtnsPossibleTrnsOnAst,
-			// cellRendererParams: {
-			// 	modalName: "iwTrnsOnAst",
-			// 	// width: "4rem",
-			// },
+			cellRendererParams: {
+				// modalName: "iwTrnsOnAst",
+				// width: "4rem",
+				columnName: 'tidTrn'
+			},
 			hide: false,
 			// tooltipComponent: TableTrnsForAstsTooltip,
 			valueGetter: (params) => {

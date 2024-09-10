@@ -185,7 +185,7 @@ export const useFirestore = fbCollection => {
 	};
 
 	const setDocument = async (document, id) => {
-		console.log(`setDocument`, document);
+		console.log(`document - before update`, document);
 		// console.log(`id`, id);
 		
 		document = {
@@ -198,13 +198,14 @@ export const useFirestore = fbCollection => {
 			},
 			updateHistory: true
 		};
+		console.log(`document - after update`, document);
 
 		dispatch({ type: "IS_PENDING" });
 		const docToUpdateRef = doc(db, fbCollection, id);
 		// console.log(`docToUpdateRef` ,docToUpdateRef)
 		try {
 			setDoc(docToUpdateRef, document).then(result => {
-				// console.log(`result` ,result)
+				console.log(`result` ,result)
 				dispatchIfNotCancelled({ type: "UPDATED_DOCUMENT" });
 			});
 		} catch (err) {

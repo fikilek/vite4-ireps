@@ -1834,26 +1834,26 @@ export const useTrns = (trnType, astCat) => {
 				},
 
 				// Ast History
-				{
-					field: "trnHistory",
-					headerName: "Trn History",
-					width: 120,
-					cellRenderer: (params) => {
-						// console.log(`params`, params);
-						const trnHistory = params.data?.trnHistory?.length
-							? params.data?.trnHistory?.length
-							: 0;
-						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
-					},
-					cellRendererParams: {
-						modalName: "iwHistory",
-						width: "3rem",
-						infoName: {
-							irepsKeyItem: "trns",
-							trnType: "audit",
-						},
-					},
-				},
+				// {
+				// 	field: "trnHistory",
+				// 	headerName: "Trn History",
+				// 	width: 120,
+				// 	cellRenderer: (params) => {
+				// 		// console.log(`params`, params);
+				// 		const trnHistory = params.data?.trnHistory?.length
+				// 			? params.data?.trnHistory?.length
+				// 			: 0;
+				// 		return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+				// 	},
+				// 	cellRendererParams: {
+				// 		modalName: "iwHistory",
+				// 		width: "3rem",
+				// 		infoName: {
+				// 			irepsKeyItem: "trns",
+				// 			trnType: "audit",
+				// 		},
+				// 	},
+				// },
 				// edit
 				{
 					field: "",
@@ -2204,26 +2204,26 @@ export const useTrns = (trnType, astCat) => {
 				},
 
 				// Ast History
-				{
-					field: "trnHistory",
-					headerName: "Trn History",
-					width: 120,
-					cellRenderer: (params) => {
-						// console.log(`params`, params);
-						const trnHistory = params.data?.trnHistory?.length
-							? params.data?.trnHistory?.length
-							: 0;
-						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
-					},
-					cellRendererParams: {
-						modalName: "iwHistory",
-						width: "3rem",
-						infoName: {
-							irepsKeyItem: "trns",
-							trnType: "tid",
-						},
-					},
-				},
+				// {
+				// 	field: "trnHistory",
+				// 	headerName: "Trn History",
+				// 	width: 120,
+				// 	cellRenderer: (params) => {
+				// 		// console.log(`params`, params);
+				// 		const trnHistory = params.data?.trnHistory?.length
+				// 			? params.data?.trnHistory?.length
+				// 			: 0;
+				// 		return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+				// 	},
+				// 	cellRendererParams: {
+				// 		modalName: "iwHistory",
+				// 		width: "3rem",
+				// 		infoName: {
+				// 			irepsKeyItem: "trns",
+				// 			trnType: "tid",
+				// 		},
+				// 	},
+				// },
 
 				// tid form edit
 				{
@@ -2498,26 +2498,26 @@ export const useTrns = (trnType, astCat) => {
 				// tid form edit
 
 				// Ast History
-				{
-					field: "trnHistory",
-					headerName: "Trn History",
-					width: 120,
-					cellRenderer: (params) => {
-						// console.log(`params`, params);
-						const trnHistory = params.data?.trnHistory?.length
-							? params.data?.trnHistory?.length
-							: 0;
-						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
-					},
-					cellRendererParams: {
-						modalName: "iwHistory",
-						width: "3rem",
-						infoName: {
-							irepsKeyItem: "trns",
-							trnType: "installation",
-						},
-					},
-				},
+				// {
+				// 	field: "trnHistory",
+				// 	headerName: "Trn History",
+				// 	width: 120,
+				// 	cellRenderer: (params) => {
+				// 		// console.log(`params`, params);
+				// 		const trnHistory = params.data?.trnHistory?.length
+				// 			? params.data?.trnHistory?.length
+				// 			: 0;
+				// 		return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+				// 	},
+				// 	cellRendererParams: {
+				// 		modalName: "iwHistory",
+				// 		width: "3rem",
+				// 		infoName: {
+				// 			irepsKeyItem: "trns",
+				// 			trnType: "installation",
+				// 		},
+				// 	},
+				// },
 				{
 					field: "",
 					headerName: "Edit",
@@ -2806,26 +2806,26 @@ export const useTrns = (trnType, astCat) => {
 				},
 
 				// Ast History
-				{
-					field: "trnHistory",
-					headerName: "Trn History",
-					width: 120,
-					cellRenderer: (params) => {
-						// console.log(`params`, params);
-						const trnHistory = params.data?.trnHistory?.length
-							? params.data?.trnHistory?.length
-							: 0;
-						return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
-					},
-					cellRendererParams: {
-						modalName: "iwHistory",
-						width: "3rem",
-						infoName: {
-							irepsKeyItem: "trns",
-							trnType: "inspection",
-						},
-					},
-				},
+				// {
+				// 	field: "trnHistory",
+				// 	headerName: "Trn History",
+				// 	width: 120,
+				// 	cellRenderer: (params) => {
+				// 		// console.log(`params`, params);
+				// 		const trnHistory = params.data?.trnHistory?.length
+				// 			? params.data?.trnHistory?.length
+				// 			: 0;
+				// 		return <TableModalBtn data={params}>{trnHistory}</TableModalBtn>;
+				// 	},
+				// 	cellRendererParams: {
+				// 		modalName: "iwHistory",
+				// 		width: "3rem",
+				// 		infoName: {
+				// 			irepsKeyItem: "trns",
+				// 			trnType: "inspection",
+				// 		},
+				// 	},
+				// },
 				// edit
 				{
 					field: "",

@@ -115,14 +115,16 @@ const FormMeterAudit = (props) => {
 								<div className="trn-form">
 									<HeaderGeneric
 										hl1={
-											<span>
-												Meter <span className="text-emphasis2">Audit</span> Form
-											</span>
+											<span className="text-emphasis2">Audit</span>
 										}
-										hl2={<span className="text-emphasis2">{trnState}</span>}
-										hr1={
+										hl2={
 											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
+											</span>
+										}
+										hl3={
+											<span className="text-emphasis2">
+												{trnState || "draft"}
 											</span>
 										}
 										hr2={

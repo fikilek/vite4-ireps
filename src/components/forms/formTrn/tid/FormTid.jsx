@@ -92,6 +92,12 @@ const FormTid = (props) => {
 						// console.log(`disabled`, disabled);
 						// console.log(`formik.values`, formik.values);
 
+						const { meterAccess } = formik.values?.access;
+						// console.log(`meterAccess`, meterAccess);
+
+						const showHide = meterAccess === "yes" ? "hide" : "";
+						// console.log(`showHide`, showHide);
+
 						updateFormState(formik, setTrnState);
 
 						return (
@@ -134,13 +140,21 @@ const FormTid = (props) => {
 													name={`access.meterAccess`}
 													options={formSelectOptions.yesNoOptions}
 												/>
+												
 												<FormikControl
-													control="select"
+													control="selectNoAccessReason"
 													type="text"
-													label="meter no accss reasons"
-													name={`access.noAccessReason`}
+													label="meter no access reasons"
+													name={`access.noAccessReason ${showHide}`}
 													options={formSelectOptions.keyPadNoAccessOptions}
 												/>
+												{/* <FormikControl
+													control="select"
+													type="text"
+													label="meter no access reasons"
+													name={`access.noAccessReason`}
+													options={formSelectOptions.keyPadNoAccessOptions}
+												/> */}
 											</div>
 											<div className="row-0 form-row">
 												<FormikControl

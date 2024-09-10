@@ -64,7 +64,7 @@ const FormMeterInstallation = (props) => {
 
 	const onSubmit = useCallback(
 		(values) => {
-			// console.log(`values`, values);
+			console.log(`values`, values);
 			setDocument(
 				{
 					...values,
@@ -135,15 +135,17 @@ const FormMeterInstallation = (props) => {
 									<HeaderGeneric
 										hl1={
 											<span>
-												Meter{" "}
 												<span className="text-emphasis2">Installation</span>{" "}
-												Form
 											</span>
 										}
-										hl2={<span className="text-emphasis2">{trnState}</span>}
-										hr1={
+										hl2={
 											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
+											</span>
+										}
+										hl3={
+											<span className="text-emphasis2">
+												{trnState || "draft"}
 											</span>
 										}
 										hr2={

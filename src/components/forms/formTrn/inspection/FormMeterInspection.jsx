@@ -87,9 +87,9 @@ const FormMeterInspection = (props) => {
 					initialValues={{
 						...data,
 						inspectionData: {
-							isMeterStillThere:"",
-							tempered: '',
-							newMeter: '',
+							isMeterStillThere: "",
+							tempered: "",
+							newMeter: "",
 						},
 					}}
 					onSubmit={onSubmit}
@@ -118,12 +118,19 @@ const FormMeterInspection = (props) => {
 									<HeaderGeneric
 										hl1={
 											<span>
-												{/* <span className="text-emphasis2">Inspection</span> */}
+												<span className="text-emphasis2">Inspection</span>
+											</span>
+										}
+										hl2={
+											<span>
 												Erf:<span className="text-emphasis2">{erfNo}</span>
 											</span>
 										}
-										hl2={<span className="text-emphasis2">{trnState || 'draft'}</span>}
-
+										hl3={
+											<span className="text-emphasis2">
+												{trnState || "draft"}
+											</span>
+										}
 										hr1={
 											<span>
 												Mn:
@@ -165,20 +172,20 @@ const FormMeterInspection = (props) => {
 													/>
 												</div>
 												<div className="row-50-50">
-												<FormikControl
-													control="input"
-													type="text"
-													label="manufacturer"
-													name={`astData.astManufacturer`}
-													readOnly={true}
-												/>
-												<FormikControl
-													control="input"
-													type="text"
-													label="product name"
-													name={`astData.astName`}
-													readOnly={true}
-												/>
+													<FormikControl
+														control="input"
+														type="text"
+														label="manufacturer"
+														name={`astData.astManufacturer`}
+														readOnly={true}
+													/>
+													<FormikControl
+														control="input"
+														type="text"
+														label="product name"
+														name={`astData.astName`}
+														readOnly={true}
+													/>
 												</div>
 											</div>
 										</div>

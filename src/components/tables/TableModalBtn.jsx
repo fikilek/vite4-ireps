@@ -20,19 +20,31 @@ const TableModalBtn = (props) => {
 		displayMode,
 		title,
 		tableBtnClass,
+		columnName
 	} = props.data;
 	// console.log(`data`, data);
 	// console.log(`modalName`, modalName);
 	// console.log(`validationSchema`, validationSchema);
+	// console.log(`columnName`, columnName);
 
 	const astCatergory = data?.astData?.astCatergory;
 	// console.log(`astCatergory`, astCatergory);
 
 	const state = data?.astData?.astState?.state;
+	const tid  = data?.astData?.astState?.tid;
 	// console.log(`state`, state);
 
-	const disableBtn = (astCatergory === 'meter' && state === 'stores') ? true : false
+	const disableBtn =
+		astCatergory === "meter" && state === "stores" ? true : false;
 	// console.log(`disableBtn`, disableBtn)
+
+	let tidDone = false;
+	if (tid) {
+		if (tid.toLowerCase().replace(/ /g, "") === "krn2") {
+			tidDone = (astCatergory === "meter" && columnName === 'tidTrn') ? true : false;
+			// console.log(`tidDone`, tidDone);
+		}
+	}
 
 	useEffect(() => {
 		if (erfError) {
@@ -144,11 +156,13 @@ const TableModalBtn = (props) => {
 		<div className="table-modal-btn">
 			<button
 				// className={`table-btn ${tableBtnClass}`}
-				className={`table-btn ${disableBtn ? 'disable-btn' : ''}`}
+				className={`table-btn ${disableBtn ? "disable-btn" : ""}   ${
+					tidDone ? "tidBtn" : ""
+				}`}
 				onClick={handleClick}
 				style={{ width: width }}
 				title={title}
-				disabled={disableBtn}
+				disabled={disableBtn || tidDone}
 			>
 				{props.children}
 			</button>

@@ -12,6 +12,10 @@ import TableModalBtn from "@/components/tables/TableModalBtn";
 const TableBtnsPossibleTrnsOnAst = (props) => {
 	// console.log(`props`, props);
 	const { trns, erf } = props.data;
+
+	const {columnName} = props
+	// console.log(`columnName`, columnName);
+
 	const {
 		astNo,
 		astId,
@@ -19,12 +23,24 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 		astState,
 		astManufacturer,
 		astName,
-		meter,
+		meter
 	} = props?.data?.astData;
 	const { phase, type } = meter;
 	const { trnsNewFormData, trnsValidationSchema } = useTrns(null);
 	// console.log(`trnsNewFormData`, trnsNewFormData);
 	// console.log(`trnsValidationSchema`, trnsValidationSchema);
+	// console.log(`columnName`, columnName);
+
+	let tidDone = false
+	let tid = null
+	if(astState?.tid) {
+		tid = astState?.tid.toLowerCase().replace(/ /g, "").toLowerCase()
+		if(tid === 'krn2') {
+			tidDone = true
+		}
+	}
+	// console.log(`tidDone`, tidDone)
+
 
 	const { openModal } = useModal();
 
@@ -68,9 +84,12 @@ const TableBtnsPossibleTrnsOnAst = (props) => {
 					width: "3rem",
 					displayMode: "modal",
 					title: "TID transaction",
+					columnName
 				}}
 			>
-				Tid
+				{
+					tidDone ? 'KRN2' : 'Tid'
+				}
 			</TableModalBtn>
 
 			{/* Meter inspection */}
