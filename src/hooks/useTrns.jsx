@@ -2050,50 +2050,50 @@ export const useTrns = (trnType, astCat) => {
 				},
 
 				// Ast Location
-				{
-					headerName: "Ast Location",
-					children: [
-						{
-							field: "location.address",
-							columnGroupShow: "closed",
-							headerName: "Ast Address",
-							width: 450,
-						},
-						{
-							field: "location.gps",
-							columnGroupShow: "closed",
-							headerName: "Ast Gps",
-							cellRenderer: (params) => {
-								// console.log(`params`, params)
-								return (
-									<TableModalBtn data={params}>{params.value}</TableModalBtn>
-								);
-							},
-							cellRendererParams: {
-								modalName: "showAstOnMap",
-								width: "7rem",
-							},
-							valueGetter: (params) => {
-								const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
-								const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
-								return `${lat}/${lng}`;
-							},
-							width: 140,
-						},
-						{
-							field: "location.premises",
-							columnGroupShow: "closed",
-							headerName: "Premises",
-							width: 120,
-						},
-						{
-							field: "location.insideBox",
-							columnGroupShow: "closed",
-							headerName: "InsideBox",
-							width: 120,
-						},
-					],
-				},
+				// {
+				// 	headerName: "Ast Location",
+				// 	children: [
+				// 		{
+				// 			field: "location.address",
+				// 			columnGroupShow: "closed",
+				// 			headerName: "Ast Address",
+				// 			width: 450,
+				// 		},
+				// 		{
+				// 			field: "location.gps",
+				// 			columnGroupShow: "closed",
+				// 			headerName: "Ast Gps",
+				// 			cellRenderer: (params) => {
+				// 				// console.log(`params`, params)
+				// 				return (
+				// 					<TableModalBtn data={params}>{params.value}</TableModalBtn>
+				// 				);
+				// 			},
+				// 			cellRendererParams: {
+				// 				modalName: "showAstOnMap",
+				// 				width: "7rem",
+				// 			},
+				// 			valueGetter: (params) => {
+				// 				const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
+				// 				const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
+				// 				return `${lat}/${lng}`;
+				// 			},
+				// 			width: 140,
+				// 		},
+				// 		{
+				// 			field: "location.premises",
+				// 			columnGroupShow: "closed",
+				// 			headerName: "Premises",
+				// 			width: 120,
+				// 		},
+				// 		{
+				// 			field: "location.insideBox",
+				// 			columnGroupShow: "closed",
+				// 			headerName: "InsideBox",
+				// 			width: 120,
+				// 		},
+				// 	],
+				// },
 			],
 			tid: [
 				// trn id
@@ -2643,27 +2643,27 @@ export const useTrns = (trnType, astCat) => {
 							headerName: "Ast Address",
 							width: 450,
 						},
-						{
-							field: "location.gps",
-							columnGroupShow: "closed",
-							headerName: "Ast Gps",
-							cellRenderer: (params) => {
-								// console.log(`params`, params)
-								return (
-									<TableModalBtn data={params}>{params.value}</TableModalBtn>
-								);
-							},
-							cellRendererParams: {
-								modalName: "showAstOnMap",
-								width: "7rem",
-							},
-							valueGetter: (params) => {
-								const lat = Number(params.data.location.gps.lat).toFixed(3);
-								const lng = Number(params.data.location.gps.lng).toFixed(3);
-								return `${lat}/${lng}`;
-							},
-							width: 140,
-						},
+						// {
+						// 	field: "location.gps",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Ast Gps",
+						// 	cellRenderer: (params) => {
+						// 		// console.log(`params`, params)
+						// 		return (
+						// 			<TableModalBtn data={params}>{params.value}</TableModalBtn>
+						// 		);
+						// 	},
+						// 	cellRendererParams: {
+						// 		modalName: "showAstOnMap",
+						// 		width: "7rem",
+						// 	},
+						// 	valueGetter: (params) => {
+						// 		const lat = Number(params.data.location.gps.lat).toFixed(3);
+						// 		const lng = Number(params.data.location.gps.lng).toFixed(3);
+						// 		return `${lat}/${lng}`;
+						// 	},
+						// 	width: 140,
+						// },
 						{
 							field: "location.premises",
 							columnGroupShow: "closed",
@@ -2876,33 +2876,33 @@ export const useTrns = (trnType, astCat) => {
 							},
 							hide: false,
 						},
-						{
-							field: "location.gps",
-							columnGroupShow: "closed",
-							headerName: "Gps",
-							cellRenderer: (params) => {
-								// console.log(`params`, params)
-								return (
-									<TableModalBtn data={params}>{params.value}</TableModalBtn>
-								);
-							},
-							cellRendererParams: {
-								modalName: "showAstOnMap",
-								width: "4rem",
-							},
-							valueGetter: (params) => {
-								// const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
-								// const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
-								return (
-									<IconContext.Provider
-										value={{ color: "blue", fontSize: "1rem" }}
-									>
-										<LuFileEdit />
-									</IconContext.Provider>
-								);
-							},
-							width: 90,
-						},
+						// {
+						// 	field: "location.gps",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Gps",
+						// 	cellRenderer: (params) => {
+						// 		// console.log(`params`, params)
+						// 		return (
+						// 			<TableModalBtn data={params}>{params.value}</TableModalBtn>
+						// 		);
+						// 	},
+						// 	cellRendererParams: {
+						// 		modalName: "showAstOnMap",
+						// 		width: "4rem",
+						// 	},
+						// 	valueGetter: (params) => {
+						// 		// const lat = Number(params?.data?.location?.gps?.lat).toFixed(3);
+						// 		// const lng = Number(params?.data?.location?.gps?.lng).toFixed(3);
+						// 		return (
+						// 			<IconContext.Provider
+						// 				value={{ color: "blue", fontSize: "1rem" }}
+						// 			>
+						// 				<LuFileEdit />
+						// 			</IconContext.Provider>
+						// 		);
+						// 	},
+						// 	width: 90,
+						// },
 						{
 							field: "erf.address.systemAdr",
 							headerName: "Erf Address (Google)",

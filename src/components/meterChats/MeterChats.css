@@ -1,0 +1,14 @@
+.meter-chats {
+	height: 72%;
+}
+
+
+
+.meter-chats .chats {
+	margin: 0.5rem 0 0;
+	gap: 0.5rem;
+	overflow-y: scroll;
+	height: 90%;
+	display: grid;
+	background-color: azure;
+}

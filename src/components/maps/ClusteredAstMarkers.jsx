@@ -16,7 +16,7 @@ import AstsActivity from "@/components/asts/astsActivity/AstsActivity";
  */
 export const ClusteredAstMarkers = (props) => {
 	const { asts } = props;
-	console.log(`asts`, asts);
+	// console.log(`asts`, asts);
 
 	// const { astsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext)

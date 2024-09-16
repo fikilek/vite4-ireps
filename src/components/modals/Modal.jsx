@@ -73,13 +73,13 @@ const IwErfOnMap = lazy(() =>
 const IwAstsOnErf = lazy(() =>
 	import("@/components/irepsInfoWindow/IwAstsOnErf")
 );
-const IwHistory = lazy(() =>
-	import("@/components/irepsInfoWindow/IwHistory")
-);
+const IwHistory = lazy(() => import("@/components/irepsInfoWindow/IwHistory"));
+const IwMeterReport = lazy(() => import("@/components/irepsInfoWindow/IwMeterReport"));
 const Signin = lazy(() => import("@/components/forms/auth/FormSignin"));
 const IwMedia = lazy(() => import("@/components/irepsInfoWindow/IwMedia"));
-const FormWorkbases = lazy(() => import("@/components/forms/auth/FormWorkbases"));
-
+const FormWorkbases = lazy(() =>
+	import("@/components/forms/auth/FormWorkbases")
+);
 
 const Modal = () => {
 	const { toOpen, modalOpened } = useContext(ModalContext);
@@ -337,6 +337,14 @@ const Modal = () => {
 							<>
 								<Suspense fallback={loader}>
 									<FormWorkbases data={payload} />
+								</Suspense>
+							</>
+						)}
+						{/* meterReport */}
+						{modalName === "meterReport" && (
+							<>
+								<Suspense fallback={loader}>
+									<IwMeterReport data={payload} />
 								</Suspense>
 							</>
 						)}

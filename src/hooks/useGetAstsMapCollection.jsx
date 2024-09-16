@@ -5,7 +5,6 @@ import {
 	orderBy,
 	where,
 	query,
-	or,
 } from "firebase/firestore";
 
 // hooks
@@ -20,7 +19,7 @@ const useGetAstsMapCollection = (fbCollection) => {
 	// console.log(`_constraints`, _constraints);
 
 	const [asts, setAsts] = useState([]);
-	console.log(`asts`, asts);
+	// console.log(`asts`, asts);
 
 	const [error, setError] = useState("");
 	// console.log(`error`, error);
@@ -38,7 +37,7 @@ const useGetAstsMapCollection = (fbCollection) => {
 			// console.log(`userData`, userData);
 
 			const { workbase } = userData?.doc;
-			console.log(`workbase`, workbase);
+			// console.log(`workbase`, workbase);
 
 			const q = query(
 				collection(db, fbCollection),

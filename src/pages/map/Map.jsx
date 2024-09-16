@@ -13,9 +13,9 @@ const Map = () => {
 	// console.log(`Map is running`)
 	useErfs();
 	const { asts, astsTableFields, error } = useAstsMap();
-	console.log(`asts`, asts);
-	console.log(`astsTableFields`, astsTableFields);
-	console.log(`error`, error);
+	// console.log(`asts`, asts);
+	// console.log(`astsTableFields`, astsTableFields);
+	// console.log(`error`, error);
 
 	return (
 		<div className="map">

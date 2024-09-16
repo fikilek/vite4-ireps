@@ -38,6 +38,7 @@ const TableTrnsOnAst = props => {
 				pagination={true}
 				noRowsOverlayComponent={TableCustomNoRowsOverlay}
 				reactiveCustomComponents
+				domLayout={"autoHeight"}
 			/>
 		</div>
 	);

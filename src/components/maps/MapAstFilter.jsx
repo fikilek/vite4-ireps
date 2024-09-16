@@ -17,7 +17,7 @@ import meter14 from "@/images/meter14.jpg";
 const MapAstFilter = (props) => {
 	// console.log(`MapAstFilter`)
 	const { asts } = props;
-	console.log(`asts`, asts)
+	// console.log(`asts`, asts)
 
 	const map = useMap();
 	// console.log(`map`, map);
@@ -43,7 +43,7 @@ const MapAstFilter = (props) => {
 	// console.log(`options`, options);
 
 	const setSelectedOption = (selection) => {
-		console.log(`selection`, selection);
+		// console.log(`selection`, selection);
 		if (!map) return;
 		if (!selection) return;
 		map.panTo({
@@ -54,7 +54,7 @@ const MapAstFilter = (props) => {
 	};
 
 	const clearValue = (e) => {
-		console.log(`clearing selected value`, e);
+		// console.log(`clearing selected value`, e);
 		return null;
 	};
 

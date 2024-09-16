@@ -12,8 +12,8 @@ import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrn
 
 export const useAstsMap = () => {
 	const { asts, error } = useGetAstsMapCollection("asts");
-	console.log(`asts`, asts);
-	console.log(`error`, error);
+	// console.log(`asts`, asts);
+	// console.log(`error`, error);
 
 	const astsTableFields = [
 		// ast id

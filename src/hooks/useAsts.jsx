@@ -139,16 +139,16 @@ export const useAsts = () => {
 					headerName: "Meter No",
 					width: 170,
 					columnGroupShow: "closed",
-					// cellRenderer: params => {
+					cellRenderer: params => {
 					// console.log(`params`, params);
-					// return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
-					// },
-					// cellRendererParams: {
-					// 	modalName: "meterEdit",
-					// 	width: "8rem",
-					// 	irepsKeyItem: "erfs",
-					// 	displayMode: "modal",
-					// },
+					return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+					},
+					cellRendererParams: {
+						modalName: "meterReport",
+						width: "8rem",
+						irepsKeyItem: "asts",
+						displayMode: "modal",
+					},
 					hide: false,
 				},
 				{

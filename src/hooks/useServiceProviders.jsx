@@ -252,7 +252,7 @@ export const useServiceProviders = () => {
 			headerName: "Registered Name",
 			width: 190,
 			cellRenderer: (params) => {
-				console.log(`params`, params);
+				// console.log(`params`, params);
 				return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 			},
 			cellRendererParams: {
