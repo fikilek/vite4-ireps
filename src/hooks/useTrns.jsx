@@ -1905,9 +1905,19 @@ export const useTrns = (trnType, astCat) => {
 							hide: false,
 						},
 						{
+							field: "erf.address.street",
+							headerName: "Street Address",
+							width: 200,
+							hide: false,
+							// valueGetter: params => {
+							// 	console.log(`params`, params);
+							// 	return "Erf Adr";
+							// },
+						},
+						{
 							field: "erf.address.systemAdr",
 							headerName: "Erf Address (Google)",
-							width: 300,
+							width: 200,
 							hide: false,
 							// valueGetter: params => {
 							// 	console.log(`params`, params);

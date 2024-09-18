@@ -1,131 +1,35 @@
-import { v4 as uuidv4 } from "uuid";
-import { Timestamp } from "firebase/firestore";
+import "@/components/meterChats/MeterChat.css";
 
-import '@/components/meterChats/MeterChat.css'
-
-import MeterChatHeader from '@/components/meterChats/MeterChatHeader'
-import MeterChats from '@/components/meterChats/MeterChats'
+import MeterChatHeader from "@/components/meterChats/MeterChatHeader";
+import MeterChats from "@/components/meterChats/MeterChats";
+import MeterChatForm from "@/components/meterChats/MeterChatForm";
+import IwNoDataToShow from '@/components/irepsInfoWindow/IwNoDataToShow'
 
 const MeterChat = (props) => {
-  const {ast} = props
-  // console.log(`ast`, ast)
-  const chats = [
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1eaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIffif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    },  
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    },  
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfifhFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    },  
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfifhFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    },  
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1eaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-    {
-      datetime: Timestamp.now(),
-      chatId:  uuidv4(),
-      userUid: 'KNfbDIfQfif1ehFaeEAK4Q9AbXV2',
-      displayName: 'Fikile Kentane',
-      chatContent: 'This meter seems to be tempered',
-      astId: '00e25954-2e9a-413f-a12c-7aa68d039934',
-      astNo: '0456532321'
-    }, 
-  ]
+	// console.log(`props`, props);
 
-  return (
-    <div className='meter-chat'>
-      <MeterChatHeader  />
-      <MeterChats chats={chats} ast={ast} />
-    </div>
-  )
-}
+	const { ast, setAst } = props;
+	// console.log(`assets`, assets);
 
-export default MeterChat
+	const {chats} = ast
+	// console.log(`chats`, chats);
+
+	if (!chats) {
+		return (
+			<div className="meter-chat">
+				<IwNoDataToShow title='Oops' msg='No chats available'/>
+				<MeterChatForm ast={ast} setAst={setAst} />
+			</div>
+		);
+	} else {
+		return (
+			<div className="meter-chat">
+				<MeterChatHeader />
+				<MeterChats chats={chats} ast={ast} />
+				<MeterChatForm ast={ast} setAst={setAst} />
+			</div>
+		);
+	}
+};
+
+export default MeterChat;

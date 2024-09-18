@@ -5,6 +5,7 @@
 	padding: 0.1rem;
 	width: 50%;
 	margin: 0.5rem;
+	height: fit-content;
 }
 
 .meter-chat-card .user {

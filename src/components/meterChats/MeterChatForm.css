@@ -14,6 +14,7 @@
 	flex: 1;
 	min-height: 2rem;
 	padding: 0.4rem;
+	height: fit-content;
 }
 
 .meter-chat-form button {

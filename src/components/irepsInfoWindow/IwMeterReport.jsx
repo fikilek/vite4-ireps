@@ -1,10 +1,14 @@
-import { useMemo, useState } from "react";
-import { where } from "firebase/firestore";
+import { useMemo, useState, useEffect } from "react";
+import { where, Timestamp } from "firebase/firestore";
+import { onSnapshot, doc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
+
 
 import "@/components/irepsInfoWindow/IwMeterReport.css";
 
 // hooks
 import useCollection from "@/hooks/useCollection.jsx";
+import useAuthContext from "@/hooks/useAuthContext.jsx";
 
 // components
 import IrepsInfoWindow from "@/components/irepsInfoWindow/IrepsInfoWindow";
@@ -19,17 +23,152 @@ import MeterChat from "@/components/meterChats/MeterChat";
 import MeterTimeline from "@/components/meterTimeline/MeterTimeline";
 import MapMeterOnMap from "@/components/maps/MapMeterOnMap";
 import MapWardErfsBoundaries from "@/components/maps/MapWardErfsBoundaries";
+import MeterVending from "@/components/meterVending/MeterVending";
+import { db } from "@/firebaseConfig/fbConfig";
+
+import { faker } from "@faker-js/faker";
+
+let dates = faker.date.betweens({
+	from: "2023-01-01T00:00:00.000Z",
+	to: "2024-09-01T00:00:00.000Z",
+	count: 19,
+});
+
+const meterOwner = faker.person.fullName()
+
+dates = dates.map((date) => Timestamp.fromDate(date));
+// console.log(`dates`, dates);
 
 const IwMeterReport = (props) => {
 	// console.log(`props`, props);
 	// const { data } = props;
-	const { astData, erf, trns } = props?.data?.data;
-	// console.log(`trns`, trns);
 
-	const ast = props?.data?.data;
+	const { user } = useAuthContext();
+	// console.log(`user`, user);
+
+	const vendingData = dates?.map((vd) => {
+		return {
+			timelineType: "vending",
+			updatedAtDatetime: vd,
+			meterOwner: meterOwner,
+			updatedByUid: user.uid,
+			amount: Math.random() * 500,
+			id: uuidv4()
+		};
+	});
+
+	// const vendingData = [
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// 	{
+	// 		timelineType: 'vending',
+	// 		updatedAtDatetime: Timestamp.now(),
+	// 		meterOwner: faker.person.fullName() ,
+	// 		updatedByUid:  user.uid,
+	// 		amount: Math.random() * 2000
+	// 	},
+	// ]
+	// console.log(`vendingData`, vendingData);
+
+	const [ast, setAst] = useState(props?.data?.data);
 	// console.log(`ast`, ast);
 
-	const { lmMetro, ward } = ast?.erf?.address;
+	const { astData, erf, trns } = ast;
+	// console.log(`trns`, trns);
+
+	// const ast = props?.data?.data;
+	// console.log(`ast`, ast);
+
+	const { lmMetro, ward } = erf?.address;
 
 	const { astId } = astData;
 	// console.log(`astId`, astId)
@@ -97,6 +236,25 @@ const IwMeterReport = (props) => {
 
 	const [activeTab, setActiveTab] = useState("trns");
 
+	// const { astId } = assets?.astData;
+	// console.log(`astId`, astId);
+
+	useEffect(() => {
+		onSnapshot(doc(db, "asts", astId), (doc) => {
+			// console.log("Current data: ", doc.data());
+			setAst(doc.data());
+		});
+	}, []);
+
+	// sort chats by chat datetime
+	const chats = ast?.chats;
+	// console.log(`chats`, chats);
+
+	chats?.sort(
+		(a, b) =>
+			b?.updatedAtDatetime?.toMillis() - a?.updatedAtDatetime?.toMillis()
+	);
+
 	return (
 		<div className="iw-meter-report">
 			<IrepsInfoWindow hl1={hl1} hl2={hl2} hr1={hr1} hr2={hr2}>
@@ -126,6 +284,11 @@ const IwMeterReport = (props) => {
 						activeTab={activeTab}
 						tabName="timeline"
 					/>
+					<BtnTab
+						setActiveTab={setActiveTab}
+						activeTab={activeTab}
+						tabName="vending"
+					/>
 				</div>
 
 				<TabPanel title="Ast Transactions" activeTab={activeTab} tabName="trns">
@@ -146,11 +309,20 @@ const IwMeterReport = (props) => {
 				</TabPanel>
 
 				<TabPanel title="Chat" activeTab={activeTab} tabName="chat">
-					<MeterChat ast={ast} />
+					<MeterChat ast={ast} setAst={setAst} />
 				</TabPanel>
 
 				<TabPanel title="Timeline" activeTab={activeTab} tabName="timeline">
-					<MeterTimeline />
+					<MeterTimeline
+						trns={trns}
+						astMediaInfo={astMediaInfo}
+						chats={chats}
+						vendingData={vendingData}
+					/>
+				</TabPanel>
+
+				<TabPanel title="Vending" activeTab={activeTab} tabName="vending">
+					<MeterVending vendingData={vendingData} />
 				</TabPanel>
 			</IrepsInfoWindow>
 		</div>

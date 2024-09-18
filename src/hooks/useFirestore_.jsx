@@ -21,6 +21,9 @@ import { db } from "@/firebaseConfig/fbConfig";
 export const useFirestore_ = (fbCollection) => {
 	// console.log(`useFirestore fbCollection:`, fbCollection);
 
+	const { user } = useAuthContext();
+	// console.log(`user`, user);
+
 	// const ref = collection(db, fbCollection);
 
 	// const addDocument = async (doc) => {
@@ -61,30 +64,28 @@ export const useFirestore_ = (fbCollection) => {
 	// 	}
 	// };
 
-	// const updateDocument = async (document, id) => {
-	// 	// console.log(`updateDocument`, document, id);
-	// 	document = {
-	// 		...document,
-	// 		"metadata.updatedAtDatetime": Timestamp.now(),
-	// 		"metadata.updatedByUser": user.displayName,
-	// 		"metadata.updatedByUid": user.uid,
-	// 		updateHistory: true,
-	// 	};
+	const updateDocument = async (document, id) => {
+		// console.log(`updateDocument`, document);
+		// console.log(`updateDocument`, id);
 
-	// 	dispatch({ type: "IS_PENDING" });
-	// 	const docToUpdateRef = doc(db, fbCollection, id);
-	// 	try {
-	// 		updateDoc(docToUpdateRef, document).then((result) => {
-	// 			dispatchIfNotCancelled({ type: "UPDATED_DOCUMENT" });
-	// 		});
-	// 	} catch (err) {
-	// 		console.log(`ERROR: `, err.message);
-	// 		dispatchIfNotCancelled({
-	// 			type: "ERROR",
-	// 			payload: err.message,
-	// 		});
-	// 	}
-	// };
+		document = {
+			...document,
+			"metadata.updatedAtDatetime": Timestamp.now(),
+			"metadata.updatedByUser": user.displayName,
+			"metadata.updatedByUid": user.uid,
+			updateHistory: true,
+		};
+
+		const docToUpdateRef = doc(db, fbCollection, id);
+
+		try {
+			await updateDoc(docToUpdateRef, document);
+			return { success: true };
+		} catch (error) {
+			console.log(`ERROR: `, error.message);
+			return { success: false, msg: error.message };
+		}
+	};
 
 	const getDocument = async (id) => {
 		// console.log(`getDocument id:`, id);
@@ -104,7 +105,7 @@ export const useFirestore_ = (fbCollection) => {
 			}
 		} catch (error) {
 			console.log("No such document!");
-			return { success: false, msg: error.message  };
+			return { success: false, msg: error.message };
 		}
 	};
 
@@ -173,7 +174,7 @@ export const useFirestore_ = (fbCollection) => {
 		// response,
 		// addDocument,
 		// deleteDocument,
-		// updateDocument,
+		updateDocument,
 		getDocument,
 		// setDocument,
 		// removeMedia,

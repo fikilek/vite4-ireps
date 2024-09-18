@@ -7,9 +7,10 @@ import "@/components/meterChats/MeterChatCard.css";
 import useAuthContext from "@/hooks/useAuthContext.jsx";
 
 const MeterChatCard = (props) => {
-	const { chat } = props;
 	// console.log(`ast`, ast);
-	const { displayName, chatContent, datetime, userUid } = chat;
+	const { chat } = props;
+	// console.log(`props`, props);
+	const { updatedByUser, chatContent, updatedAtDatetime, updatedByUid: userUid } = chat;
 	// console.log(`userUid`, userUid)
 
 	const { user } = useAuthContext();
@@ -22,10 +23,10 @@ const MeterChatCard = (props) => {
 	
 	return (
 		<div className={`meter-chat-card ${chatter}`}>
-			<p className="user">{displayName}</p>
+			<p className="user">{updatedByUser}</p>
 			<p className="content">{chatContent}</p>
 			<p className="datetime">
-				{format(datetime.toDate(), constants.dateFormat2)}
+				{format(updatedAtDatetime?.toDate(), constants?.dateFormat2)}
 			</p>
 		</div>
 	);
