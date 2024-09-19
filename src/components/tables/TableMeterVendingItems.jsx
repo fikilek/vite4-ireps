@@ -14,7 +14,7 @@ import "@ag-grid-community/styles/ag-theme-quartz.css";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
 const TableMeterVendingItems = props => {
-	console.log(` TableMeterVendingItems`, props);
+	// console.log(` TableMeterVendingItems`, props);
 	const { rowData, colDefs } = props;
 
 	const defaultColDef = useMemo(

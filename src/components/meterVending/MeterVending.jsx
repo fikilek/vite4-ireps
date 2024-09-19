@@ -6,7 +6,7 @@ import TableDate from "@/components/tables/TableDate";
 import { irepsConstants } from "@/utils/utils";
 
 const MeterVending = (props) => {
-	console.log(`props`, props);
+	// console.log(`props`, props);
 	const { vendingData } = props;
 
 	vendingData?.sort(

@@ -11,6 +11,11 @@ import { constants } from "@/utils/utils";
 
 import "@/components/meterTimeline/MeterTimeline.css";
 
+import MeterTimelineTrn from '@/components/meterTimeline/MeterTimelineTrn'
+import MeterTimelineVending from '@/components/meterTimeline/MeterTimelineVending'
+import MeterTimelineChat from '@/components/meterTimeline/MeterTimelineChat'
+import MeterTimelineMedia from '@/components/meterTimeline/MeterTimelineMedia'
+
 const MeterTimeline = (props) => {
 	// console.log(`props`, props);
 	const {
@@ -68,8 +73,8 @@ const MeterTimeline = (props) => {
 								key={index}
 								className="vertical-timeline-element--work"
 								contentStyle={{
-									background: "rgb(33, 150, 243)",
-									color: "#fff",
+									background: "#FC4100",
+									color: "#00215E",
 								}}
 								contentArrowStyle={{
 									borderRight: "7px solid  rgb(33, 150, 243)",
@@ -79,10 +84,10 @@ const MeterTimeline = (props) => {
 									constants?.dateFormat2
 								)}
 								// date={item.updatedAtDatetime.toString()}
-								iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+								iconStyle={{ background: "rgb(33, 150, 243)", color: "#D2E0FB" }}
 								icon={<FaAdjust />}
 							>
-								<p>Chat</p>
+								<MeterTimelineChat chat={item} />
 							</VerticalTimelineElement>
 						);
 					}
@@ -94,8 +99,8 @@ const MeterTimeline = (props) => {
 								key={index}
 								className="vertical-timeline-element--work"
 								contentStyle={{
-									background: "rgb(33, 150, 243)",
-									color: "#fff",
+									background: "#DAEAF1",
+									color: "#180161",
 								}}
 								contentArrowStyle={{
 									borderRight: "7px solid  rgb(33, 150, 243)",
@@ -105,10 +110,10 @@ const MeterTimeline = (props) => {
 									constants?.dateFormat2
 								)}
 								// date={item.updatedAtDatetime.toString()}
-								iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+								iconStyle={{ background: "rgb(33, 150, 243)", color: "#DAEAF1" }}
 								icon={<FaAdjust />}
 							>
-								<p>Trn</p>
+								<MeterTimelineTrn trn={item} />
 							</VerticalTimelineElement>
 						);
 					}
@@ -133,7 +138,7 @@ const MeterTimeline = (props) => {
 								iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
 								icon={<FaAdjust />}
 							>
-								<p>Media</p>
+								<MeterTimelineMedia media={item} />
 							</VerticalTimelineElement>
 						);
 					}
@@ -144,8 +149,8 @@ const MeterTimeline = (props) => {
 								key={index}
 								className="vertical-timeline-element--work"
 								contentStyle={{
-									background: "rgb(33, 150, 243)",
-									color: "#fff",
+									background: "#C6DE41",
+									color: "#153B44",
 								}}
 								contentArrowStyle={{
 									borderRight: "7px solid  rgb(33, 150, 243)",
@@ -158,7 +163,7 @@ const MeterTimeline = (props) => {
 								iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
 								icon={<FaAdjust />}
 							>
-								<p>Vending</p>
+								<MeterTimelineVending vendingData={item} />
 							</VerticalTimelineElement>
 						);
 					}
