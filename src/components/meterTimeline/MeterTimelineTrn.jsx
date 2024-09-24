@@ -1,6 +1,5 @@
 
-import { format } from "date-fns";
-import { constants } from "@/utils/utils";
+import { capitalizeFirstLetter } from "@/utils/utils";
 
 
 import '@/components/meterTimeline/MeterTimelineTrn.css'
@@ -11,8 +10,7 @@ const MeterTimelineTrn = (props) => {
   return (
     <div className='meter-timeline-trn'>
       <p>Transaction (Trn)</p>
-      <p>{trn?.trnType}</p>
-      {/* <p>Updated By Datetime: {format(trn?.updatedAtDatetime?.toDate(),constants?.dateFormat2)}</p> */}
+      <p className='trn-type'>{capitalizeFirstLetter(trn?.trnType)}</p>
       <p>{trn?.updatedByUser}</p>
     </div>
   )

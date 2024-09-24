@@ -11,7 +11,7 @@ const MeterTimelineVending = (props) => {
   return (
     <div className='meter-timeline-trn'>
       <p>Vending</p>
-      <p>{vendingData?.amount}</p>
+      <p className='amount'>R{vendingData?.amount?.toFixed(2)}</p>
       <p>{vendingData?.meterOwner}</p>
     </div>
   )

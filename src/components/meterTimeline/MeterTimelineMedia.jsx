@@ -4,7 +4,7 @@
 import '@/components/meterTimeline/MeterTimelineMedia.css'
 
 const MeterTimelineMedia = (props) => {
-  console.log(`props`, props)
+  // console.log(`props`, props)
   const {media} = props
   return (
     <div className='meter-timeline-media'>
