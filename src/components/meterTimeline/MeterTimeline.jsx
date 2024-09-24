@@ -4,17 +4,15 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import { FaAdjust } from "react-icons/fa";
-import { MdOutlineSchool } from "react-icons/md";
-import { MdStar } from "react-icons/md";
 import { format } from "date-fns";
 import { constants } from "@/utils/utils";
 
 import "@/components/meterTimeline/MeterTimeline.css";
 
-import MeterTimelineTrn from '@/components/meterTimeline/MeterTimelineTrn'
-import MeterTimelineVending from '@/components/meterTimeline/MeterTimelineVending'
-import MeterTimelineChat from '@/components/meterTimeline/MeterTimelineChat'
-import MeterTimelineMedia from '@/components/meterTimeline/MeterTimelineMedia'
+import MeterTimelineTrn from "@/components/meterTimeline/MeterTimelineTrn";
+import MeterTimelineVending from "@/components/meterTimeline/MeterTimelineVending";
+import MeterTimelineChat from "@/components/meterTimeline/MeterTimelineChat";
+import MeterTimelineMedia from "@/components/meterTimeline/MeterTimelineMedia";
 
 const MeterTimeline = (props) => {
 	// console.log(`props`, props);
@@ -84,7 +82,10 @@ const MeterTimeline = (props) => {
 									constants?.dateFormat2
 								)}
 								// date={item.updatedAtDatetime.toString()}
-								iconStyle={{ background: "rgb(33, 150, 243)", color: "#D2E0FB" }}
+								iconStyle={{
+									background: "rgb(33, 150, 243)",
+									color: "#D2E0FB",
+								}}
 								icon={<FaAdjust />}
 							>
 								<MeterTimelineChat chat={item} />
@@ -110,7 +111,10 @@ const MeterTimeline = (props) => {
 									constants?.dateFormat2
 								)}
 								// date={item.updatedAtDatetime.toString()}
-								iconStyle={{ background: "rgb(33, 150, 243)", color: "#DAEAF1" }}
+								iconStyle={{
+									background: "rgb(33, 150, 243)",
+									color: "#DAEAF1",
+								}}
 								icon={<FaAdjust />}
 							>
 								<MeterTimelineTrn trn={item} />

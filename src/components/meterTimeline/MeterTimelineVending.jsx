@@ -1,21 +1,15 @@
-
-// import { format } from "date-fns";
-// import { constants } from "@/utils/utils";
-
-
-import '@/components/meterTimeline/MeterTimelineVending.css'
+import "@/components/meterTimeline/MeterTimelineVending.css";
 
 const MeterTimelineVending = (props) => {
-  // console.log(`props`, props)
-  const {vendingData} = props
-  return (
-    <div className='meter-timeline-trn'>
-      <p>Vending</p>
-      <p className='amount'>R{vendingData?.amount?.toFixed(2)}</p>
-      <p>{vendingData?.meterOwner}</p>
-    </div>
-  )
-}
+	// console.log(`props`, props)
+	const { vendingData } = props;
+	return (
+		<div className="meter-timeline-trn">
+			<p>Vending</p>
+			<p className="amount">R{vendingData?.amount?.toFixed(2)}</p>
+			<p>{vendingData?.meterOwner}</p>
+		</div>
+	);
+};
 
-export default MeterTimelineVending
-
+export default MeterTimelineVending;
