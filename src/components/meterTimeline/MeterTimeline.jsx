@@ -54,10 +54,13 @@ const MeterTimeline = (props) => {
 	// [...trns, ...ami, ...chats, ...vendingData];
 	// console.log(`timeline BEFORE`, timeline);
 
-	timeline?.sort(
-		(a, b) =>
-			b?.updatedAtDatetime?.toMillis() - a?.updatedAtDatetime?.toMillis()
-	);
+	if (timeline) {
+		timeline?.sort(
+			(a, b) =>
+				b?.updatedAtDatetime?.toMillis() - a?.updatedAtDatetime?.toMillis()
+		);
+	}
+
 	// console.log(`timeline AFTER`, timeline);
 
 	return (
@@ -77,7 +80,7 @@ const MeterTimeline = (props) => {
 								contentArrowStyle={{
 									borderRight: "7px solid  rgb(33, 150, 243)",
 								}}
-								date={format(
+								date={item.updatedAtDatetime && format(
 									item.updatedAtDatetime?.toDate(),
 									constants?.dateFormat2
 								)}

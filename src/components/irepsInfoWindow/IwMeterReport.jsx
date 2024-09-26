@@ -36,7 +36,7 @@ let dates = faker.date.betweens({
 
 const meterOwner = faker.person.fullName()
 
-dates = dates.map((date) => Timestamp.fromDate(date));
+dates = dates.map((date) => Timestamp?.fromDate(date));
 // console.log(`dates`, dates);
 
 const IwMeterReport = (props) => {
@@ -282,12 +282,12 @@ const IwMeterReport = (props) => {
 					<BtnTab
 						setActiveTab={setActiveTab}
 						activeTab={activeTab}
-						tabName="timeline"
+						tabName="vending"
 					/>
 					<BtnTab
 						setActiveTab={setActiveTab}
 						activeTab={activeTab}
-						tabName="vending"
+						tabName="timeline"
 					/>
 				</div>
 

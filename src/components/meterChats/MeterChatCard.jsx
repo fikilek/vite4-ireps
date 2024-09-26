@@ -26,7 +26,7 @@ const MeterChatCard = (props) => {
 			<p className="user">{updatedByUser}</p>
 			<p className="content">{chatContent}</p>
 			<p className="datetime">
-				{format(updatedAtDatetime?.toDate(), constants?.dateFormat2)}
+				{updatedAtDatetime && format(updatedAtDatetime?.toDate(), constants?.dateFormat2)}
 			</p>
 		</div>
 	);
