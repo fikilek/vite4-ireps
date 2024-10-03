@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
 	collection,
 	onSnapshot,
@@ -10,14 +10,29 @@ import {
 
 // hooks
 import useAuthContext from "@/hooks/useAuthContext";
-import { useFirestore_ } from "./useFirestore_";
+import { useFirestore_ } from "@/hooks/useFirestore_";
+
+// contexts
+import { AstsContext } from "@/contexts/AstsContext";
 
 // components
 import { db } from "@/firebaseConfig/fbConfig";
 
+function getRandomColor() {
+	var letters = "0123456789ABCDEF";
+	var color = "#";
+	for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
+}
+
 const useGetAstsCollection = (fbCollection) => {
 	// console.log(`fbCollection`, fbCollection);
 	// console.log(`_constraints`, _constraints);
+
+	const { astsContext, setAstsContext } = useContext(AstsContext);
+	// console.log(`astsContext`, astsContext);
 
 	const [asts, setAsts] = useState([]);
 	// console.log(`asts`, asts);
@@ -60,6 +75,38 @@ const useGetAstsCollection = (fbCollection) => {
 						results.push({ id: doc.id, ...doc.data() });
 					});
 					setAsts(results);
+
+					const stats = {};
+					results?.forEach((ast) => {
+						stats[ast.metadata.createdByUid] =
+							1 + (stats[ast.metadata.createdByUid] || 0);
+					});
+
+					const updatedStats = [];
+					for (const uid in stats) {
+						// console.log(`${uid}: ${object[property]}`);
+						const matchingAst = results.find((ast) => {
+							return ast?.metadata?.createdByUid === uid;
+						});
+
+						const percentage = ((stats[uid] / results?.length) * 100).toFixed(
+							2
+						);
+
+						updatedStats.push({
+							uid: uid,
+							displayName: matchingAst?.metadata?.createdByUser,
+							quantity: stats[uid],
+							percentage: percentage,
+							fillColor: getRandomColor(),
+						});
+					}
+
+					setAstsContext({
+						...astsContext,
+						asts: results,
+						statsCreatedAtDatetimeByUser: updatedStats,
+					});
 				},
 				(err) => {
 					console.log(`firestore err`, err.message);

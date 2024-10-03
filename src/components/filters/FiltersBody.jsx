@@ -1,21 +1,26 @@
-
 // css
 import "@/components/filters/FiltersBody.css";
 
 // components
-// import FilterDataFilter from "@/components/filters/FilterDataFilter";
-import FilterReports from "@/components/filters/FilterReports";
-import FilterDataFilter_ from "./FilterDataFilter_";
+import FilterReport from "@/components/filters/FilterReport";
+import FilterDataFilter from "./FilterDataFilter";
 
-const FiltersHeader = props => {
-  const { active, irepsKeyItem } = props;
+const FiltersBody = (props) => {
+	const { active, irepsKeyItem } = props;
 	return (
 		<div className="filters-body">
-			{/* {active === "dataFilter" ? <FilterDataFilter irepsKeyItem={irepsKeyItem} /> : ""} */}
-			{active === "dataFilter" ? <FilterDataFilter_ irepsKeyItem={irepsKeyItem} /> : ""}
-			{active === "reports" ? <FilterReports irepsKeyItem={irepsKeyItem} /> : ""}
+			{active === "reportFilters" ? (
+				<FilterDataFilter irepsKeyItem={irepsKeyItem} />
+			) : (
+				""
+			)}
+			{active === "reportStats" ? (
+				<FilterReport irepsKeyItem={irepsKeyItem} />
+			) : (
+				""
+			)}
 		</div>
 	);
 };
 
-export default FiltersHeader;
+export default FiltersBody;

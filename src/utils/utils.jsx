@@ -49,6 +49,7 @@ export const capitalizeFirstLetters = (obj) => {
 
 // constants
 export const constants = {
+	dateFormat0: "yyyy MMM dd",
 	dateFormat1: "yyyy MMM dd: HH:mm",
 	dateFormat2: "yyyy-MMM-dd_HH:mm:ss",
 };
@@ -453,8 +454,8 @@ irepsDictionary.set("tidOperation", "Tid Operation");
 irepsDictionary.set("tid", "Tid");
 irepsDictionary.set("installationData", "Installation Data");
 irepsDictionary.set("activeArea", "Active Area");
-irepsDictionary.set("reports", "Reports");
-irepsDictionary.set("dataFilter", "Data Filter");
+irepsDictionary.set("reportStats", "Report Stats");
+irepsDictionary.set("reportFilters", "Report Filters");
 irepsDictionary.set("existingMeter", "Existing Meter");
 irepsDictionary.set("inspectionData", "Inspection Data");
 irepsDictionary.set("isMeterStillThere", "Existing Meter");

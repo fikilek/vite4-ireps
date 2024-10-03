@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 // Create context:
 export const AstsContext = createContext();
@@ -10,9 +10,10 @@ const initSettings = {
 	asts: null,
 };
 
-export const AstsContextProvider = props => {
+export const AstsContextProvider = (props) => {
 	const [astsContext, setAstsContext] = useState(initSettings);
 	// console.log(`astsContext`, astsContext);
+
 	return (
 		<AstsContext.Provider value={{ astsContext, setAstsContext }}>
 			{props.children}

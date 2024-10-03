@@ -15,6 +15,7 @@
     "@ag-grid-community/styles": "^31.0.3",
     "@googlemaps/markerclusterer": "^2.5.3",
     "@vis.gl/react-google-maps": "^0.7.1",
+    "ag-charts-react": "^10.2.0",
     "axios": "^1.6.8",
     "date-fns": "^3.3.1",
     "firebase": "^10.12.2",

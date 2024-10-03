@@ -81,6 +81,8 @@ export const useTrns = (trnType, astCat) => {
 		}
 	}, [user?.uid]);
 
+	const trnId = uuidv4();
+
 	const trnsNewFormData = {
 		meter: {
 			checkin: {
@@ -238,13 +240,18 @@ export const useTrns = (trnType, astCat) => {
 					createdByUid: user.uid,
 					trnHistory: 0, // how many times transaction has been updated
 					trnType: "installation", //['installation', 'commissioning', 'vending', 'missing', 'found', 'disconnection', 'reconnection', 'sale', 'decomissioning', "dispose", 'inspection', 'audit']
-					trnId: uuidv4(),
+					trnId: trnId,
 					trnState: "draft",
+					createdThrough: {
+						creatorTrnName: "installation",
+						creatorTrnNo: "trnNo",
+						creatorTrnId: trnId,
+					},
 				},
 				astData: {
-					astId: '',
+					astId: "",
 					astNo: "", // for meters this is a meter no
-					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'curcuit breaker', 'seal'],
+					astCatergory: "meter", // [ 'pole', 'box', 'meter', 'circuit breaker', 'seal'],
 					astState: {
 						state: "service",
 						location: "",

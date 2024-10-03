@@ -4,7 +4,7 @@ import "@/components/irepsInfoWindow/ShowAstOnMap.css";
 
 import IwShowOnMap from "@/components/irepsInfoWindow/IwShowOnMap";
 
-const ShowAstOnMap = props => {
+const ShowAstOnMap = (props) => {
 	// console.log(`props`, props);
 
 	const { astNo } = props.data.data?.astData;
@@ -13,12 +13,12 @@ const ShowAstOnMap = props => {
 	const { gps } = props.data.data?.location;
 	// console.log(`gps`, gps);
 
-	const {lmMetro, ward} = props.data.data?.erf?.address
+	const { lmMetro, ward } = props.data.data?.erf?.address;
 	// console.log(`lmMetro`, lmMetro)
 	// console.log(`ward`, ward)
-	
-	const ast = props?.data?.data
-	console.log(`ast`, ast)
+
+	const ast = props?.data?.data;
+	// console.log(`ast`, ast)
 
 	const [gpsPoint, setGpsPoint] = useState({});
 	// console.log(`gpsPoint`, gpsPoint);

@@ -4,6 +4,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 
 // hooks
 import useGetAstsCollection from "./useGetAstsCollection";
+// import useGetAstsReports from "./useGetAstsReports";
 
 // components
 import TableDate from "@/components/tables/TableDate";
@@ -11,7 +12,7 @@ import TableModalBtn from "@/components/tables/TableModalBtn";
 import TableBtnsPossibleTrnsOnAst from "@/components/tables/TableBtnsPossibleTrnsOnAst";
 
 export const useAsts = () => {
-	const { asts, error } = useGetAstsCollection("asts");
+	const { error } = useGetAstsCollection("asts");
 	// console.log(`asts`, asts);
 	// console.log(`error`, error);
 
@@ -48,16 +49,16 @@ export const useAsts = () => {
 					width: 150,
 					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
-							params.value.seconds,
-							params.value.nanoseconds
+							params?.value?.seconds,
+							params?.value?.nanoseconds
 						);
-						const newDate = timestamp.toDate();
+						const newDate = timestamp?.toDate();
 						return (
 							<TableDate date={newDate} dateFormat={"yyyy-MMM-dd HH:mm"} />
 						);
 					},
 					valueGetter: (params) => {
-						return params.data.metadata.createdAtDatetime;
+						return params.data?.metadata?.createdAtDatetime;
 					},
 					hide: false,
 				},
@@ -139,9 +140,9 @@ export const useAsts = () => {
 					headerName: "Meter No",
 					width: 170,
 					columnGroupShow: "closed",
-					cellRenderer: params => {
-					// console.log(`params`, params);
-					return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
+					cellRenderer: (params) => {
+						// console.log(`params`, params);
+						return <TableModalBtn data={params}>{params.value}</TableModalBtn>;
 					},
 					cellRendererParams: {
 						modalName: "meterReport",
@@ -221,23 +222,23 @@ export const useAsts = () => {
 			valueGetter: (params) => {
 				let astState = "";
 				if (params.data?.astData.astState.state === "stores") {
-					astState = `${params.data?.astData.astState.state} : ${params.data?.astData.astState.locationName}`;
+					astState = `${params.data?.astData?.astState?.state} : ${params.data?.astData?.astState?.locationName}`;
 				}
 
 				if (params.data?.astData.astState.state === "service") {
-					astState = `service : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
+					astState = `service : ${params.data?.erf?.address?.lmMetro} - ${params.data?.erf.erfNo}`;
 				}
 
-				if (params.data?.astData.astState.state === "temper") {
+				if (params.data?.astData?.astState?.state === "temper") {
 					astState = `temper : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
 				}
 
 				if (
-					params.data?.astData.astState.state == "" ||
-					params.data?.astData.astState.state == null ||
-					params.data?.astData.astState.state == undefined
+					params.data?.astData?.astState?.state == "" ||
+					params.data?.astData?.astState?.state == null ||
+					params.data?.astData?.astState?.state == undefined
 				) {
-					astState = `service : ${params.data?.erf.address.lmMetro} - ${params.data?.erf.erfNo}`;
+					astState = `service : ${params.data?.erf?.address?.lmMetro} - ${params.data?.erf.erfNo}`;
 				}
 
 				// else {
@@ -245,6 +246,13 @@ export const useAsts = () => {
 				// }
 				return astState;
 			},
+		},
+
+		// ast creator
+		{
+			field: "metadata.createdThrough.creatorTrnName",
+			headerName: "Meter Creator",
+			width: 140,
 		},
 
 		// // trns - all trns on the ast
@@ -281,7 +289,7 @@ export const useAsts = () => {
 			cellRendererParams: {
 				// modalName: "iwTrnsOnAst",
 				// width: "4rem",
-				columnName: 'tidTrn'
+				columnName: "tidTrn",
 			},
 			hide: false,
 			// tooltipComponent: TableTrnsForAstsTooltip,
@@ -467,5 +475,5 @@ export const useAsts = () => {
 		},
 	];
 
-	return { asts, astsTableFields, error };
+	return { astsTableFields, error };
 };
