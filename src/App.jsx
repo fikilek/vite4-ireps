@@ -48,7 +48,8 @@ import GeocodingContextProvider from "@/contexts/GeocodingContext";
 import TrnsLayout from "@/components/layouts/TrnsLayout";
 import { ErfsMapContextProvider } from "./contexts/ErfsMapContext";
 import { GmrContextProvider } from "./contexts/GmrContext";
-import {FiltersContextProvider} from '@/contexts/FiltersContext'
+import { FiltersContextProvider } from "@/contexts/FiltersContext";
+import { AstsStatsContextProvider } from "@/contexts/AstsStatsContext";
 
 // Lazy loading
 const Erfs = lazy(() => import("@/pages/erfs/Erfs"));
@@ -437,43 +438,45 @@ const router = createBrowserRouter(
 
 function App() {
 	return (
-		<FiltersContextProvider>
-			<GmrContextProvider>
-				<ErfsMapContextProvider>
-					<ReverseGeocodingContextProvider>
-						<GeocodingContextProvider>
-							<AstsContextProvider>
-								<TrnsContextProvider>
-									<AnomalyContextProvider>
-										<MediaContextProvider>
-											<ReverseGeocodingContextProvider>
-												<ErfsContextProvider>
-													{/* <QueryClientProvider client={queryClient}> */}
-													<AreaTreeContextProvider>
-														<ClaimsContextProvider>
-															<AuthContextProvider>
-																<ModalContextProvider>
-																	<div className="App">
-																		<RouterProvider router={router} />
-																		<ToastContainer />
-																	</div>
-																	<Modal />
-																</ModalContextProvider>
-															</AuthContextProvider>
-														</ClaimsContextProvider>
-													</AreaTreeContextProvider>
-													{/* </QueryClientProvider> */}
-												</ErfsContextProvider>
-											</ReverseGeocodingContextProvider>
-										</MediaContextProvider>
-									</AnomalyContextProvider>
-								</TrnsContextProvider>
-							</AstsContextProvider>
-						</GeocodingContextProvider>
-					</ReverseGeocodingContextProvider>
-				</ErfsMapContextProvider>
-			</GmrContextProvider>
-		</FiltersContextProvider>
+		<AstsStatsContextProvider>
+			<FiltersContextProvider>
+				<GmrContextProvider>
+					<ErfsMapContextProvider>
+						<ReverseGeocodingContextProvider>
+							<GeocodingContextProvider>
+								<AstsContextProvider>
+									<TrnsContextProvider>
+										<AnomalyContextProvider>
+											<MediaContextProvider>
+												<ReverseGeocodingContextProvider>
+													<ErfsContextProvider>
+														{/* <QueryClientProvider client={queryClient}> */}
+														<AreaTreeContextProvider>
+															<ClaimsContextProvider>
+																<AuthContextProvider>
+																	<ModalContextProvider>
+																		<div className="App">
+																			<RouterProvider router={router} />
+																			<ToastContainer />
+																		</div>
+																		<Modal />
+																	</ModalContextProvider>
+																</AuthContextProvider>
+															</ClaimsContextProvider>
+														</AreaTreeContextProvider>
+														{/* </QueryClientProvider> */}
+													</ErfsContextProvider>
+												</ReverseGeocodingContextProvider>
+											</MediaContextProvider>
+										</AnomalyContextProvider>
+									</TrnsContextProvider>
+								</AstsContextProvider>
+							</GeocodingContextProvider>
+						</ReverseGeocodingContextProvider>
+					</ErfsMapContextProvider>
+				</GmrContextProvider>
+			</FiltersContextProvider>
+		</AstsStatsContextProvider>
 	);
 }
 

@@ -7,7 +7,7 @@ import FormFieldError from "@/components/forms/formError/FormFieldError";
 import { AnomalyContext } from "@/contexts/AnomalyContext";
 // import { select } from "firebase-functions/params";
 
-const FormikSelectSetAnomaly = props => {
+const FormikSelectSetAnomaly = (props) => {
 	const { label, name, options, ...rest } = props;
 
 	const { anomalyContext, setAnomalyContext } = useContext(AnomalyContext);
@@ -15,14 +15,14 @@ const FormikSelectSetAnomaly = props => {
 	return (
 		<div className={`form-control ${name} `}>
 			<Field id={name} name={name} {...rest}>
-				{props => {
-					// console.log(`props`, props)
+				{(props) => {
+					// console.log(`props`, props);
 					const { field, form, meta } = props;
 
 					// const selected = field.value
 					// console.log(`selecred`, selected)
 
-					const handleChange = async e => {
+					const handleChange = async (e) => {
 						// console.log(`e.target.value`, e.target.value);
 						// console.log(`field`, field);
 						// console.log(`form`, form);
@@ -43,11 +43,15 @@ const FormikSelectSetAnomaly = props => {
 					};
 
 					return (
-						<select {...field} onChange={handleChange} className={meta.error ? 'error' : ''}>
+						<select
+							{...field}
+							onChange={handleChange}
+							className={meta.error ? "error" : ""}
+						>
 							{options &&
-								options.map(option => {
+								options.map((option) => {
 									return (
-										<option key={option.key} value={option.value}>
+										<option key={option.value} value={option.value}>
 											{option.key}
 										</option>
 									);

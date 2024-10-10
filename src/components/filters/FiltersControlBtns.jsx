@@ -15,14 +15,14 @@ const FiltersControlBtns = (props) => {
 	const { getAsts } = props;
 
 	const { filtersContext, setFiltersContext } = useContext(FiltersContext);
-	// console.log(`filtersContext`, filtersContext);
+	// console.log(`filtersContext.filterCondition`, filtersContext.filterCondition);
 
 	const { createdAtDatetimeRange, updatedAtDatetimeRange, filterCondition } =
 		filtersContext;
 	// console.log(`filtersActive`, filtersActive);
 	// console.log(`createdAtDatetimeRange`, createdAtDatetimeRange);
 
-	const { astState, astCreation } = filterCondition;
+	const { astState, astCreation, astMeterType } = filterCondition;
 
 	const handleClick = (e) => {
 		// console.log(`Filter Get Data`, constraints);
@@ -83,11 +83,17 @@ const FiltersControlBtns = (props) => {
 		if (astState) {
 			constraints = [...constraints, where("astData.astState", ">=", astState)];
 		}
+		if (astMeterType) {
+			constraints = [
+				...constraints,
+				where("astData.meter.type", "==", astMeterType),
+			];
+		}
 		// if (geographicArea) {
 		// 	constraints = [...constraints, where("astData.astState", ">=", geographicArea)];
 		// }
 
-		console.log(`constraints`, constraints);
+		// console.log(`constraints`, constraints);
 
 		getAsts(constraints);
 
@@ -107,7 +113,10 @@ const FiltersControlBtns = (props) => {
 			createdAtDatetimeRange: [null, null],
 			updatedAtDatetimeRange: [null, null],
 			filterCondition: {
+				createdAtDatetime: [],
+				updatedAtDatetime: [],
 				astCreation: "",
+				astMeterType: "",
 				astState: "",
 				geographicArea: "",
 			},

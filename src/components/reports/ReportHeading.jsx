@@ -57,16 +57,33 @@ const ReportHeading = (props) => {
 		// There is no filtering. Get date range from astsContext.asts
 
 		// console.log(`range`, range);
-		rangeLabel = "Entire Range";
+		rangeLabel = "Entire Range (CreatedAtDatetime)";
 		// Get asts array from astsContext
 		const asts = astsContext?.asts;
 		// console.log(`asts`, asts);
 
 		if (!asts) return;
 
+		// asts?.map((ast) => {
+		// 	const dt = ast?.metadata?.createdAtDatetime;
+		// 	console.log(`dt`, dt);
+		// 	console.log(`dt`, format(dt?.toDate(), constants?.dateFormat0));
+		// });
+
+		const dA = asts?.[0]?.metadata?.createdAtDatetime;
+		// console.log(`dA`, dA);
+		// const testDateA = format(dA?.toDate(), constants?.dateFormat0);
+		// console.log(`testDateA`, testDateA);
+
+		// const dB = asts?.[asts.length - 1]?.metadata?.createdAtDatetime;
+		// const testDateB = format(dB?.toDate(), constants?.dateFormat0);
+		// console.log(`testDateA`, testDateB);
+
+		// if (!asts) return;
+
 		// clone asts first
 		const astsClone = cloneDeep(asts);
-		console.log(`astsClone`, astsClone);
+		// console.log(`astsClone`, astsClone);
 
 		// Sort by createdAtDatetime
 		astsClone?.sort((a, b) => {
@@ -74,19 +91,35 @@ const ReportHeading = (props) => {
 			// console.log(`b.metadata.createdAtDatetime`, b.metadata.createdAtDatetime);
 			// Turn your strings into dates, and then subtract them
 			// to get a value that is either negative, positive, or zero.
-			const dateA = a.metadata?.createdAtDatetime?.toDate();
-			const dateB = b.metadata?.createdAtDatetime?.toDate();
+			const dateA = a.metadata?.createdAtDatetime?.toMillis();
+			const dateB = b.metadata?.createdAtDatetime?.toMillis();
 			return dateA - dateB;
 		});
-		// console.log(`asts`, asts);
+		// console.log(`astsClone`, asts);
+
+		// astsClone?.sort((a, b) => {
+		// 	// console.log(`a.metadata.createdAtDatetime`, a.metadata.createdAtDatetime);
+		// 	// console.log(`b.metadata.createdAtDatetime`, b.metadata.createdAtDatetime);
+		// 	// Turn your strings into dates, and then subtract them
+		// 	// to get a value that is either negative, positive, or zero.
+		// 	const dateA = a.metadata?.updatedAtDatetime?.toDate();
+		// 	const dateB = b.metadata?.updatedAtDatetime?.toDate();
+		// 	return dateA - dateB;
+		// });
 
 		// Get first element in the asts array and extract createdAtDatetime and assign to date1
-		const dateA = asts?.[0]?.metadata?.createdAtDatetime;
+		const dateA = astsClone?.[0]?.metadata?.createdAtDatetime;
+		// const testDateA = format(dateA.toDate(), constants.dateFormat0);
+		// console.log(`testDateA`, testDateA);
 		// console.log(`dateA`, dateA);
 
 		// Get last element in the asts array and extract createdAtDatetime and assign to date2
-		const dateB = asts?.[asts?.length - 1]?.metadata?.createdAtDatetime;
+		const dateB =
+			astsClone?.[astsClone?.length - 1]?.metadata?.createdAtDatetime;
 		// console.log(`dateB`, dateB);
+
+		// const testDateB = format(dateB.toDate(), constants.dateFormat0);
+		// console.log(`testDateB`, testDateB);
 
 		// Assign date1 and date2 to the range
 		range = [dateA?.toDate(), dateB?.toDate()];
@@ -98,10 +131,10 @@ const ReportHeading = (props) => {
 	const date2 = range?.[1];
 	// console.log(`date2`, date2);
 
-	const d1 = format(new Date(date1 || 0), constants.dateFormat0);
+	const d1 = format(new Date(date1 || 0), constants.dateFormat3);
 	// console.log(`d1`, d1);
 
-	const d2 = format(new Date(date2 || 0), constants.dateFormat0);
+	const d2 = format(new Date(date2 || 0), constants.dateFormat3);
 	// console.log(`d2`, d2);
 
 	const { astCreation } = filterCondition;

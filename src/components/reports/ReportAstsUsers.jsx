@@ -1,10 +1,10 @@
 // npm libraries
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 import "@/components/reports/ReportAstsUsers.css";
 
 // contexts
-import { AstsContext } from "@/contexts/AstsContext";
+import { AstsStatsContext } from "@/contexts/AstsStatsContext";
 
 import ReportHeading from "@/components/reports/ReportHeading";
 import ReportAstsUsersTable from "@/components/reports/ReportAstsUsersTable";
@@ -12,19 +12,19 @@ import ReportAstsUsersPieChart from "@/components/reports/ReportAstsUsersPieChar
 import ReportAstsUsersBarChart from "@/components/reports/ReportAstsUsersBarChart";
 
 const ReportAstsUsers = () => {
-	const { astsContext } = useContext(AstsContext);
+	const { astsStatsContext } = useContext(AstsStatsContext);
 	// console.log(`astsContext`, astsContext);
 
-	const users = astsContext?.statsCreatedAtDatetimeByUser;
+	const users = astsStatsContext?.statsAstsUsers;
 	// console.log(`users`, users);
 
 	return (
 		<div className={`report-asts-users`}>
-			<ReportHeading title="Asts - Users Report" />
+			<ReportHeading title="Users Stats" />
 			<div className="rau-body">
 				<ReportAstsUsersTable data={users} />
 				<ReportAstsUsersBarChart data={users} />
-				<ReportAstsUsersPieChart data={users} />
+				{/* <ReportAstsUsersPieChart data={users} /> */}
 			</div>
 		</div>
 	);

@@ -13,9 +13,10 @@ const initSettings = {
 	// dateRange: "",
 	activeReport: "",
 	filterCondition: {
-		// createdAtDatetime: "",
-		// updatedAtDatetime: "",
+		createdAtDatetime: [],
+		updatedAtDatetime: [],
 		astCreation: "",
+		astMeterType: "",
 		astState: "",
 		geographicArea: "",
 	},

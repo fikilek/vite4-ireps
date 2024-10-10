@@ -10,8 +10,19 @@ const FilterReport = () => {
 	return (
 		<div className="filter-reports">
 			<div className="filter-report-body">
-				<FilterReportTypeBtn title="Users Report" name="users" />
-				<FilterReportTypeBtn title="Anomalies Report" name="anomalies" />
+				<FilterReportTypeBtn title="Asts Per User Report" name="users" />
+				<FilterReportTypeBtn
+					title="Meter Type Per Users Report"
+					name="meterType"
+				/>
+				{/* <FilterReportTypeBtn
+					title="Meter Phase Per Users Report"
+					name="meterPhase"
+				/> */}
+				<FilterReportTypeBtn
+					title="Anomalies Per Users Report"
+					name="anomalies"
+				/>
 				<FilterReportTypeBtn title="Vending Report" name="vending" />
 			</div>
 		</div>

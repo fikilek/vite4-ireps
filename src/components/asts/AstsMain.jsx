@@ -8,6 +8,7 @@ import AstsTable from "@/components/asts/AstsTable";
 import ReportAstsUsers from "@/components/reports/ReportAstsUsers";
 import ReportAstsAnomalies from "@/components/reports/ReportAstsAnomalies";
 import ReportAstsVending from "@/components/reports/ReportAstsVending";
+import ReportAstsMeterType from "@/components/reports/ReportAstsMeterType";
 import Report from "@/components/reports/Report";
 
 const AstsMain = ({ asts, astsTableFields }) => {
@@ -24,7 +25,9 @@ const AstsMain = ({ asts, astsTableFields }) => {
 				<Report reportName="vending">
 					<ReportAstsVending />
 				</Report>
-
+				<Report reportName="meterType">
+					<ReportAstsMeterType />
+				</Report>
 			</div>
 		</>
 	);

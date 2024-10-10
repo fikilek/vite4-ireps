@@ -9,31 +9,25 @@ import { FiltersContext } from "@/contexts/FiltersContext";
 
 const FilterItemHeading = (props) => {
 	const { title, name, value } = props;
+	// console.log(`name`, name);
 
 	const { filtersContext } = useContext(FiltersContext);
-	// console.log(`filtersContext.dateRange`,filtersContext.dateRange)
+	// console.log(`filtersContext`, filtersContext);
 
 	const { dateRange } = filtersContext;
 
-	let checked = null;
-	if (dateRange === value) {
-		checked = true;
-	}
+	// check if the filter condition is set
+	const { filterCondition } = filtersContext;
+	// console.log(`filterCondition`, filterCondition);
+
+	const filterSet = filterCondition[name];
+	// console.log(`filterSet`, filterSet);
+
+	const highText = filterSet ? "text-emphasis" : "";
 
 	return (
 		<div className="filter-item-heading">
-			<p>{title}</p>
-			{name === "geographicArea" ? (
-				<button>View On Map</button>
-			) : (
-				<input
-					type="radio"
-					value={value}
-					name={name}
-					checked={checked}
-					readOnly
-				/>
-			)}
+			<p className={`fih-title ${highText} `}>{title}</p>
 		</div>
 	);
 };

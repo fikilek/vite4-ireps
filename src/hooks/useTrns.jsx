@@ -288,8 +288,8 @@ export const useTrns = (trnType, astCat) => {
 					insideBox: "", // ['yes', 'no'] - Required
 				},
 				anomalies: {
-					anomaly: "", // ['', '', '', '', '', ''] - required
-					anomalyDetail: "", // ['', '', '', '', '', ''] - required based on 'anomaly'
+					anomaly: "MeterOk", // ['', '', '', '', '', ''] - required
+					anomalyDetail: "Operationally Ok", // ['', '', '', '', '', ''] - required based on 'anomaly'
 				},
 				erf: {
 					erfNo: "",
@@ -1232,44 +1232,44 @@ export const useTrns = (trnType, astCat) => {
 						}),
 					});
 				}),
-				// anomalies: lazy((v, { context }) => {
-				// 	return object().shape({
-				// 		anomaly: string().when("meterAccess", (meterAccess_, schema) => {
-				// 			const { meterAccess } = context.access;
-				// 			if (meterAccess === "no") {
-				// 				return schema.notRequired();
-				// 			}
-				// 			if (meterAccess === "yes") {
-				// 				return schema
-				// 					.required("Required")
-				// 					.notOneOf(["choose", ""], "Required");
-				// 			} else {
-				// 				return schema;
-				// 			}
-				// 		}),
-				// 		anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
-				// 			const { anomaly } = context.anomalies;
-				// 			// console.log(`anomaly`, anomaly)
-				// 			// console.log(`meterAccess_`, meterAccess_);
-				// 			const { meterAccess } = context.access;
-				// 			if (meterAccess === "no") {
-				// 				return schema.notRequired();
-				// 			}
-				// 			if (
-				// 				anomaly === "" ||
-				// 				anomaly === "choose" ||
-				// 				anomaly === null ||
-				// 				anomaly === undefined
-				// 			) {
-				// 				return schema.notRequired();
-				// 			} else {
-				// 				return schema
-				// 					.required("Required")
-				// 					.notOneOf(["choose", ""], "Required");
-				// 			}
-				// 		}),
-				// 	});
-				// }),
+				anomalies: lazy((v, { context }) => {
+					return object().shape({
+						anomaly: string().when("meterAccess", (meterAccess_, schema) => {
+							const { meterAccess } = context.access;
+							if (meterAccess === "no") {
+								return schema.notRequired();
+							}
+							if (meterAccess === "yes") {
+								return schema
+									.required("Required")
+									.notOneOf(["choose", ""], "Required");
+							} else {
+								return schema;
+							}
+						}),
+						anomalyDetail: string().when("anomaly", (meterAccess_, schema) => {
+							const { anomaly } = context.anomalies;
+							// console.log(`anomaly`, anomaly)
+							// console.log(`meterAccess_`, meterAccess_);
+							const { meterAccess } = context.access;
+							if (meterAccess === "no") {
+								return schema.notRequired();
+							}
+							if (
+								anomaly === "" ||
+								anomaly === "choose" ||
+								anomaly === null ||
+								anomaly === undefined
+							) {
+								return schema.notRequired();
+							} else {
+								return schema
+									.required("Required")
+									.notOneOf(["choose", ""], "Required");
+							}
+						}),
+					});
+				}),
 				serviceConnection: lazy((v, { context }) => {
 					return object().shape({
 						configuration: string().when(

@@ -11,9 +11,11 @@ import {
 // hooks
 import useAuthContext from "@/hooks/useAuthContext";
 import { useFirestore_ } from "@/hooks/useFirestore_";
+import { useAstsStats } from "@/hooks/useAstsStats.jsx";
 
 // contexts
 import { AstsContext } from "@/contexts/AstsContext";
+import { AstsStatsContext } from "@/contexts/AstsStatsContext";
 
 // components
 import { db } from "@/firebaseConfig/fbConfig";
@@ -34,6 +36,10 @@ const useGetAstsReport = (fbCollection) => {
 	const { astsContext, setAstsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext);
 
+	const { astsStatsContext, setAstsStatsContext } =
+		useContext(AstsStatsContext);
+	// console.log(`astsStatsContext`, astsStatsContext);
+
 	const [workbase, setWorkbase] = useState([]);
 	// console.log(`workbase`, workbase);
 
@@ -44,6 +50,12 @@ const useGetAstsReport = (fbCollection) => {
 
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
+
+	const {
+		getAstsUsersStats,
+		getMeterTypePerUserStats,
+		getAnomalyPerUserStats,
+	} = useAstsStats();
 
 	const { uid } = user;
 	// console.log(`uid`, uid);
@@ -90,6 +102,17 @@ const useGetAstsReport = (fbCollection) => {
 					results.push({ id: doc.id, ...doc.data() });
 				});
 
+				// results.splice(10);
+
+				// users stats
+				const statsAstsUsers = getAstsUsersStats(results);
+
+				// audits pre-paid and conventional
+				const meterTypePerUserStats = getMeterTypePerUserStats(results);
+
+				// anomaly per user stats
+				const anomalyPerUserStats = getAnomalyPerUserStats(results);
+
 				const stats = {};
 				results?.forEach((ast) => {
 					stats[ast.metadata.createdByUid] =
@@ -118,6 +141,19 @@ const useGetAstsReport = (fbCollection) => {
 					...astsContext,
 					asts: results,
 					statsCreatedAtDatetimeByUser: updatedStats,
+				});
+
+				setAstsStatsContext((prev) => {
+					return {
+						...prev,
+						statsAstsUsers,
+						meterTypePerUserStats,
+						anomalyPerUserStats,
+						// statsCreatedAtDatetimeByUser: updatedStats,
+						// anomaliesStats,
+						// auditsPrepaidStats,
+						// auditsConventionalStats,
+					};
 				});
 
 				// console.log(`results`, results);

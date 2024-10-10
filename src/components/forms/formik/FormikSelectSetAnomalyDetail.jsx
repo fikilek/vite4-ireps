@@ -6,7 +6,7 @@ import "@/components/forms/Form.css";
 import FormFieldError from "@/components/forms/formError/FormFieldError";
 import { AnomalyContext } from "@/contexts/AnomalyContext";
 
-const FormikSelectSetAnomalyDetail = props => {
+const FormikSelectSetAnomalyDetail = (props) => {
 	// console.log(`props`, props);
 	const { label, name, ...rest } = props;
 	// console.log(`rest`, rest);
@@ -24,20 +24,24 @@ const FormikSelectSetAnomalyDetail = props => {
 	return (
 		<div className={`form-control ${name} `}>
 			<Field id={name} name={name} {...rest}>
-				{props => {
+				{(props) => {
 					const { field, form, meta } = props;
 
-					const handleChange = async e => {
+					const handleChange = async (e) => {
 						await form.setFieldValue(field.name, e.target.value);
 						await form.validateField(field.name);
 					};
 
 					return (
-						<select {...field} onChange={handleChange} className={meta.error ? 'error' : ''}>
+						<select
+							{...field}
+							onChange={handleChange}
+							className={meta.error ? "error" : ""}
+						>
 							{options &&
-								options.map(option => {
+								options.map((option) => {
 									return (
-										<option key={option.key} value={option.value}>
+										<option key={option.value} value={option.value}>
 											{option.key}
 										</option>
 									);

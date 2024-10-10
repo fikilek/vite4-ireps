@@ -359,6 +359,42 @@ const FormMeterInstallation = (props) => {
 										</div>
 									</FormSection>
 
+									{/* anomalies */}
+									<FormSection
+										sectionData={{
+											sectionName: "anomalies",
+											formik: formik,
+										}}
+										active={active}
+										setActive={setActive}
+									>
+										<div className="form-row-wrapper">
+											<div className="row-4 form-row">
+												<FormikControl
+													control="selectSetAnomaly"
+													type="text"
+													label="anomaly"
+													name={`anomalies.anomaly`}
+													options={formSelectOptions.anomaliesOptions}
+												/>
+												<FormikControl
+													control="selectSetAnomalyDetail"
+													type="text"
+													label="anomaly detail"
+													name={`anomalies.anomalyDetail`}
+												/>
+											</div>
+											<div className="row-5 form-row">
+												<FormikControl
+													control="mediaButton"
+													type="button"
+													label="anomaly media"
+													name={`astData.media.anomaly`}
+												/>
+											</div>
+										</div>
+									</FormSection>
+
 									{/* service connection */}
 									<FormSection
 										sectionData={{

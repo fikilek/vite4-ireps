@@ -1,5 +1,5 @@
 // npm libraries
-import { useContext } from "react";
+import { useContext, lazy } from "react";
 
 // css
 import "@/pages/asts/Asts.css";
@@ -12,17 +12,14 @@ import { useErfs } from "@/hooks/useErfs.jsx";
 import { AstsContext } from "@/contexts/AstsContext";
 
 // components
-import AstsHeader from "@/components/asts/AstsHeader";
-import AstsMain from "@/components/asts/AstsMain";
-import Filters from "@/components/filters/Filters";
+const AstsHeader = lazy(() => import("@/components/asts/AstsHeader"));
+const AstsMain = lazy(() => import("@/components/asts/AstsMain"));
+const Filters = lazy(() => import("@/components/filters/Filters"));
 
 const Asts = () => {
 	useErfs();
 
 	const { astsTableFields, error } = useAsts();
-	// console.log(`asts`, asts)
-	// console.log(`astsTableFields`, astsTableFields)
-	// console.log(`error`, error)
 
 	const { astsContext, setAstsContext } = useContext(AstsContext);
 	// console.log(`astsContext`, astsContext);

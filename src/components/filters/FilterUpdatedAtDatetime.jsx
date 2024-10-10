@@ -24,6 +24,10 @@ const FilterUpdatedAtDatetime = () => {
 			...filtersContext,
 			updatedAtDatetimeRange: update,
 			createdAtDatetimeRange: [null, null],
+			filterCondition: {
+				...filtersContext.filterCondition,
+				updatedAtDatetime: update,
+			},
 		});
 	};
 

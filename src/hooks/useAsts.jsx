@@ -28,13 +28,13 @@ export const useAsts = () => {
 		{
 			headerName: "Created",
 			children: [
-				{
-					field: "metadata.createdByUser",
-					columnGroupShow: "closed",
-					headerName: "Created By",
-					width: 150,
-					hide: false,
-				},
+				// {
+				// 	field: "metadata.createdByUser",
+				// 	columnGroupShow: "closed",
+				// 	headerName: "Created By",
+				// 	width: 150,
+				// 	hide: false,
+				// },
 				{
 					field: "metadata.createdByUser",
 					columnGroupShow: "open",
@@ -46,7 +46,7 @@ export const useAsts = () => {
 					field: "metadata.createdAtDatetime",
 					columnGroupShow: "open",
 					headerName: "Date Created",
-					width: 150,
+					width: 160,
 					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
 							params?.value?.seconds,
@@ -68,13 +68,13 @@ export const useAsts = () => {
 		{
 			headerName: "Updated",
 			children: [
-				{
-					field: "metadata.updatedByUser",
-					columnGroupShow: "closed",
-					headerName: "Updated By",
-					width: 150,
-					hide: false,
-				},
+				// {
+				// 	field: "metadata.updatedByUser",
+				// 	columnGroupShow: "closed",
+				// 	headerName: "Updated By",
+				// 	width: 150,
+				// 	hide: false,
+				// },
 				{
 					field: "metadata.updatedByUser",
 					columnGroupShow: "open",
@@ -85,8 +85,8 @@ export const useAsts = () => {
 				{
 					field: "metadata.updatedAtDatetime",
 					columnGroupShow: "open",
-					headerName: "Date Created",
-					width: 150,
+					headerName: "Date Updated",
+					width: 160,
 					cellRenderer: (params) => {
 						const timestamp = new Timestamp(
 							params.value.seconds,
@@ -353,7 +353,7 @@ export const useAsts = () => {
 			children: [
 				{
 					field: "anomalies.anomaly",
-					columnGroupShow: "closed",
+					// columnGroupShow: "closed",
 					headerName: "Anomaly",
 					width: 200,
 				},

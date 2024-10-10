@@ -47,11 +47,25 @@ export const capitalizeFirstLetters = (obj) => {
 	return obj;
 };
 
+export const capitalizeInitialsString = (str) => {
+	if (!str) return;
+	// split str into an array of substrings
+	const arrayOfStr = str.split(" ");
+
+	// Concat the array elements
+	let newStr = "";
+	arrayOfStr?.forEach((str) => {
+		newStr = newStr + str.charAt(0).toUpperCase();
+	});
+	return newStr;
+};
+
 // constants
 export const constants = {
 	dateFormat0: "yyyy MMM dd",
 	dateFormat1: "yyyy MMM dd: HH:mm",
 	dateFormat2: "yyyy-MMM-dd_HH:mm:ss",
+	dateFormat3: "yy MMM dd",
 };
 
 // loaders
@@ -116,11 +130,11 @@ export const formSelectOptions = {
 		{ key: "other", value: "other" },
 	],
 	anomaliesOptions: [
+		{ key: "meterOk", value: "meterOk" },
 		{ key: "choose", value: "choose" },
 		{ key: "meterDamaged", value: "meterDamaged" },
 		{ key: "meterFaulty", value: "meterFaulty" },
 		{ key: "meterIllegallyConnected", value: "meterIllegallyConnected" },
-		{ key: "meterOk", value: "meterOk" },
 		{ key: "meterMissing", value: "meterMissing" },
 	],
 	tariffOptions: [
@@ -530,11 +544,11 @@ const choices = {
 		"Cable Stolen",
 	],
 	"Meter Illegally Connected": [
-		"Staight Connection (Meter Bypassed)",
+		"Straight Connection (Meter Bypassed)",
 		"Bridge Wire on Meter",
 	],
 	"Meter Missing": [
-		"Property Has Power (Illegal Conection)",
+		"Property Has Power (Illegal Connection)",
 		"No Power Supply To Property",
 		"Access Refused",
 	],
@@ -562,4 +576,13 @@ export const updateFormState = async (formik, setFormState) => {
 	setFormState(newState);
 
 	return { state: newState };
+};
+
+export const getRandomColor = () => {
+	var letters = "0123456789ABCDEF";
+	var color = "#";
+	for (var i = 0; i < 6; i++) {
+		color += letters[Math.floor(Math.random() * 16)];
+	}
+	return color;
 };

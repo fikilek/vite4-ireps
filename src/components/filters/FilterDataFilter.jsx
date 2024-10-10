@@ -15,6 +15,7 @@ import FilterUpdatedAtDatetime from "@/components/filters/FilterUpdatedAtDatetim
 import FilterGeographicArea from "@/components/filters/FilterGeographicArea";
 import FilterAstCreationProcess from "@/components/filters/FilterAstCreationProcess";
 import FilterAstState from "@/components/filters/FilterAstState";
+import FilterMeterType from "@/components/filters/FilterMeterType";
 
 const FilterDataFilter = () => {
 	// console.log(`props`, props);
@@ -46,6 +47,14 @@ const FilterDataFilter = () => {
 					value="astCreation"
 				>
 					<FilterAstCreationProcess />
+				</FilterItem>
+
+				<FilterItem
+					title="Filter-Meter Type"
+					name="astMeterType"
+					value="astMeterType"
+				>
+					<FilterMeterType />
 				</FilterItem>
 
 				<FilterItem title="Filter-Ast State" name="astState" value="astState">

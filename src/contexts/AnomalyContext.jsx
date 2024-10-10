@@ -18,13 +18,15 @@ const initSettings = {
 				key: "Meter Wheel Running In Reverse Mode",
 				value: "Meter Wheel Running In Reverse Mode",
 			},
-			"",
 		],
 		meterOk: [
 			{ key: "choose", value: "choose" },
 			{ key: "Operationally Ok", value: "Operationally Ok" },
 			{ key: "Meter Not On Portal", value: "Meter Not On Portal" },
-			{ key: "No TID KC Tokens on Portal", value: "No TID KC Tokens on Portal" },
+			{
+				key: "No TID KC Tokens on Portal",
+				value: "No TID KC Tokens on Portal",
+			},
 			{ key: "No SGC Tokens Available", value: "No SGC Tokens Available" },
 		],
 		meterDamaged: [
@@ -48,13 +50,16 @@ const initSettings = {
 				key: "Property Has Power (Illegal Connection)",
 				value: "Property Has Power (Illegal Connection)",
 			},
-			{ key: "No Power Supply To Property", value: "No Power Supply To Property" },
+			{
+				key: "No Power Supply To Property",
+				value: "No Power Supply To Property",
+			},
 		],
 	},
 	anomaly: "",
 };
 
-export const AnomalyContextProvider = props => {
+export const AnomalyContextProvider = (props) => {
 	const [anomalyContext, setAnomalyContext] = useState(initSettings);
 	// console.log(`anomalyContext`, anomalyContext);
 	return (
