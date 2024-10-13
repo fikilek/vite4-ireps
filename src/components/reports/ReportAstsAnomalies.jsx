@@ -1,5 +1,5 @@
 // npm libraries
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 
 import "@/components/reports/ReportAstsAnomalies.css";
 
@@ -13,12 +13,29 @@ import StatsComboBarChartAnomalies from "@/components/stats/StatsComboBarChartAn
 import StatsComboPieChart from "@/components/stats/StatsComboPieChart";
 import StatsCard from "@/components/stats/StatsCard";
 
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import "@ag-grid-community/styles/ag-grid.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
+import { CsvExportModule } from "@ag-grid-community/csv-export";
+
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+ModuleRegistry.registerModules([CsvExportModule]);
+
 const ReportAnomalies = () => {
 	const { astsStatsContext } = useContext(AstsStatsContext);
 	// console.log(`astsStatsContext`, astsStatsContext);
 
+	const tableRef = useRef();
+
 	const { anomalyPerUserStats } = astsStatsContext;
 	// console.log(`anomalyPerUserStats`, anomalyPerUserStats);
+
+	const handleClick = (e) => {
+		// console.log(`export btn clicked`, e.target.value);
+		// console.log(`tableRef`, tableRef);
+		tableRef.current.api.exportDataAsCsv();
+	};
 
 	const statsName = "Anomaly Summary";
 	const headerDataGeneric = {
@@ -27,7 +44,9 @@ const ReportAnomalies = () => {
 		hr1: " ",
 		hr2: (
 			<>
-				<button className="stats-btn stats-btn-export">Export</button>{" "}
+				<button onClick={handleClick} className="stats-btn stats-btn-export">
+					Export
+				</button>{" "}
 				<button className="stats-btn stats-btn-pdf">Pdf</button>
 			</>
 		),
@@ -45,7 +64,10 @@ const ReportAnomalies = () => {
 						stats={anomalyPerUserStats}
 						headerData={headerDataGeneric}
 					>
-						<StatsComboTableAnomalies stats={anomalyPerUserStats} />
+						<StatsComboTableAnomalies
+							stats={anomalyPerUserStats}
+							tableRef={tableRef}
+						/>
 					</StatsCard>
 
 					{/* <StatsCard

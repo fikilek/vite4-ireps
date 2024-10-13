@@ -45,10 +45,11 @@ import { AnomalyContextProvider } from "@/contexts/AnomalyContext";
 import { TrnsContextProvider } from "@/contexts/TrnsContext";
 import { AstsContextProvider } from "@/contexts/AstsContext";
 import GeocodingContextProvider from "@/contexts/GeocodingContext";
-import TrnsLayout from "@/components/layouts/TrnsLayout";
+// import TrnsLayout from "@/components/layouts/TrnsLayout";
 import { ErfsMapContextProvider } from "./contexts/ErfsMapContext";
 import { GmrContextProvider } from "./contexts/GmrContext";
 import { FiltersContextProvider } from "@/contexts/FiltersContext";
+import { TrnsStatsContextProvider } from "@/contexts/TrnsStatsContext";
 import { AstsStatsContextProvider } from "@/contexts/AstsStatsContext";
 
 // Lazy loading
@@ -107,7 +108,7 @@ const router = createBrowserRouter(
 								"superuser",
 							]}
 						>
-							<TrnsLayout />
+							<Trns trnType="all" astCat="meter" />
 						</RequireAuth>
 					</Suspense>
 				}
@@ -438,45 +439,47 @@ const router = createBrowserRouter(
 
 function App() {
 	return (
-		<AstsStatsContextProvider>
-			<FiltersContextProvider>
-				<GmrContextProvider>
-					<ErfsMapContextProvider>
-						<ReverseGeocodingContextProvider>
-							<GeocodingContextProvider>
-								<AstsContextProvider>
-									<TrnsContextProvider>
-										<AnomalyContextProvider>
-											<MediaContextProvider>
-												<ReverseGeocodingContextProvider>
-													<ErfsContextProvider>
-														{/* <QueryClientProvider client={queryClient}> */}
-														<AreaTreeContextProvider>
-															<ClaimsContextProvider>
-																<AuthContextProvider>
-																	<ModalContextProvider>
-																		<div className="App">
-																			<RouterProvider router={router} />
-																			<ToastContainer />
-																		</div>
-																		<Modal />
-																	</ModalContextProvider>
-																</AuthContextProvider>
-															</ClaimsContextProvider>
-														</AreaTreeContextProvider>
-														{/* </QueryClientProvider> */}
-													</ErfsContextProvider>
-												</ReverseGeocodingContextProvider>
-											</MediaContextProvider>
-										</AnomalyContextProvider>
-									</TrnsContextProvider>
-								</AstsContextProvider>
-							</GeocodingContextProvider>
-						</ReverseGeocodingContextProvider>
-					</ErfsMapContextProvider>
-				</GmrContextProvider>
-			</FiltersContextProvider>
-		</AstsStatsContextProvider>
+		<TrnsStatsContextProvider>
+			<AstsStatsContextProvider>
+				<FiltersContextProvider>
+					<GmrContextProvider>
+						<ErfsMapContextProvider>
+							<ReverseGeocodingContextProvider>
+								<GeocodingContextProvider>
+									<AstsContextProvider>
+										<TrnsContextProvider>
+											<AnomalyContextProvider>
+												<MediaContextProvider>
+													<ReverseGeocodingContextProvider>
+														<ErfsContextProvider>
+															{/* <QueryClientProvider client={queryClient}> */}
+															<AreaTreeContextProvider>
+																<ClaimsContextProvider>
+																	<AuthContextProvider>
+																		<ModalContextProvider>
+																			<div className="App">
+																				<RouterProvider router={router} />
+																				<ToastContainer />
+																			</div>
+																			<Modal />
+																		</ModalContextProvider>
+																	</AuthContextProvider>
+																</ClaimsContextProvider>
+															</AreaTreeContextProvider>
+															{/* </QueryClientProvider> */}
+														</ErfsContextProvider>
+													</ReverseGeocodingContextProvider>
+												</MediaContextProvider>
+											</AnomalyContextProvider>
+										</TrnsContextProvider>
+									</AstsContextProvider>
+								</GeocodingContextProvider>
+							</ReverseGeocodingContextProvider>
+						</ErfsMapContextProvider>
+					</GmrContextProvider>
+				</FiltersContextProvider>
+			</AstsStatsContextProvider>
+		</TrnsStatsContextProvider>
 	);
 }
 

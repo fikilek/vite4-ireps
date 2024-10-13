@@ -1,5 +1,14 @@
 // npm libraries
-import { useContext } from "react";
+import { useContext, useRef } from "react";
+
+import { ModuleRegistry } from "@ag-grid-community/core";
+import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
+import "@ag-grid-community/styles/ag-grid.css";
+import "@ag-grid-community/styles/ag-theme-quartz.css";
+import { CsvExportModule } from "@ag-grid-community/csv-export";
+
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+ModuleRegistry.registerModules([CsvExportModule]);
 
 import "@/components/reports/ReportAstsMeterType.css";
 
@@ -18,6 +27,8 @@ import { capitalizeInitialsString } from "@/utils/utils";
 const ReportAstsMeterType = () => {
 	const { astsStatsContext } = useContext(AstsStatsContext);
 	// console.log(`astsStatsContext`, astsStatsContext);
+
+	const tableRef = useRef();
 
 	const { meterTypePerUserStats, anomaliesStats } = astsStatsContext;
 	// console.log(`meterTypePerUserStats`, meterTypePerUserStats);
@@ -60,13 +71,22 @@ const ReportAstsMeterType = () => {
 	};
 
 	const statsName = "Meter Type Summary";
+
+	const handleClick = (e) => {
+		console.log(`export btn clicked`, e.target.value);
+		console.log(`tableRef`, tableRef);
+		tableRef.current?.api?.exportDataAsCsv();
+	};
+
 	const headerDataGeneric = {
 		hl1: "hl1",
 		hl2: "",
 		hr1: " ",
 		hr2: (
 			<>
-				<button className="stats-btn stats-btn-export">Export</button>{" "}
+				<button onClick={handleClick} className="stats-btn stats-btn-export">
+					Export
+				</button>{" "}
 				<button className="stats-btn stats-btn-pdf">Pdf</button>
 			</>
 		),
@@ -83,7 +103,10 @@ const ReportAstsMeterType = () => {
 						stats={statsData}
 						headerData={headerDataGeneric}
 					>
-						<StatsComboTableMeterTypes stats={meterTypePerUserStats} />
+						<StatsComboTableMeterTypes
+							stats={meterTypePerUserStats}
+							tableRef={tableRef}
+						/>
 					</StatsCard>
 
 					<StatsCard

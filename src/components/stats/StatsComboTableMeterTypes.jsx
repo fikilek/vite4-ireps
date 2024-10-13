@@ -13,7 +13,7 @@ import TableComboData from "@/components/tables/TableComboData";
 
 const StatsComboTableMeterTypes = (props) => {
 	// Get asts anomalies from the astsStatsContext
-	const { stats } = props;
+	const { stats, tableRef } = props;
 	// console.log(`stats`, stats);
 
 	let columnDefinitions = [
@@ -21,7 +21,7 @@ const StatsComboTableMeterTypes = (props) => {
 			field: "meterTypeName",
 			// headerName: "Anomaly - Anomaly Detail",
 			width: "150",
-			// flex: 0.3,
+			// flex: 3,
 		},
 	];
 
@@ -43,10 +43,12 @@ const StatsComboTableMeterTypes = (props) => {
 					field: `users.${user.uid}.user.quantity`,
 					headerName: capitalizeInitialsString(user.displayName),
 					width: "60",
-					// flex: 0.1,
-					cellRenderer: (params) => {
-						// console.log(`params.value`, params.value);
-						return params.value ? params.value : 0;
+					// flex: 1,
+					headerTooltip: user.displayName,
+					valueGetter: (params) => {
+						// console.log(`params`, params);
+						const value = params.data?.users[user?.uid]?.user?.quantity;
+						return value ? value : 0;
 					},
 				});
 			}
@@ -68,7 +70,7 @@ const StatsComboTableMeterTypes = (props) => {
 		field: "total",
 		headerName: "Total",
 		width: "100",
-		// flex: 0.1,
+		// flex: 2,
 		cellRenderer: (params) => {
 			// console.log(`params.value`, params.value);
 			return params.value ? params.value : 0;
@@ -80,7 +82,11 @@ const StatsComboTableMeterTypes = (props) => {
 
 	return (
 		<div className="stats-combo-table-meter-type">
-			<TableComboData rowData={meterTypeData} colDefs={columnDefinitions} />
+			<TableComboData
+				rowData={meterTypeData}
+				colDefs={columnDefinitions}
+				tableRef={tableRef}
+			/>
 		</div>
 	);
 };

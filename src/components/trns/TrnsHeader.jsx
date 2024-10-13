@@ -7,9 +7,11 @@ import { useUser } from "@/hooks/useUser";
 
 // components
 import PageTitle from "@/pages/PageTitle";
+import FilterBtn from "@/components/filters/FilterBtn";
 
 const TrnsHeader = (props) => {
-	const { phLl, phL2 } = props;
+	// console.log(`props`, props);
+	const { phLl, phL2, phl3, trnsContext, setTrnsContext } = props;
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
 
@@ -19,7 +21,7 @@ const TrnsHeader = (props) => {
 		<div className="trns-header">
 			<div className="ph ph-left">
 				<div className="phLl">
-					{/* <FilterBtn /> */}
+					<FilterBtn context={trnsContext} setContext={setTrnsContext} />
 					<PageTitle title={phLl} />
 					{/* <PageTitle title={phL2} /> */}
 					<PageTitle title={userFromUsers.workbase} />
@@ -30,9 +32,9 @@ const TrnsHeader = (props) => {
 			<div className="ph ph-right">
 				<div className="phRl"></div>
 				<div className="phRr">
-					<button className="trnsTable" id="table">
+					{/* <button className="trnsTable" id="table">
 						Table
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>

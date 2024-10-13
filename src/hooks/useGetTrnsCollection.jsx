@@ -8,7 +8,7 @@ import {
 	query,
 	where,
 } from "firebase/firestore";
-import { TrnsContext } from @/contexts/TrnsContext";
+import { TrnsContext } from "@/contexts/TrnsContext";
 
 const initData = {
 	data: [],
@@ -48,7 +48,7 @@ const colReducer = (state, action) => {
 	}
 };
 
-const useGetTrnsCollection = col => {
+const useGetTrnsCollection = (col) => {
 	// console.log(`col`, col);
 	// console.log(`_query`, _query);
 
@@ -69,7 +69,7 @@ const useGetTrnsCollection = col => {
 
 	let colRef = collection(db, col);
 
-	const getCollection = _query => {
+	const getCollection = (_query) => {
 		// console.log(`..._query`, ..._query);
 		let newQuery;
 
@@ -88,10 +88,10 @@ const useGetTrnsCollection = col => {
 
 		onSnapshot(
 			newQuery,
-			snapShot => {
+			(snapShot) => {
 				const results = [];
 				console.log(`snapShot`, snapShot);
-				snapShot.docs.forEach(doc => {
+				snapShot.docs.forEach((doc) => {
 					results.push({ id: doc.id, ...doc.data() });
 				});
 				dispatch({ type: "SUCCESS", payload: results });
@@ -102,7 +102,7 @@ const useGetTrnsCollection = col => {
 					});
 				}
 			},
-			error => {
+			(error) => {
 				console.log(`firestore err`, error.message);
 				dispatch({ type: "ERROR", payload: error.message });
 			}

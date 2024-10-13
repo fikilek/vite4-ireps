@@ -21,7 +21,7 @@ const TrnsLayout = () => {
 
 	return (
 		<div className="sidebar-main-layout">
-			<nav className="sidebar-main-nav">
+			{/* <nav className="sidebar-main-nav">
 				<NavLink to="audits">Audits </NavLink>
 				<NavLink to="tid">Tid </NavLink>
 				<NavLink to="installations">Installations</NavLink>
@@ -29,7 +29,7 @@ const TrnsLayout = () => {
 				<NavLink to="decomissionings">Decomissionings</NavLink>
 				<NavLink to="disconnections">Disconnections</NavLink>
 				<NavLink to="reconnections">Reconnections</NavLink>
-			</nav>
+			</nav> */}
 			<Outlet />
 		</div>
 	);

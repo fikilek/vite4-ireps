@@ -13,7 +13,7 @@ import TableComboData from "@/components/tables/TableComboData";
 
 const StatsComboTableAnomalies = (props) => {
 	// Get asts anomalies from the astsStatsContext
-	const { stats } = props;
+	const { stats, tableRef } = props;
 	// console.log(`stats`, stats);
 
 	let columnDefinitions = [
@@ -41,6 +41,7 @@ const StatsComboTableAnomalies = (props) => {
 
 			let userObj = {};
 			users?.forEach((user) => {
+				// console.log(`user`, user);
 				userObj[user.uid] = {
 					user: user,
 				};
@@ -52,10 +53,11 @@ const StatsComboTableAnomalies = (props) => {
 						headerName: capitalizeInitialsString(user.displayName),
 						uid: user.uid,
 						width: "60",
+						headerTooltip: user.displayName,
 						// flex: 0.1,
-						cellRenderer: (params) => {
-							// console.log(`params.value`, params.value);
-							return params.value ? params.value : 0;
+						valueGetter: (params) => {
+							const value = params.data?.userObj[user?.uid]?.user?.quantity;
+							return value ? value : 0;
 						},
 					});
 				}
@@ -87,7 +89,11 @@ const StatsComboTableAnomalies = (props) => {
 
 	return (
 		<div className="stats-combo-table-anomalies">
-			<TableComboData rowData={anomalyData} colDefs={columnDefinitions} />
+			<TableComboData
+				rowData={anomalyData}
+				colDefs={columnDefinitions}
+				tableRef={tableRef}
+			/>
 		</div>
 	);
 };

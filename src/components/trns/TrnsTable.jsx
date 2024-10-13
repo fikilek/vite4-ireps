@@ -1,41 +1,33 @@
-import { useContext } from "react";
+// import { useContext } from "react";
 
 // css
 import "@/components/trns/TrnsTable.css";
 
 // hooks
-import { useTrns } from "@/hooks/useTrns";
+// import { useTrns } from "@/hooks/useTrns";
 
 // components
 import TableTrns from "@/components/tables/TableTrns";
-import { TrnsContext } from "@/contexts/TrnsContext";
+// import { TrnsContext } from "@/contexts/TrnsContext";
 
-const TrnsTable = props => {
-	// console.log(`props`, props)
-	const { trnType, astCat } = props;
+const TrnsTable = (props) => {
+	// console.log(`props`, props);
 
-	useTrns(trnType, astCat);
+	const { trns, trnsTableFields } = props;
 
-	const { trnsContext } = useContext(TrnsContext);
-	// console.log(`trnsContext`, trnsContext);
+	const { all: colDefs } = trnsTableFields?.all;
 
 	return (
 		<div className="trns-table table">
-
-			{ trnsContext.trns?.length === 0 ? (
-				<p className="no-data">No data</p>
-				) : (
-					(trnsContext?.trnsTableFields && (trnsContext?.trns.length > 0)) ? (
-						<TableTrns
-							rowData={trnsContext?.trns}
-							colDefs={trnsContext?.trnsTableFields[astCat][trnType]}
-							key={trnType}
-						/>
-					) : <p>Loading ....</p>
-				)
-
-			}
-			
+			{trns?.length > 0 ? (
+				<TableTrns
+					rowData={trns}
+					colDefs={colDefs}
+					// key={trnType}
+				/>
+			) : (
+				<p>Loading ....</p>
+			)}
 		</div>
 	);
 };

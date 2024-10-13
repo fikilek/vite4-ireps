@@ -10,76 +10,78 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import useAuthContext from "@/hooks/useAuthContext";
 import { useFirestore } from "@/hooks/useFirestore";
 import useGetCollection from "@/hooks/useGetCollection";
+import useGetTrnsCollection_ from "@/hooks/useGetTrnsCollection_";
 
 // components
 import TableDate from "@/components/tables/TableDate";
 import TableModalBtn from "@/components/tables/TableModalBtn";
 import { TrnsContext } from "@/contexts/TrnsContext";
 
-export const useTrns = (trnType, astCat) => {
+export const useTrns = () => {
 	// console.log(`trnType`, trnType);
 	// console.log(`astCat`, astCat);
 
-	const { trnsContext, setTrnsContext } = useContext(TrnsContext);
+	// const { trnsContext, setTrnsContext } = useContext(TrnsContext);
 	// console.log(`trnsContext`, trnsContext);
 
 	// get user details from firestore on snapshot
-	const { getDocument, response } = useFirestore("users");
+	// const { getDocument, response } = useFirestore("users");
 	// console.log(`response`, response);
 
-	const [workbase, setWorkbase] = useState(null);
+	// const [workbase, setWorkbase] = useState(null);
 	// console.log(`workbase`, workbase);
 
-	const [constraints, setConstraints] = useState([]);
+	// const [constraints, setConstraints] = useState([]);
 	// console.log(`constraints`, constraints);
 
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
 
-	const { state, getCollection } = useGetCollection("trns");
+	// const { state, getCollection } = useGetCollection("trns");
 	// console.log(`state`, state);
+	useGetTrnsCollection_("trns");
 
-	getCollection(constraints);
+	// getCollection(constraints);
 
-	useEffect(() => {
-		setTrnsContext({
-			...trnsContext,
-			trns: state.data,
-			trnsTableFields,
-		});
-	}, [state]);
+	// useEffect(() => {
+	// 	setTrnsContext({
+	// 		...trnsContext,
+	// 		// trns: state.data,
+	// 		trnsTableFields,
+	// 	});
+	// }, [state]);
 
-	useEffect(() => {
-		// console.log(`workbase changed:`, workbase)
-		if (workbase) {
-			setConstraints((prev) => {
-				return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
-			});
-		}
+	// useEffect(() => {
+	// 	// console.log(`workbase changed:`, workbase)
+	// 	if (workbase) {
+	// 		setConstraints((prev) => {
+	// 			return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
+	// 		});
+	// 	}
 
-		if (trnType && trnType !== "all") {
-			setConstraints((prev) => {
-				return [...prev, where("metadata.trnType", "==", trnType)];
-			});
-		}
+	// 	if (trnType && trnType !== "all") {
+	// 		setConstraints((prev) => {
+	// 			return [...prev, where("metadata.trnType", "==", trnType)];
+	// 		});
+	// 	}
 
-		return () => setConstraints([]);
-	}, [workbase, trnType]);
+	// 	return () => setConstraints([]);
+	// }, [workbase, trnType]);
 
-	useEffect(() => {
-		if (response.success) {
-			// console.log(`response`, response);
-			const { workbase } = response?.document;
-			// console.log(`workbase`, workbase)
-			setWorkbase(workbase);
-		}
-	}, [response.success]);
+	// useEffect(() => {
+	// 	if (response.success) {
+	// 		// console.log(`response`, response);
+	// 		const { workbase } = response?.document;
+	// 		// console.log(`workbase`, workbase)
+	// 		setWorkbase(workbase);
+	// 	}
+	// }, [response.success]);
 
-	useEffect(() => {
-		if (user?.uid) {
-			getDocument(user?.uid);
-		}
-	}, [user?.uid]);
+	// useEffect(() => {
+	// 	if (user?.uid) {
+	// 		getDocument(user?.uid);
+	// 	}
+	// }, [user?.uid]);
 
 	const trnId = uuidv4();
 
@@ -3104,19 +3106,19 @@ export const useTrns = (trnType, astCat) => {
 				{
 					headerName: "Created",
 					children: [
-						{
-							field: "metadata.createdByUser",
-							columnGroupShow: "closed",
-							headerName: "Created By",
-							width: 150,
-							hide: false,
-						},
+						// {
+						// 	field: "metadata.createdByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Created By",
+						// 	width: 150,
+						// 	// hide: false,
+						// },
 						{
 							field: "metadata.createdByUser",
 							columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
-							hide: false,
+							// hide: false,
 						},
 						{
 							field: "metadata.createdAtDatetime",
@@ -3144,19 +3146,19 @@ export const useTrns = (trnType, astCat) => {
 				{
 					headerName: "Updated",
 					children: [
-						{
-							field: "metadata.updatedByUser",
-							columnGroupShow: "closed",
-							headerName: "Updated By",
-							width: 150,
-							hide: false,
-						},
+						// {
+						// 	field: "metadata.updatedByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Updated By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.updatedByUser",
 							columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
-							hide: false,
+							// hide: false,
 						},
 						{
 							field: "metadata.updatedAtDatetime",
@@ -3183,7 +3185,7 @@ export const useTrns = (trnType, astCat) => {
 
 				// Ast Description
 				{
-					headerName: "Ast Description",
+					headerName: "Meter Description",
 					children: [
 						// astCat
 						// {
@@ -3196,7 +3198,7 @@ export const useTrns = (trnType, astCat) => {
 						{
 							field: "astData.astNo",
 							// columnGroupShow: "open",
-							headerName: "Ast No",
+							headerName: "Meter No",
 							width: 150,
 							hide: false,
 						},
@@ -3239,7 +3241,7 @@ export const useTrns = (trnType, astCat) => {
 
 				// erf - data comes from the erf that created the trn
 				{
-					headerName: "Erf for Ast",
+					headerName: "Erf for Meter",
 					children: [
 						{
 							field: "erf.erfNo",
@@ -3303,8 +3305,8 @@ export const useTrns = (trnType, astCat) => {
 				// trn state - shows the form state and opens it on a click for editing
 				{
 					field: "metadata.trnState",
-					headerName: "State",
-					width: 100,
+					headerName: "Form State",
+					width: 120,
 				},
 
 				// trn type
@@ -3418,6 +3420,6 @@ export const useTrns = (trnType, astCat) => {
 	return {
 		trnsNewFormData,
 		trnsValidationSchema,
-		// updateFormState,
+		trnsTableFields,
 	};
 };

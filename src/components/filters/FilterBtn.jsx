@@ -6,10 +6,10 @@ import { IoMdArrowDropright } from "react-icons/io";
 import "@/components/filters/FilterBtn.css";
 
 const FilterBtn = (props) => {
-	const {context, setContext} = props
+	const { context, setContext } = props;
 
 	const handleClick = () => {
-		setContext(prev => ({
+		setContext((prev) => ({
 			...prev,
 			filterBtn: !prev.filterBtn,
 		}));
