@@ -15,7 +15,7 @@ import "@/components/reports/ReportTrnTypes.css";
 // contexts
 import { TrnsStatsContext } from "@/contexts/TrnsStatsContext";
 
-import ReportHeading from "@/components/reports/ReportHeading";
+import ReportHeadingTrn from "@/components/reports/ReportHeadingTrn";
 import StatsCombo50_50 from "@/components/stats/StatsCombo50_50";
 // import StatsComboPieChart from "@/components/stats/StatsComboPieChart";
 import StatsCard from "@/components/stats/StatsCard";
@@ -30,9 +30,11 @@ const ReportTrnTypes = () => {
 
 	const tableRef = useRef();
 
-	const { trnTypePerUserStats, statsTrnType } = trnsStatsContext;
+	const { statsTrnType } = trnsStatsContext;
 	// console.log(`trnTypePerUserStats`, trnTypePerUserStats);
 	// console.log(`statsTrnType`, statsTrnType);
+
+	const stats = statsTrnType?.stats;
 
 	const barChartSeries = [
 		{ type: "bar", xKey: "trntype", yKey: "quantity", yName: "Trn Type" },
@@ -42,15 +44,16 @@ const ReportTrnTypes = () => {
 	// console.log(`trnTypeData`, trnTypeData);
 
 	const statsData = {
-		statsTrnType,
+		stats: statsTrnType?.stats,
+		total: statsTrnType?.total,
 		barChartSeries,
 	};
 
 	const statsName = "Trn Type Summary";
 
 	const handleClick = (e) => {
-		console.log(`export btn clicked`, e.target.value);
-		console.log(`tableRef`, tableRef);
+		// console.log(`export btn clicked`, e.target.value);
+		// console.log(`tableRef`, tableRef);
 		tableRef.current?.api?.exportDataAsCsv();
 	};
 
@@ -70,8 +73,8 @@ const ReportTrnTypes = () => {
 
 	return (
 		<div className={`report-trn-types`}>
-			<ReportHeading title="Trn Type Stats" />
-			<div className="tts-body">
+			<ReportHeadingTrn title="Trn Type Stats" stats={statsData} />
+			<div className="rtt-body">
 				<StatsCombo50_50 statsName="Trn Types">
 					<StatsCard
 						statsName={`${statsName}`}
@@ -79,7 +82,7 @@ const ReportTrnTypes = () => {
 						headerData={headerDataGeneric}
 						tableRef={tableRef}
 					>
-						<StatsComboTableTrnTypes stats={statsTrnType} tableRef={tableRef} />
+						<StatsComboTableTrnTypes stats={stats} tableRef={tableRef} />
 					</StatsCard>
 
 					<StatsCard

@@ -51,11 +51,7 @@ const useGetTrnsReport = (fbCollection) => {
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
 
-	const {
-		getTrnsUsersStats,
-		getMeterTypePerUserStats,
-		getAnomalyPerUserStats,
-	} = useTrnsStats();
+	const { getTrnTypesStats, getTrnTypePerUserStats } = useTrnsStats();
 
 	const { uid } = user;
 	// console.log(`uid`, uid);
@@ -74,6 +70,8 @@ const useGetTrnsReport = (fbCollection) => {
 	}, []);
 
 	const getTrns = (constraints) => {
+		console.log(`constraints`, constraints);
+
 		let constraints_ = where("erf.address.lmMetro", "==", workbase);
 
 		if (constraints) {
@@ -103,15 +101,13 @@ const useGetTrnsReport = (fbCollection) => {
 				});
 
 				// results.splice(10);
+				// console.log(`results`, results);
 
 				// users stats
-				const statsTrnsUsers = getTrnsUsersStats(results);
+				const statsTrnType = getTrnTypesStats(results);
 
 				// audits pre-paid and conventional
-				const meterTypePerUserStats = getMeterTypePerUserStats(results);
-
-				// anomaly per user stats
-				const anomalyPerUserStats = getAnomalyPerUserStats(results);
+				const trnTypePerUserStats = getTrnTypePerUserStats(results);
 
 				const stats = {};
 				results?.forEach((ast) => {
@@ -141,23 +137,16 @@ const useGetTrnsReport = (fbCollection) => {
 					...trnsContext,
 					trns: results,
 					statsCreatedAtDatetimeByUser: updatedStats,
+					newTrnsData: true,
 				});
 
 				setTrnsStatsContext((prev) => {
 					return {
 						...prev,
-						statsTrnsUsers,
-						meterTypePerUserStats,
-						anomalyPerUserStats,
-						// statsCreatedAtDatetimeByUser: updatedStats,
-						// anomaliesStats,
-						// auditsPrepaidStats,
-						// auditsConventionalStats,
+						statsTrnType,
+						trnTypePerUserStats,
 					};
 				});
-
-				// console.log(`results`, results);
-				// setTrnsContext((prev) => ({ ...prev, trns: results }));
 			},
 			(err) => {
 				console.log(`firestore err`, err.message);

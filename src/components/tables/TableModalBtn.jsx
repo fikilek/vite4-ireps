@@ -20,18 +20,23 @@ const TableModalBtn = (props) => {
 		displayMode,
 		title,
 		tableBtnClass,
-		columnName
+		columnName,
 	} = props.data;
 	// console.log(`data`, data);
+
+	const { modalName: modName } = props;
 	// console.log(`modalName`, modalName);
 	// console.log(`validationSchema`, validationSchema);
 	// console.log(`columnName`, columnName);
+
+	const tType = modName?.split("-")?.[1];
+	// console.log(`tType`, tType);
 
 	const astCatergory = data?.astData?.astCatergory;
 	// console.log(`astCatergory`, astCatergory);
 
 	const state = data?.astData?.astState?.state;
-	const tid  = data?.astData?.astState?.tid;
+	const tid = data?.astData?.astState?.tid;
 	// console.log(`state`, state);
 
 	const disableBtn =
@@ -41,7 +46,8 @@ const TableModalBtn = (props) => {
 	let tidDone = false;
 	if (tid) {
 		if (tid.toLowerCase().replace(/ /g, "") === "krn2") {
-			tidDone = (astCatergory === "meter" && columnName === 'tidTrn') ? true : false;
+			tidDone =
+				astCatergory === "meter" && columnName === "tidTrn" ? true : false;
 			// console.log(`tidDone`, tidDone);
 		}
 	}
@@ -140,13 +146,13 @@ const TableModalBtn = (props) => {
 		}
 
 		openModal({
-			modalName: modalName,
+			modalName: modName ? modName : modalName,
 			payload: {
 				data,
 				infoName,
 				irepsKeyItem,
 				width,
-				validationSchema,
+				validationSchema: validationSchema?.[tType],
 				displayMode,
 				tableBtnClass,
 			},

@@ -15,10 +15,20 @@ const FilterCreatedAtDatetime = () => {
 
 	const [startDate, endDate] = filtersContext.createdAtDatetimeRange;
 	// console.log(`startDate`,startDate)
-	// console.log(`endDate`,endDate)
+	// console.log(`endDate`, endDate);
 
 	const handleChange = (update) => {
-		// console.log(`update`, update);
+		console.log(`update BEFORE`, update);
+
+		const endDate = update?.[1];
+		if (endDate) {
+			const newEndDate =
+				new Date(new Date(endDate).setDate(new Date(endDate).getDate() + 1)) +
+				1;
+
+			update[1] = new Date(newEndDate);
+		}
+		console.log(`update AFTER`, update);
 
 		setFiltersContext({
 			...filtersContext,

@@ -43,7 +43,10 @@ export const useAstsStats = () => {
 			});
 		}
 
-		return statsAstsUsers;
+		return {
+			stats: statsAstsUsers,
+			total: asts?.length,
+		};
 	};
 
 	const getMeterTypePerUserStats = (asts) => {
@@ -232,7 +235,10 @@ export const useAstsStats = () => {
 		});
 		// console.log(`anomaliesStats`, anomaliesStats);
 
-		return anomaliesStats;
+		return {
+			stats: anomaliesStats,
+			total: asts.length,
+		};
 	};
 
 	return {

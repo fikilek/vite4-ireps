@@ -7,21 +7,17 @@ import "@/components/reports/Report.css";
 import { FiltersContext } from "@/contexts/FiltersContext";
 
 const Report = (props) => {
+	// console.log(`props`, props);
+	const { children, reportName } = props;
 
-	const {children, reportName} = props
+	const { filtersContext } = useContext(FiltersContext);
+	// console.log(`filtersContext`, filtersContext)
 
-  const { filtersContext } = useContext(FiltersContext);
-  // console.log(`filtersContext`, filtersContext)
-  
-  const {activeReport} = filtersContext
-  // console.log(`activeReport`, activeReport)
+	const { activeReport } = filtersContext;
+	// console.log(`activeReport`, activeReport);
 
-  const showHide = (activeReport === reportName) ? 'show' : 'hide'
-	return (
-		<div className={`report ${showHide}  `}>
-			{children}
-		</div>
-	);
+	const showHide = activeReport === reportName ? "show" : "hide";
+	return <div className={`report ${showHide}  `}>{children}</div>;
 };
 
 export default Report;

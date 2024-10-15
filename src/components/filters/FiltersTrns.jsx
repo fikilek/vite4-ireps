@@ -4,7 +4,7 @@ import { useState } from "react";
 import "@/components/filters/FiltersTrns.css";
 
 // hooks
-// import { useGetTrnsReport } from "@/hooks/useGetTrnsReport";
+import useGetTrnsReport from "@/hooks/useGetTrnsReport";
 
 // context
 
@@ -13,13 +13,16 @@ import FiltersHeader from "@/components/filters/FiltersHeader";
 import FilterItem from "@/components/filters/FilterItem";
 import FiltersControlBtns from "@/components/filters/FiltersControlBtns";
 import FilterReportTypeBtn from "@/components/filters/FilterReportTypeBtn";
+import FilterCreatedAtDatetime from "@/components/filters/FilterCreatedAtDatetime";
+import FilterUpdatedAtDatetime from "@/components/filters/FilterUpdatedAtDatetime";
+import FilterTrnType from "@/components/filters/FilterTrnType";
+import FilterTrnAccess from "@/components/filters/FilterTrnAccess";
 
 const FiltersTrns = (props) => {
 	const { irepsKeyItem } = props;
 	const [active, setActive] = useState("reportFilters");
 
-	// const { getTrns } = useGetTrnsReport("asts");
-	const getTrns = () => {};
+	const { getTrns } = useGetTrnsReport("trns");
 
 	return (
 		<div className="filters-trns">
@@ -37,26 +40,32 @@ const FiltersTrns = (props) => {
 								name="dateRange"
 								value="created"
 							>
-								{/* <FilterCreatedAtDatetime /> */}
+								<FilterCreatedAtDatetime />
 							</FilterItem>
-
 							<FilterItem
 								title="UpdatedAtDatetime"
 								name="dateRange"
 								value="updated"
 							>
-								{/* <FilterUpdatedAtDatetime /> */}
+								<FilterUpdatedAtDatetime />
+							</FilterItem>
+							<FilterItem
+								title="TrnType (audit, tid, etc)"
+								name="trnType"
+								value="trnType"
+							>
+								<FilterTrnType />
 							</FilterItem>
 
-							<FilterItem title="TrnType" name="trnType" value="trnType">
-								{/* <FilterTrnType /> */}
-							</FilterItem>
-
-							<FilterItem title="Access" name="trnsAccess" value="trnsAccess">
-								{/* <FilterTrnAccess /> */}
+							<FilterItem
+								title="Access/No Access "
+								name="trnAccess"
+								value="trnAccess"
+							>
+								<FilterTrnAccess />
 							</FilterItem>
 						</div>
-						<FiltersControlBtns getTrns={getTrns} />
+						<FiltersControlBtns getData={getTrns} />
 					</div>
 				) : (
 					""
@@ -66,8 +75,8 @@ const FiltersTrns = (props) => {
 						<div className="filter-report-body">
 							<FilterReportTypeBtn title="Trn Types Stats" name="trnTypes" />
 							<FilterReportTypeBtn
-								title="Trn Type Per Users Stats"
-								name="trnsPerUser"
+								title="Trn Types Per Users Stats"
+								name="trnTypesPerUser"
 							/>
 						</div>
 					</div>

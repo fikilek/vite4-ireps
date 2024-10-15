@@ -1,87 +1,23 @@
-import { Timestamp, serverTimestamp, where } from "firebase/firestore";
+import { Timestamp, serverTimestamp } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import { lazy, number, object, string } from "yup";
-import { useContext, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { LuFileEdit } from "react-icons/lu";
 import { FaMapMarkedAlt } from "react-icons/fa";
 
 // hooks
 import useAuthContext from "@/hooks/useAuthContext";
-import { useFirestore } from "@/hooks/useFirestore";
-import useGetCollection from "@/hooks/useGetCollection";
 import useGetTrnsCollection_ from "@/hooks/useGetTrnsCollection_";
 
 // components
 import TableDate from "@/components/tables/TableDate";
 import TableModalBtn from "@/components/tables/TableModalBtn";
-import { TrnsContext } from "@/contexts/TrnsContext";
 
 export const useTrns = () => {
-	// console.log(`trnType`, trnType);
-	// console.log(`astCat`, astCat);
-
-	// const { trnsContext, setTrnsContext } = useContext(TrnsContext);
-	// console.log(`trnsContext`, trnsContext);
-
-	// get user details from firestore on snapshot
-	// const { getDocument, response } = useFirestore("users");
-	// console.log(`response`, response);
-
-	// const [workbase, setWorkbase] = useState(null);
-	// console.log(`workbase`, workbase);
-
-	// const [constraints, setConstraints] = useState([]);
-	// console.log(`constraints`, constraints);
-
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
 
-	// const { state, getCollection } = useGetCollection("trns");
-	// console.log(`state`, state);
 	useGetTrnsCollection_("trns");
-
-	// getCollection(constraints);
-
-	// useEffect(() => {
-	// 	setTrnsContext({
-	// 		...trnsContext,
-	// 		// trns: state.data,
-	// 		trnsTableFields,
-	// 	});
-	// }, [state]);
-
-	// useEffect(() => {
-	// 	// console.log(`workbase changed:`, workbase)
-	// 	if (workbase) {
-	// 		setConstraints((prev) => {
-	// 			return [...prev, where("erf.address.lmMetro", "==", workbase?.trim())];
-	// 		});
-	// 	}
-
-	// 	if (trnType && trnType !== "all") {
-	// 		setConstraints((prev) => {
-	// 			return [...prev, where("metadata.trnType", "==", trnType)];
-	// 		});
-	// 	}
-
-	// 	return () => setConstraints([]);
-	// }, [workbase, trnType]);
-
-	// useEffect(() => {
-	// 	if (response.success) {
-	// 		// console.log(`response`, response);
-	// 		const { workbase } = response?.document;
-	// 		// console.log(`workbase`, workbase)
-	// 		setWorkbase(workbase);
-	// 	}
-	// }, [response.success]);
-
-	// useEffect(() => {
-	// 	if (user?.uid) {
-	// 		getDocument(user?.uid);
-	// 	}
-	// }, [user?.uid]);
 
 	const trnId = uuidv4();
 
@@ -1728,16 +1664,16 @@ export const useTrns = () => {
 				{
 					headerName: "Created",
 					children: [
+						// {
+						// 	field: "metadata.createdByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Created By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.createdByUser",
-							columnGroupShow: "closed",
-							headerName: "Created By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.createdByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
 							hide: false,
@@ -1769,16 +1705,16 @@ export const useTrns = () => {
 				{
 					headerName: "Updated",
 					children: [
+						// {
+						// 	field: "metadata.updatedByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Updated By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.updatedByUser",
-							columnGroupShow: "closed",
-							headerName: "Updated By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.updatedByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
 							hide: false,
@@ -2126,16 +2062,16 @@ export const useTrns = () => {
 				{
 					headerName: "Created",
 					children: [
+						// {
+						// 	field: "metadata.createdByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Created By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.createdByUser",
-							columnGroupShow: "closed",
-							headerName: "Created By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.createdByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
 							hide: false,
@@ -2166,16 +2102,16 @@ export const useTrns = () => {
 				{
 					headerName: "Updated",
 					children: [
+						// {
+						// 	field: "metadata.updatedByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Updated By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.updatedByUser",
-							columnGroupShow: "closed",
-							headerName: "Updated By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.updatedByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
 							hide: false,
@@ -2383,16 +2319,16 @@ export const useTrns = () => {
 				{
 					headerName: "Created",
 					children: [
+						// {
+						// 	field: "metadata.createdByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Created By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.createdByUser",
-							columnGroupShow: "closed",
-							headerName: "Created By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.createdByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
 							hide: false,
@@ -2423,16 +2359,16 @@ export const useTrns = () => {
 				{
 					headerName: "Updated",
 					children: [
+						// {
+						// 	field: "metadata.updatedByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Updated By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.updatedByUser",
-							columnGroupShow: "closed",
-							headerName: "Updated By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.updatedByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
 							hide: false,
@@ -2711,16 +2647,16 @@ export const useTrns = () => {
 				{
 					headerName: "Created",
 					children: [
+						// {
+						// 	field: "metadata.createdByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Created By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.createdByUser",
-							columnGroupShow: "closed",
-							headerName: "Created By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.createdByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
 							hide: false,
@@ -2752,16 +2688,16 @@ export const useTrns = () => {
 				{
 					headerName: "Updated",
 					children: [
+						// {
+						// 	field: "metadata.updatedByUser",
+						// 	columnGroupShow: "closed",
+						// 	headerName: "Updated By",
+						// 	width: 150,
+						// 	hide: false,
+						// },
 						{
 							field: "metadata.updatedByUser",
-							columnGroupShow: "closed",
-							headerName: "Updated By",
-							width: 150,
-							hide: false,
-						},
-						{
-							field: "metadata.updatedByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
 							hide: false,
@@ -3237,6 +3173,34 @@ export const useTrns = () => {
 						// 	hide: false,
 						// },
 					],
+				},
+
+				// edit
+				{
+					field: "",
+					headerName: "Edit",
+					cellRenderer: (params) => {
+						// console.log(`props.data`, params.data);
+
+						const trnType = params?.data?.metadata?.trnType;
+						// console.log(`trnType`, trnType);
+
+						return (
+							<TableModalBtn data={params} modalName={`meter-${trnType}`}>
+								<IconContext.Provider
+									value={{ color: "blue", fontSize: "1rem" }}
+								>
+									<LuFileEdit />
+								</IconContext.Provider>
+							</TableModalBtn>
+						);
+					},
+					cellRendererParams: {
+						// modalName: "meter-audit",
+						validationSchema: trnsValidationSchema["meter"]["audit"],
+						width: "3rem",
+					},
+					width: 80,
 				},
 
 				// erf - data comes from the erf that created the trn

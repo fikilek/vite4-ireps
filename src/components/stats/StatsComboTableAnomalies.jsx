@@ -20,7 +20,7 @@ const StatsComboTableAnomalies = (props) => {
 		{
 			field: "anomalyName",
 			headerName: "Anomaly - Anomaly Detail",
-			width: "350",
+			width: "220",
 			// flex: 0.3,
 		},
 	];
@@ -46,18 +46,22 @@ const StatsComboTableAnomalies = (props) => {
 					user: user,
 				};
 
-				const result = columnDefinitions.some((fw) => fw.uid === user.uid);
+				const result = columnDefinitions.some(
+					(fw) => fw?.valueGetterParam?.uid === user.uid
+				);
 				if (!result) {
 					columnDefinitions.push({
 						field: `userObj.${user.uid}.user.quantity`,
 						headerName: capitalizeInitialsString(user.displayName),
-						uid: user.uid,
-						width: "60",
+						width: "58",
 						headerTooltip: user.displayName,
 						// flex: 0.1,
 						valueGetter: (params) => {
 							const value = params.data?.userObj[user?.uid]?.user?.quantity;
 							return value ? value : 0;
+						},
+						valueGetterParam: {
+							uid: user.uid,
 						},
 					});
 				}

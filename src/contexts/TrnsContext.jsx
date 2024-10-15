@@ -7,9 +7,10 @@ const initSettings = {
 	activeTab: "table",
 	activeArea: "",
 	trns: null,
+	newTrnsData: false,
 };
 
-export const TrnsContextProvider = props => {
+export const TrnsContextProvider = (props) => {
 	const [trnsContext, setTrnsContext] = useState(initSettings);
 	// console.log(`trnsContext`, trnsContext);
 	return (

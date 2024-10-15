@@ -12,7 +12,7 @@ import { FiltersContext } from "@/contexts/FiltersContext";
 
 const FiltersControlBtns = (props) => {
 	// console.log(`props`, props)
-	const { getAsts } = props;
+	const { getData } = props;
 
 	const { filtersContext, setFiltersContext } = useContext(FiltersContext);
 	// console.log(`filtersContext.filterCondition`, filtersContext.filterCondition);
@@ -20,9 +20,11 @@ const FiltersControlBtns = (props) => {
 	const { createdAtDatetimeRange, updatedAtDatetimeRange, filterCondition } =
 		filtersContext;
 	// console.log(`filtersActive`, filtersActive);
+	// console.log(`filterCondition`, filterCondition);
 	// console.log(`createdAtDatetimeRange`, createdAtDatetimeRange);
 
-	const { astState, astCreation, astMeterType } = filterCondition;
+	const { astState, astCreation, astMeterType, trnType, trnAccess } =
+		filterCondition;
 
 	const handleClick = (e) => {
 		// console.log(`Filter Get Data`, constraints);
@@ -81,12 +83,21 @@ const FiltersControlBtns = (props) => {
 			];
 		}
 		if (astState) {
-			constraints = [...constraints, where("astData.astState", ">=", astState)];
+			constraints = [...constraints, where("astData.astState", "==", astState)];
 		}
 		if (astMeterType) {
 			constraints = [
 				...constraints,
 				where("astData.meter.type", "==", astMeterType),
+			];
+		}
+		if (trnType) {
+			constraints = [...constraints, where("metadata.trnType", "==", trnType)];
+		}
+		if (trnAccess) {
+			constraints = [
+				...constraints,
+				where("access.meterAccess", "==", trnAccess),
 			];
 		}
 		// if (geographicArea) {
@@ -95,7 +106,7 @@ const FiltersControlBtns = (props) => {
 
 		// console.log(`constraints`, constraints);
 
-		getAsts(constraints);
+		getData(constraints);
 
 		setFiltersContext({
 			...filtersContext,
@@ -106,7 +117,7 @@ const FiltersControlBtns = (props) => {
 	const filterReset = (e) => {
 		// console.log(`Filter Reset`);
 		// setErfsFilters(initErfsFilter);
-		getAsts();
+		getData();
 		setFiltersContext({
 			...filtersContext,
 			filtersActive: false,
@@ -119,11 +130,13 @@ const FiltersControlBtns = (props) => {
 				astMeterType: "",
 				astState: "",
 				geographicArea: "",
+				trnType: "",
+				trnAccess: "",
 			},
 		});
 	};
 
-	// const getAstsBtnDisabled = () => {
+	// const getDataBtnDisabled = () => {
 	// 	if (dateRange === "created") {
 	// 		const [startDate, endDate] = createdAtDatetimeRange;
 	// 		const astsBtnDisabled = startDate && endDate ? false : true;
@@ -142,7 +155,7 @@ const FiltersControlBtns = (props) => {
 			<button
 				className="fcb get-data-btn"
 				onClick={handleClick}
-				// disabled={getAstsBtnDisabled()}
+				// disabled={getDataBtnDisabled()}
 			>
 				Get Data
 			</button>

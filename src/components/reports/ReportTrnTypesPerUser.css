@@ -1,4 +1,4 @@
-.report-asts-anomalies {
+.report-trn-types-per-user {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -8,8 +8,8 @@
 	/* overflow: auto; */
 }
 
-.report-asts-anomalies .raa-body {
+.report-trn-types-per-user .rttpu-body {
 	overflow: auto;
-	height: calc(100% - 3.3rem);
+	height: calc(100% - 4.3rem);
 	width: 100%;
 }

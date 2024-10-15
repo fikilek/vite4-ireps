@@ -4,10 +4,10 @@ import { createContext, useState } from "react";
 export const FiltersContext = createContext();
 
 const initSettings = {
+	newTrnsData: false,
 	filtersActive: false,
 	activeTab: "table",
 	activeArea: "",
-	asts: null,
 	createdAtDatetimeRange: [null, null],
 	updatedAtDatetimeRange: [null, null],
 	// dateRange: "",
@@ -19,6 +19,8 @@ const initSettings = {
 		astMeterType: "",
 		astState: "",
 		geographicArea: "",
+		trnType: "",
+		trnAccess: "",
 	},
 };
 

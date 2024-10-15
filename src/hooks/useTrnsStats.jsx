@@ -18,9 +18,6 @@ export const useTrnsStats = () => {
 		const statsTrnType = [];
 		for (const trntype in stats) {
 			// console.log(`${trntype}: ${object[property]}`);
-			// const matchingTrn = trns?.find((trn) => {
-			// 	return trn?.metadata?.createdByTrnType === trntype;
-			// });
 
 			const percentage = ((stats[trntype] / trns?.length) * 100).toFixed(2);
 
@@ -33,7 +30,10 @@ export const useTrnsStats = () => {
 			});
 		}
 
-		return statsTrnType;
+		return {
+			stats: statsTrnType,
+			total: trns?.length,
+		};
 	};
 
 	const getTrnTypePerUserStats = (trns) => {

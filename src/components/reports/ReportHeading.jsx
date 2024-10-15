@@ -13,6 +13,14 @@ import { AstsContext } from "@/contexts/AstsContext";
 import { constants } from "@/utils/utils";
 
 const ReportHeading = (props) => {
+	// console.log(`props`, props);
+
+	const stats = props?.stats;
+	// console.log(`stats`, stats);
+
+	const total = stats?.total;
+	// console.log(`total`, total);
+
 	const { filtersContext } = useContext(FiltersContext);
 	// console.log(`filtersContext`, filtersContext);
 
@@ -152,16 +160,11 @@ const ReportHeading = (props) => {
 		<div className="report-heading">
 			<div className="rh rh-left">
 				<p className="rhl rh-element rhll">{title}</p>
-				<p className="rhl rh-element rhlm">{astCreator}</p>
-				<p className="rhl rh-element rhlr">
-					Total: {astsContext?.asts?.length}
-				</p>
+				<p className="rhr rh-element rhlr"></p>
 			</div>
 			<div className="rh rh-right">
-				<p className="rhr rh-element rhrl">{rangeLabel}</p>
-				<p className="rhr rh-element rhrr">
-					{d1} to {d2}
-				</p>
+				<p className="rhr rh-element rhrl"></p>
+				<p className="rhr rh-element rhrr">Total: {total}</p>
 			</div>
 		</div>
 	);

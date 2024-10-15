@@ -6,7 +6,7 @@ const StatsComboBarChartTrnTypes = (props) => {
 	// console.log(`props`, props);
 
 	// get stats from props
-	const { statsTrnType, barChartSeries } = props?.stats;
+	const { stats, barChartSeries } = props?.stats;
 
 	const options = {
 		title: {
@@ -15,7 +15,7 @@ const StatsComboBarChartTrnTypes = (props) => {
 		subtitle: {
 			text: "Transaction Types",
 		},
-		data: statsTrnType,
+		data: stats,
 		series: barChartSeries,
 	};
 

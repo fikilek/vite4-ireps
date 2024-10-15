@@ -1,10 +1,9 @@
-// import { useContext } from "react";
-
 // css
 import "@/components/trns/TrnsTable.css";
 
 // hooks
-// import { useTrns } from "@/hooks/useTrns";
+
+// contexts
 
 // components
 import TableTrns from "@/components/tables/TableTrns";
@@ -14,20 +13,13 @@ const TrnsTable = (props) => {
 	// console.log(`props`, props);
 
 	const { trns, trnsTableFields } = props;
+	// console.log(`trnsTableFields`, trnsTableFields);
 
-	const { all: colDefs } = trnsTableFields?.all;
+	const colDefs = trnsTableFields?.["all"]?.["all"];
 
 	return (
 		<div className="trns-table table">
-			{trns?.length > 0 ? (
-				<TableTrns
-					rowData={trns}
-					colDefs={colDefs}
-					// key={trnType}
-				/>
-			) : (
-				<p>Loading ....</p>
-			)}
+			<TableTrns rowData={trns} colDefs={colDefs} />
 		</div>
 	);
 };

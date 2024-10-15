@@ -5,7 +5,6 @@ import {
 	orderBy,
 	where,
 	query,
-	or,
 } from "firebase/firestore";
 
 // hooks
@@ -24,10 +23,8 @@ const useGetTrnsCollection_ = (fbCollection) => {
 	// console.log(`fbCollection`, fbCollection);
 
 	const { trnsContext, setTrnsContext } = useContext(TrnsContext);
-	// console.log(`trnsContext`, trnsContext);
 
-	const { trnsStatsContext, setTrnsStatsContext } =
-		useContext(TrnsStatsContext);
+	const { setTrnsStatsContext } = useContext(TrnsStatsContext);
 	// console.log(`trnsStatsContext`, trnsStatsContext);
 
 	const [trns, setTrns] = useState([]);
@@ -41,11 +38,7 @@ const useGetTrnsCollection_ = (fbCollection) => {
 	const { user } = useAuthContext();
 	// console.log(`user`, user);
 
-	const {
-		getTrnTypesStats,
-		getTrnTypePerUserStats,
-		// getAnomalyPerUserStats,
-	} = useTrnsStats();
+	const { getTrnTypesStats, getTrnTypePerUserStats } = useTrnsStats();
 
 	const { uid } = user;
 	// console.log(`uid`, uid);
@@ -88,16 +81,10 @@ const useGetTrnsCollection_ = (fbCollection) => {
 					// audits pre-paid and conventional
 					const trnTypePerUserStats = getTrnTypePerUserStats(results);
 
-					// anomaly per user stats
-					// const anomalyPerUserStats = getAnomalyPerUserStats(results);
-
 					setTrnsContext({
 						...trnsContext,
 						trns: results,
-						// statsCreatedAtDatetimeByUser: updatedStats,
-						// anomaliesStats,
-						// auditsPrepaidStats,
-						// auditsConventionalStats,
+						newTrnsData: true,
 					});
 
 					setTrnsStatsContext((prev) => {
@@ -105,11 +92,6 @@ const useGetTrnsCollection_ = (fbCollection) => {
 							...prev,
 							statsTrnType,
 							trnTypePerUserStats,
-							// anomalyPerUserStats,
-							// statsCreatedAtDatetimeByUser: updatedStats,
-							// anomaliesStats,
-							// auditsPrepaidStats,
-							// auditsConventionalStats,
 						};
 					});
 				},

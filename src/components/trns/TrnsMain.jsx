@@ -6,6 +6,7 @@ import "@/components/trns/TrnsMain.css";
 // components
 import TrnsTable from "@/components/trns/TrnsTable";
 import ReportTrnTypes from "@/components/reports/ReportTrnTypes";
+import ReportTrnTypesPerUser from "@/components/reports/ReportTrnTypesPerUser";
 import Report from "@/components/reports/Report";
 
 const TrnsMain = ({ trns, trnsTableFields }) => {
@@ -14,6 +15,9 @@ const TrnsMain = ({ trns, trnsTableFields }) => {
 			<TrnsTable trns={trns} trnsTableFields={trnsTableFields} />
 			<Report reportName="trnTypes">
 				<ReportTrnTypes />
+			</Report>
+			<Report reportName="trnTypesPerUser">
+				<ReportTrnTypesPerUser />
 			</Report>
 		</div>
 	);

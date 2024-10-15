@@ -73,8 +73,8 @@ const ReportAstsMeterType = () => {
 	const statsName = "Meter Type Summary";
 
 	const handleClick = (e) => {
-		console.log(`export btn clicked`, e.target.value);
-		console.log(`tableRef`, tableRef);
+		// console.log(`export btn clicked`, e.target.value);
+		// console.log(`tableRef`, tableRef);
 		tableRef.current?.api?.exportDataAsCsv();
 	};
 
@@ -94,7 +94,10 @@ const ReportAstsMeterType = () => {
 
 	return (
 		<div className={`report-asts-meter-type`}>
-			<ReportHeading title="Meter Type Stats" />
+			{/* <ReportHeading
+				title="Meters Type Per User Stats"
+				stats={meterTypePerUserStats}
+			/> */}
 
 			<div className="ramt-body">
 				<StatsCombo statsName="Meter Type Summary">

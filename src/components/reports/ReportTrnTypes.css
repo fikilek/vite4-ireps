@@ -8,7 +8,7 @@
 	/* overflow: auto; */
 }
 
-.report-trn-types .tts-body {
+.report-trn-types .rtt-body {
 	overflow: auto;
 	height: calc(100% - 4.3rem);
 	width: 100%;

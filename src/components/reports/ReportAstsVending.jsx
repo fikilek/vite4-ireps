@@ -14,7 +14,7 @@ const ReportAstsVending = () => {
 
 	return (
 		<div className={`report-asts-vending`}>
-			<ReportHeading title="Asts - Vending Report" />
+			<ReportHeading title="Asts - Vending Stats" />
 			<p>ReportAstsVending</p>
 		</div>
 	);

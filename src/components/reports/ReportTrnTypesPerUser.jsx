@@ -1,16 +1,16 @@
 // npm libraries
 import { useContext, useRef } from "react";
 
-import "@/components/reports/ReportAstsAnomalies.css";
+import "@/components/reports/ReportTrnTypesPerUser.css";
 
 // contexts
-import { AstsStatsContext } from "@/contexts/AstsStatsContext";
+import { TrnsStatsContext } from "@/contexts/TrnsStatsContext";
 
-import ReportHeading from "@/components/reports/ReportHeading";
+import ReportHeadingTrn from "@/components/reports/ReportHeadingTrn";
 import StatsCombo from "@/components/stats/StatsCombo";
-import StatsComboTableAnomalies from "@/components/stats/StatsComboTableAnomalies";
-import StatsComboBarChartAnomalies from "@/components/stats/StatsComboBarChartAnomalies";
-import StatsComboPieChart from "@/components/stats/StatsComboPieChart";
+import StatsComboTableTrnPerUser from "@/components/stats/StatsComboTableTrnPerUser";
+// import StatsComboBarChartAnomalies from "@/components/stats/StatsComboBarChartAnomalies";
+// import StatsComboPieChart from "@/components/stats/StatsComboPieChart";
 import StatsCard from "@/components/stats/StatsCard";
 
 import { ModuleRegistry } from "@ag-grid-community/core";
@@ -22,14 +22,14 @@ import { CsvExportModule } from "@ag-grid-community/csv-export";
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 ModuleRegistry.registerModules([CsvExportModule]);
 
-const ReportAnomalies = () => {
-	const { astsStatsContext } = useContext(AstsStatsContext);
-	// console.log(`astsStatsContext`, astsStatsContext);
+const ReportTrnTypesPerUser = () => {
+	const { trnsStatsContext } = useContext(TrnsStatsContext);
+	// console.log(`trnsStatsContext`, trnsStatsContext);
 
 	const tableRef = useRef();
 
-	const { anomalyPerUserStats } = astsStatsContext;
-	// console.log(`anomalyPerUserStats`, anomalyPerUserStats);
+	const { trnTypePerUserStats } = trnsStatsContext;
+	// console.log(`trnTypePerUserStats`, trnTypePerUserStats);
 
 	const handleClick = (e) => {
 		// console.log(`export btn clicked`, e.target.value);
@@ -37,7 +37,7 @@ const ReportAnomalies = () => {
 		tableRef.current.api.exportDataAsCsv();
 	};
 
-	const statsName = "Anomaly Summary";
+	const statsName = "Trn Type Per User";
 	const headerDataGeneric = {
 		hl1: "hl1",
 		hl2: "",
@@ -53,40 +53,32 @@ const ReportAnomalies = () => {
 	};
 
 	return (
-		<div className={`report-asts-anomalies`}>
-			<ReportHeading
-				title="Meters Anomalies Per User Stats"
-				stats={anomalyPerUserStats}
+		<div className={`report-trn-types-per-user`}>
+			<ReportHeadingTrn
+				title="Trn Type Per User Stats"
+				stats={trnTypePerUserStats}
 			/>
 
 			{/* display main anomalies data */}
-			<div className="raa-body">
-				<StatsCombo statsName="Anomaly Summary">
+			<div className="rttpu-body">
+				<StatsCombo statsName={statsName}>
 					<StatsCard
 						statsName={statsName}
-						stats={anomalyPerUserStats}
+						stats={trnTypePerUserStats}
 						headerData={headerDataGeneric}
 					>
-						<StatsComboTableAnomalies
-							stats={anomalyPerUserStats?.stats}
+						<StatsComboTableTrnPerUser
+							stats={trnTypePerUserStats}
 							tableRef={tableRef}
 						/>
 					</StatsCard>
 
 					{/* <StatsCard
 						statsName={`${statsName} Bar Chart`}
-						stats={anomalyPerUserStats}
+						stats={trnTypePerUserStats}
 						headerData={headerDataGeneric}
 					>
-						<StatsComboBarChartAnomalies stats={anomalyPerUserStats} />
-					</StatsCard> */}
-
-					{/* <StatsCard
-						statsName={`${statsName} Pie Chart`}
-						stats={anomalyPerUserStats}
-						headerData={headerDataGeneric}
-					>
-						<StatsComboPieChart stats={anomalyPerUserStats} />
+						<StatsComboBarChartAnomalies stats={trnTypePerUserStats} />
 					</StatsCard> */}
 				</StatsCombo>
 			</div>
@@ -94,4 +86,4 @@ const ReportAnomalies = () => {
 	);
 };
 
-export default ReportAnomalies;
+export default ReportTrnTypesPerUser;

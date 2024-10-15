@@ -19,8 +19,8 @@ const StatsComboTableMeterTypes = (props) => {
 	let columnDefinitions = [
 		{
 			field: "meterTypeName",
-			// headerName: "Anomaly - Anomaly Detail",
-			width: "150",
+			headerName: "Meter Type",
+			width: "110",
 			// flex: 3,
 		},
 	];
@@ -32,7 +32,9 @@ const StatsComboTableMeterTypes = (props) => {
 
 		let users = {};
 		meterType?.stats?.forEach((user) => {
-			const result = columnDefinitions.some((fw) => fw.uid === user.uid);
+			const result = columnDefinitions.some(
+				(fw) => fw?.valueGetterParam?.uid === user.uid
+			);
 
 			users[user.uid] = {
 				user: user,
@@ -42,13 +44,16 @@ const StatsComboTableMeterTypes = (props) => {
 				columnDefinitions.push({
 					field: `users.${user.uid}.user.quantity`,
 					headerName: capitalizeInitialsString(user.displayName),
-					width: "60",
+					width: "58",
 					// flex: 1,
 					headerTooltip: user.displayName,
 					valueGetter: (params) => {
 						// console.log(`params`, params);
 						const value = params.data?.users[user?.uid]?.user?.quantity;
 						return value ? value : 0;
+					},
+					valueGetterParam: {
+						uid: user.uid,
 					},
 				});
 			}

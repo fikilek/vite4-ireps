@@ -69,7 +69,7 @@ const FilterDataFilter = () => {
 					<FilterGeographicArea />
 				</FilterItem>
 			</div>
-			<FiltersControlBtns getAsts={getAsts} />
+			<FiltersControlBtns getData={getAsts} />
 		</div>
 	);
 };
