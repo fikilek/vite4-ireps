@@ -3051,7 +3051,7 @@ export const useTrns = () => {
 						// },
 						{
 							field: "metadata.createdByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Created By",
 							width: 150,
 							// hide: false,
@@ -3091,7 +3091,7 @@ export const useTrns = () => {
 						// },
 						{
 							field: "metadata.updatedByUser",
-							columnGroupShow: "open",
+							// columnGroupShow: "open",
 							headerName: "Updated By",
 							width: 150,
 							// hide: false,
